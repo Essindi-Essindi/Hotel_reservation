@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase - Admin Dashboard</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        /* Enhanced Location and Lot Items */
+        .location-item, .lot-item {
+            border: 1px solid rgba(26, 60, 143, 0.1);
+            padding: 20px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-item::before, .lot-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #1a3c8f, #2f58cd, #17a2b8);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .location-item:hover, .lot-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(26, 60, 143, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .location-item:hover::before, .lot-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .location-actions, .lot-actions {
+            margin: 12px 0;
+            float: right;
+            display: flex;
+            gap: 8px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .location-item:hover .location-actions,
+        .lot-item:hover .lot-actions {
+            opacity: 1;
+        }
+
+        .spot-list {
+            margin-top: 12px;
+            padding-left: 24px;
+            border-left: 3px solid rgba(26, 60, 143, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        .location-item:hover .spot-list,
+        .lot-item:hover .spot-list {
+            border-color: var(--primary-color);
+        }
+
+        /* Enhanced Matrix and Cell Styles */
+        .cell {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            position: relative;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .cell::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(26, 60, 143, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            z-index: 0;
+        }
+
+        .cell:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+            border-color: var(--primary-light);
+            box-shadow: 0 8px 20px rgba(26, 60, 143, 0.2);
+            color: var(--primary-color);
+        }
+
+        .cell:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        .cell.selected {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border-color: #1e7e34;
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(40, 167, 69, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 6px 25px rgba(40, 167, 69, 0.4); }
+            50% { box-shadow: 0 8px 30px rgba(40, 167, 69, 0.6); }
+        }
+
+        .matrix {
+            display: grid;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            border-radius: 12px;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        :root {
+            --primary-color: #1a3c8f;
+            --primary-light: #2f58cd;
+            --primary-dark: #0f2461;
+            --secondary-color: #95a5a6;
+            --accent-color: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #666666;
+            --background-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.3s;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --selected-color: #007bff;
+            --hover-color: #17a2b8;
+            --sidebar-width: 260px;
+            --sidebar-collapsed-width: 70px;
+            --gradient-primary: linear-gradient(135deg, #1a3c8f 0%, #2f58cd 100%);
+            --gradient-card: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--gradient-primary);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 0;
+            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.02)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            gap: 0.8rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sidebar-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            right: 1rem;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .sidebar-header i {
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .sidebar-menu {
+            flex-grow: 1;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            gap: 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: white;
+            transform: scaleY(0);
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .sidebar-item:hover::before,
+        .sidebar-item.active::before {
+            transform: scaleY(1);
+        }
+
+        .sidebar-item:hover,
+        .sidebar-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            transform: translateX(8px);
+        }
+
+        .sidebar-item i {
+            font-size: 1.3rem;
+            width: 28px;
+            text-align: center;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+
+        .sidebar-item span {
+            opacity: 1;
+            transition: all var(--transition-speed) ease;
+            font-weight: 500;
+        }
+
+        .sidebar.collapsed .sidebar-item span {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: -20px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all var(--transition-speed) ease;
+            z-index: 1001;
+        }
+
+        .toggle-btn:hover {
+            transform: scale(1.1) rotate(180deg);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Enhanced Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 2.5rem;
+            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .main-content.collapsed {
+            margin-left: var(--sidebar-collapsed-width);
+        }
+
+        .user-info {
+            position: absolute;
+            top: 2.5rem;
+            right: 2.5rem;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            background: var(--gradient-card);
+            padding: 0.5rem;
+            border-radius: 50%;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .user-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 55px;
+            right: 0;
+            background: var(--gradient-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 0.5rem 0;
+            min-width: 150px;
+            z-index: 1001;
+        }
+
+        .user-dropdown.active {
+            display: block;
+        }
+
+        .user-dropdown-item {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            color: var(--text-primary);
+            cursor: default;
+            transition: background-color var(--transition-speed) ease;
+        }
+
+        .user-dropdown-item:hover {
+            background-color: rgba(26, 60, 143, 0.1);
+        }
+
+        .user-dropdown-item.logout {
+            cursor: pointer;
+            color: var(--danger-color);
+        }
+
+        .user-dropdown-item.logout:hover {
+            background-color: rgba(220, 53, 69, 0.1);
+        }
+
+        .section {
+            display: none;
+            padding: 2rem 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        /* Enhanced Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .dashboard-card {
+            background: var(--gradient-card);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(26, 60, 143, 0.1);
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(26, 60, 143, 0.15);
+            border-color: var(--primary-light);
+        }
+
+        .dashboard-card:hover::before {
+            left: 100%;
+        }
+
+        .dashboard-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+        }
+
+        .dashboard-card p {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.8rem;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #e9ecef, #f8f9fa);
+            border-radius: 12px;
+            height: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            height: 100%;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Enhanced Form Styles */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-left: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 1rem 2.5rem 1rem 2.5rem;
+            border: 2px solid rgba(26, 60, 143, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: var(--gradient-card);
+            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(26, 60, 143, 0.2);
+            transform: translateY(-2px);
+            outline: none;
+        }
+
+        .form-group input:hover,
+        .form-group select:hover {
+            background: #ffffff;
+            border-color: var(--primary-light);
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 1rem;
+            top: 3rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .form-group:focus-within i {
+            color: var(--primary-light);
+            transform: scale(1.1);
+        }
+
+        /* Enhanced Button Styles */
+        .btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(26, 60, 143, 0.3);
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 12px 25px rgba(220, 53, 69, 0.3);
+        }
+
+        /* Enhanced Admin Card */
+        .admin-card {
+            background: var(--gradient-card);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(26, 60, 143, 0.1);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .quarter-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .quarter-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: all var(--transition-speed) ease;
+            border-left: 4px solid transparent;
+        }
+
+        .quarter-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            border-left-color: var(--primary-color);
+        }
+
+        .quarter-item button {
+            margin-left: 0.8rem;
+        }
+
+        /* Enhanced Reservation Styles */
+        .reservation-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .reservation-card {
+            background: var(--gradient-card);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border: 1px solid rgba(26, 60, 143, 0.1);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .reservation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .reservation-card h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .reservation-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .reservation-table th,
+        .reservation-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(26, 60, 143, 0.1);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .reservation-table th {
+            background: var(--gradient-primary);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .reservation-table tr:hover {
+            background: rgba(26, 60, 143, 0.05);
+            transform: scale(1.01);
+        }
+
+        .reservation-table td.status-available {
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .reservation-table td.status-occupied {
+            color: var(--danger-color);
+            font-weight: 600;
+        }
+
+        /* Enhanced Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--gradient-card);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 95%;
+            position: relative;
+            animation: modalSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(26, 60, 143, 0.2);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            color: var(--danger-color);
+            background: rgba(220, 53, 69, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* Enhanced Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: var(--sidebar-collapsed-width);
+            }
+
+            .sidebar.collapsed {
+                width: var(--sidebar-width);
+            }
+
+            .main-content {
+                margin-left: var(--sidebar-collapsed-width);
+                padding: 1.5rem;
+            }
+
+            .main-content.collapsed {
+                margin-left: var(--sidebar-width);
+            }
+
+            .sidebar-item span {
+                opacity: 0;
+                width: 0;
+                overflow: hidden;
+            }
+
+            .sidebar.collapsed .sidebar-item span {
+                opacity: 1;
+                width: auto;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .reservation-table {
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+
+            .modal-content h2 {
+                font-size: 1.6rem;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .form-group {
+                max-width: 100%;
+            }
+
+            .user-info {
+                top: 1.5rem;
+                right: 1.5rem;
+                font-size: 1.2rem;
+                width: 35px;
+                height: 35px;
+            }
+
+            .user-dropdown {
+                top: 45px;
+                min-width: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cell {
+                width: 35px;
+                height: 35px;
+                font-size: 0.8rem;
+            }
+
+            .matrix {
+                gap: 6px;
+                padding: 15px;
+            }
+
+            .dashboard-card {
+                padding: 1.5rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .user-info {
+                top: 1rem;
+                right: 1rem;
+                font-size: 1rem;
+                width: 30px;
+                height: 30px;
+            }
+
+            .user-dropdown {
+                top: 40px;
+                min-width: 100px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-parking"></i>
+            <span>ParkEase</span>
+        </div>
+        <button class="toggle-btn" id="toggle-btn"><i class="fas fa-chevron-left"></i></button>
+        <div class="sidebar-menu">
+            <div class="sidebar-item active" data-section="dashboard">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="sidebar-item" data-section="new">
+                <i class="fas fa-plus"></i>
+                <span>New</span>
+            </div>
+            <div class="sidebar-item" data-section="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+            <div class="sidebar-item" data-section="reservation">
+                <i class="fas fa-parking"></i>
+                <span>Reservation</span>
+            </div>
+            <div class="sidebar-item" data-section="logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span><a href="/logout" style="color: white; text-decoration: none">Logout</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content" id="main-content">
+        <section class="section active" id="dashboard">
+            <div class="container">
+                <h2>Admin Dashboard</h2>
+                <div class="dashboard-grid" id="dashboard-grid"></div>
+                <input type="hidden" id="priceInput" th:value="${price}">
+            </div>
+        </section>
+
+        <section class="section" id="new">
+            <div class="container">
+                <h2>Add New Quarter</h2>
+                <div class="admin-card">
+                    <button class="btn" id="open-new-quarter-modal"><i class="fas fa-plus"></i> Add New Quarter</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="edit">
+            <div class="container">
+                <h2>Edit Parking Lots & Spots</h2>
+                <div class="quarter-list" id="edit-quarter-list"></div>
+            </div>
+        </section>
+
+        <section class="section" id="settings">
+            <div class="container">
+                <h2>Settings</h2>
+                <div class="admin-card">
+                    <form id="price-form">
+                        <div class="form-group">
+                            <label for="price-per-hour">Price per Hour (FCFA)</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-money-bill"></i>
+                                <input type="number" id="price-per-hour" min="1" required placeholder="e.g., 100">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn"><i class="fas fa-save"></i> Update Price</button>
+                    </form>
+                    <p>Current Price: <span th:text="${price} + ' FCFA/hour'" id="current-price"></span></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="reservation">
+            <div class="container">
+                <h2>Reservation Status</h2>
+                <div class="reservation-grid" id="reservation-grid"></div>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal" id="new-quarter-modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h2><i class="fas fa-plus"></i> Add New Quarter</h2>
+            <form id="new-quarter-form">
+                <div class="form-group">
+                    <label for="quarter-name">Quarter Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="quarter-name" required placeholder="e.g., Bastos">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lot-name">Lot Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="lot-name" required placeholder="e.g., BastosA">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rows">Rows</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-car"></i>
+                        <input type="number" id="rows" min="1" value="3" required placeholder="e.g., 6">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="columns">Columns</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-car"></i>
+                        <input type="number" id="columns" min="1" value="3" required placeholder="e.g., 6">
+                    </div>
+                </div>
+                <button type="button" class="action" onclick="generateMatrix()">Generate Matrix</button>
+                <div id="matrixContainer" class="matrix" style="margin-top: 10px;"></div>
+                <button type="submit" class="btn" onclick="saveSpots()"><i class="fas fa-save"></i> Save Location</button>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="modal" id="edit-quarter-modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h2><i class="fas fa-edit"></i> Edit Location</h2>
+            <form id="edit-quarter-form">
+                <div class="form-group">
+                    <label for="edit-quarter-name">Location Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="edit-quarter-name" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn"><i class="fas fa-save"></i> Save Changes</button>
+                <button type="button" class="btn btn-danger" id="delete-quarter"><i class="fas fa-trash"></i> Delete Quarter</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let selectedSpots = [];
+        let savedLocations = [];
+
+        function generateMatrix() {
+            const rows = parseInt(document.getElementById('rows').value);
+            const cols = parseInt(document.getElementById('columns').value);
+            const container = document.getElementById('matrixContainer');
+            container.innerHTML = '';
+            selectedSpots = [];
+
+            container.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
+            container.className = 'matrix';
+
+            for (let r = 1; r <= rows; r++) {
+                for (let c = 1; c <= cols; c++) {
+                    const div = document.createElement('div');
+                    div.className = 'cell';
+                    div.textContent = `${r},${c}`;
+                    div.dataset.row = r;
+                    div.dataset.col = c;
+
+                    div.onclick = () => {
+                        const key = `${r},${c}`;
+                        if (selectedSpots.includes(key)) {
+                            selectedSpots = selectedSpots.filter(s => s !== key);
+                            div.classList.remove('selected');
+                        } else {
+                            selectedSpots.push(key);
+                            div.classList.add('selected');
+                        }
+                    };
+                    container.appendChild(div);
+                }
+            }
+        }
+
+        function saveSpots() {
+            const locationName = document.getElementById('quarter-name').value.trim();
+            const lotName = document.getElementById('lot-name').value.trim();
+
+            if (!locationName || !lotName) {
+                alert("Please enter both location and lot name.");
+                return;
+            }
+
+            const parkingSpots = selectedSpots.map(pos => {
+                const [r, c] = pos.split(',').map(Number);
+                return {
+                    parkingSpotId: `${lotName}${r}${c}`,
+                    // parkingSpotStatus: "AVAILABLE"
+                };
+            });
+
+            const parkingLot = {
+                parkingLotID: lotName,
+                totalSpots: parkingSpots.length,
+                parkingSpots
+            };
+
+            const locationDto = {
+                locationID: savedLocations.length + 1,
+                locationName,
+                // pricePerHour: currentPrice,
+                parkingLots: [parkingLot]
+            };
+
+            savedLocations.push(locationDto);
+            console.log(locationDto);
+            saveParkingData(locationDto);
+        }
+
+        async function getParkingData() {
+            try {
+                const response = await fetch('/get-all-parkingSpots'); // 👉 replace with your actual endpoint
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const locationDtos = await response.json(); // Assuming it returns an array of LocationDto
+                // Optional validation (minimal)
+                if (!Array.isArray(locationDtos)) {
+                    console.error("Invalid data format: Expected an array of LocationDto objects.");
+                    return [];
+                }
+
+                return locationDtos;
+            } catch (error) {
+                console.error('Failed to fetch parking data from API:', error);
+                return []; // Return empty array as fallback
+            }
+        }
+
+        async function saveParkingData(locationDto) {
+            // Validate that the object is a valid LocationDto
+            if (
+                !locationDto ||
+                typeof locationDto.locationID === 'undefined' ||
+                typeof locationDto.locationName !== 'string' ||
+                !Array.isArray(locationDto.parkingLots)
+            ) {
+                console.error('❌ Invalid LocationDto format:', locationDto);
+                return;
+            }
+
+            // Optional: Further validation of inner structures (ParkingLotDto, ParkingSpotDto)
+            const isValid = locationDto.parkingLots.every(lot =>
+                lot.parkingLotID &&
+                typeof lot.totalSpots === 'number' &&
+                Array.isArray(lot.parkingSpots) &&
+                lot.parkingSpots.every(spot =>
+                    typeof spot.parkingSpotId === 'string'
+                )
+            );
+
+            if (!isValid) {
+                console.error('❌ Invalid nested structure inside LocationDto:', locationDto);
+                return;
+            }
+
+            try {
+                const response = await fetch('/new-location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(locationDto)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('✅ LocationDto posted successfully:', result);
+                newQuarterModal.style.display = 'none';
+                newQuarterForm.reset();
+            } catch (error) {
+                console.error('❌ Failed to post LocationDto:', error);
+            }
+        }
+
+        async function loadDashboard() {
+            const pricePerHour = parseInt(document.getElementById('priceInput').value);
+            const locations = await getParkingData(); // Array<LocationDto>
+
+            const dashboardGrid = document.getElementById('dashboard-grid');
+            dashboardGrid.innerHTML = '';
+
+            if (!Array.isArray(locations) || locations.length === 0) {
+                dashboardGrid.textContent = "No parking locations available.";
+                return;
+            }
+
+            locations.forEach(location => {
+                // location = LocationDto
+                const lotsCount = location.parkingLots.length; // List<ParkingLotDto>
+
+                // Flatten all spots from all parkingLots
+                const allSpots = location.parkingLots.flatMap(lot => lot.parkingSpots); // List<ParkingSpotDto>
+
+                const totalSpots = allSpots.length;
+                // Count spots where parkingSpotStatus is "AVAILABLE"
+                const freeSpots = allSpots.filter(spot => spot.parkingSpotStatus === "Available").length;
+                const reservedSpots = totalSpots - freeSpots;
+
+                const freePercentage = totalSpots ? (freeSpots / totalSpots) * 100 : 0;
+
+                const card = document.createElement('div');
+                card.className = 'dashboard-card';
+                card.innerHTML = `
+      <h3>${location.locationName}</h3>
+      <p>${lotsCount} Lots</p>
+      <p>${totalSpots} Spots</p>
+      <p>${freeSpots} Free / ${reservedSpots} Reserved</p>
+      <div class="progress-bar">
+        <div class="progress" style="width: ${freePercentage}%;"></div>
+      </div>
+    `;
+
+                dashboardGrid.appendChild(card);
+            });
+        }
+
+        async function loadEditLocations() {
+            const data = await getParkingData(); // expects an array of LocationDto objects
+            const quarterList = document.getElementById('edit-quarter-list');
+            quarterList.innerHTML = '';
+
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach(location => {
+                    const lots = location.parkingLots || [];
+                    const totalLots = lots.length;
+                    const totalSpots = lots.reduce((sum, lot) => sum + (lot.totalSpots || 0), 0);
+                    const slotsPerLot = totalLots ? totalSpots / totalLots : 0;
+
+                    const locationItem = document.createElement('div');
+                    locationItem.className = 'quarter-item';  // you can rename to location-item if you want
+                    locationItem.innerHTML = `
+        <span>${location.locationName}</span>
+        <div>
+          <button class="btn edit-quarter"
+                  data-locationid="${location.locationID}"
+                  data-lots="${totalLots}"
+                  data-spots="${totalSpots}"
+                  data-slots-per-lot="${slotsPerLot.toFixed(2)}">
+            <i class="fas fa-edit"></i> Edit
+          </button>
+          <button class="btn btn-danger delete-quarter" data-locationid="${location.locationID}">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </div>
+      `;
+
+                    quarterList.appendChild(locationItem);
+                });
+            } else {
+                quarterList.textContent = "No locations available.";
+            }
+        }
+
+        locationDto = getParkingData();
+
+        async function loadReservationStatus(locationDtoList) {
+            const reservationGrid = document.getElementById('reservation-grid');
+            reservationGrid.innerHTML = '';
+            console.log(locationDtoList)
+
+            if (!Array.isArray(locationDtoList) || locationDtoList.length === 0) {
+                reservationGrid.innerHTML = '<p>No locations available.</p>';
+                return;
+            }
+
+            locationDtoList.forEach(location => {
+                const parkingLots = location.parkingLots;
+
+                if (!Array.isArray(parkingLots) || parkingLots.length === 0) {
+                    const msg = document.createElement('p');
+                    msg.textContent = `No parking lots available for ${location.locationName}.`;
+                    reservationGrid.appendChild(msg);
+                    return;
+                }
+
+                parkingLots.forEach(parkingLot => {
+                    const spots = parkingLot.parkingSpots || [];
+                    const freeSpots = spots.filter(spot => spot.parkingSpotStatus === 'available').length;
+                    const reservedSpots = spots.length - freeSpots;
+
+                    const card = document.createElement('div');
+                    card.className = 'reservation-card';
+
+                    let tableRows = '';
+                    spots.forEach(spot => {
+                        tableRows += `
+                    <tr>
+                        <td>${spot.parkingSpotId}</td>
+                        <td>${parkingLot.parkingLotID}</td>
+                        <td class="status-${spot.parkingSpotStatus === 'Available' ? 'Available' : 'occupied'}">
+                            ${spot.parkingSpotStatus === 'Available' ? 'Available' : 'Occupied'}
+                        </td>
+                    </tr>
+                `;
+                    });
+
+                    card.innerHTML = `
+                <h3>Location: ${location.locationName} | Lot: ${parkingLot.parkingLotID}</h3>
+                <p>Total Spots: ${spots.length} | Free: ${freeSpots} | Reserved: ${reservedSpots}</p>
+                <table class="reservation-table">
+                    <thead>
+                        <tr>
+                            <th>Spot ID</th>
+                            <th>Lot ID</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRows}
+                    </tbody>
+                </table>
+            `;
+
+                    reservationGrid.appendChild(card);
+                });
+            });
+        }
+
+
+        // Sidebar Navigation
+        const sidebarItems = document.querySelectorAll('.sidebar-item[data-section]');
+        const sections = document.querySelectorAll('.section');
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', async () => {
+                sidebarItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                const sectionId = item.dataset.section;
+                sections.forEach(section => {
+                    section.classList.toggle('active', section.id === sectionId);
+                });
+                if (sectionId === 'dashboard') await loadDashboard();
+                if (sectionId === 'edit') await loadEditLocations();
+                if (sectionId === 'reservation') await loadReservationStatus(await locationDto);
+            });
+        });
+
+        // Sidebar Toggle
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const toggleBtn = document.getElementById('toggle-btn');
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('collapsed');
+            toggleBtn.innerHTML = `<i class="fas fa-chevron-${sidebar.classList.contains('collapsed') ? 'right' : 'left'}"></i>`;
+        });
+
+        // New Quarter Modal
+        const newQuarterModal = document.getElementById('new-quarter-modal');
+        const newQuarterForm = document.getElementById('new-quarter-form');
+        const openNewQuarterModal = document.getElementById('open-new-quarter-modal');
+        const newCloseBtn = newQuarterModal.querySelector('.close-btn');
+
+        openNewQuarterModal.addEventListener('click', () => {
+            newQuarterModal.style.display = 'flex';
+        });
+
+        newQuarterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = getParkingData();
+
+            saveParkingData(data);
+            newQuarterModal.style.display = 'none';
+            newQuarterForm.reset();
+            loadDashboard();
+            loadEditLocations();
+        });
+
+        newCloseBtn.addEventListener('click', () => {
+            newQuarterModal.style.display = 'none';
+        });
+
+        // Edit Quarter Modal
+        const editQuarterModal = document.getElementById('edit-quarter-modal');
+        const editQuarterForm = document.getElementById('edit-quarter-form');
+        const editCloseBtn = editQuarterModal.querySelector('.close-btn');
+        const deleteQuarterBtn = document.getElementById('delete-quarter');
+        let currentLocation = '';
+
+        document.getElementById('edit-quarter-list').addEventListener('click', async (e) => {
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            const locationID = button.dataset.locationid;
+            const data = await getParkingData();
+
+            // Find the location by ID
+            const locationIndex = data.findIndex(loc => loc.locationID.toString() === locationID);
+            console.log(locationIndex)
+
+            if (locationIndex === -1) {
+                alert('Location not found!');
+                return;
+            }
+
+            const location = data[locationIndex];
+
+            // Delete location
+            if (button.classList.contains('delete-quarter')) {
+                if (confirm(`Are you sure you want to delete ${location.locationName}?`)) {
+                    // data.splice(locationIndex, 1); // Remove location
+                    // saveParkingData(data);
+                    await loadDashboard();
+                    await loadEditLocations();
+                    await loadReservationStatus(locationDto);
+                    alert('Location deleted successfully!');
+                }
+
+                // Edit location
+            }
+            else if (button.classList.contains('edit-quarter')) {
+                currentLocation = location;
+
+                document.getElementById('edit-quarter-name').value = location.locationName;
+
+                editQuarterModal.style.display = 'flex';
+            }
+
+        });
+
+        editQuarterForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const newLocationName = document.getElementById('edit-quarter-name').value.trim();
+
+            if (!newLocationName) {
+                alert('Location name cannot be empty!');
+                return;
+            }
+
+            const data = getParkingData();
+            const locationIndex = data.findIndex(loc => loc.locationID === Number(currentLocation.locationID));
+            if (locationIndex === -1) {
+                alert('Location not found!');
+                return;
+            }
+
+            const location = data[locationIndex];
+            location.locationName = newLocationName;
+
+            try {
+                const response = await fetch('/update-location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify([location.locationID, newLocationName])
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update location on the server.');
+                }
+
+                // Save locally if needed
+                // saveParkingData(data);
+
+                editQuarterModal.style.display = 'none';
+                await loadDashboard();
+                await loadEditLocations();
+                await loadReservationStatus(locationDto);
+                alert('Location updated successfully!');
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred while updating the location.');
+            }
+        });
+
+        deleteQuarterBtn.addEventListener('click', () => {
+            if (confirm(`Are you sure you want to delete ${currentQuarter.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}?`)) {
+                const data = getParkingData();
+                delete data.quarters[currentQuarter];
+                saveParkingData(data);
+                editQuarterModal.style.display = 'none';
+                loadDashboard();
+                loadEditQuarters();
+                loadReservationStatus(locationDto);
+                alert('Quarter deleted successfully!');
+            }
+        });
+        editCloseBtn.addEventListener('click', () => {
+            editQuarterModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === newQuarterModal) newQuarterModal.style.display = 'none';
+            if (e.target === editQuarterModal) editQuarterModal.style.display = 'none';
+        });
+
+        // Price Form
+        const priceForm = document.getElementById('price-form');
+        priceForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const price = parseInt(document.getElementById('price-per-hour').value);
+            console.log(typeof price)
+            if (!price || price <= 0) {
+                alert('Please enter a valid price!');
+                return;
+            }
+
+            try {
+                const response = await fetch('/update-hourly-rate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: price
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                // Optionally, update UI based on server response
+                document.getElementById('current-price').textContent = `${price} FCFA/hour`;
+                priceForm.reset();
+                await loadDashboard();
+                alert('Price updated successfully!');
+            } catch (error) {
+                console.error('Failed to update price:', error);
+                alert('Failed to update price. Please try again.');
+            }
+        });
+
+
+        // Initialize
+        loadDashboard();
+        loadEditLocations();
+        // loadReservationStatus(locationDto);
+    </script>
+</body>
+</html>

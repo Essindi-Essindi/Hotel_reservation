@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stripe Checkout</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/x-icon">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4fc;
+            color: #003366;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #002244;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            color: #003366;
+        }
+
+        #checkout-button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #checkout-button:hover {
+            background-color: #004999;
+        }
+
+        #checkout-button:active {
+            background-color: #003d80;
+        }
+
+        /* Optional: Center container styling */
+        body > * {
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+<h2>Parking Reservation Payment</h2>
+<p>Click the button below to complete your payment.</p>
+<button id="checkout-button">Checkout</button>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // Extract everything from the user object
+    const user = /*[[${user}]]*/ {};
+    const userId = user?.id || 0; // Derive from user object
+
+    // Debug log
+    console.log("User object:", user);
+    console.log("Derived userId:", userId);
+    /*]]>*/
+</script>
+<script>
+    let stripe;
+
+    // Fetch Stripe public key and initialize Stripe
+    fetch("/api/payment/public-key")
+        .then(res => res.json())
+        .then(data => {
+            if (!data.publicKey) {
+                throw new Error("Missing publicKey in response");
+            }
+            stripe = Stripe(data.publicKey);
+
+            // Attach click event handler only after Stripe is ready
+            document.getElementById("checkout-button").addEventListener("click", () => {
+                // Retrieve amount from sessionStorage
+                const storedPrice = sessionStorage.getItem("reservationPrice");
+                const amount = parseInt(storedPrice) * 100; // Convert FCFA to centimes (Stripe expects smallest currency unit)
+
+
+                if (!amount || isNaN(amount) || amount <= 0) {
+                    alert("Invalid or missing reservation price.");
+                    console.error("Invalid amount:", storedPrice);
+                    return;
+                }
+
+                // Create the checkout session
+                fetch(`/api/payment/create-checkout-session/${userId}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ amount: amount })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.id) {
+                            throw new Error("Missing session ID from Stripe backend");
+                        }
+
+                        // Redirect to Stripe Checkout
+                        stripe.redirectToCheckout({ sessionId: data.id });
+                    })
+                    .catch(error => {
+                        console.error("Checkout session error:", error);
+                        alert("Failed to initiate payment. Please try again.");
+                    });
+            });
+        })
+        .catch(error => {
+            console.error("Stripe initialization error:", error);
+            alert("Unable to load payment system. Please refresh the page.");
+        });
+</script>
+</body>
+</html>

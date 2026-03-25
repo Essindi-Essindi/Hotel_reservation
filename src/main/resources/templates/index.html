@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase - Smart Parking Solution</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <style>
+        :root {
+            --primary-color: #1a3c8f;
+            --primary-light: #2f58cd;
+            --secondary-color: #95a5a6;
+            --accent-color: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --background-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+        }
+
+        header {
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: large;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.pexels.com/photos/1756957/pexels-photo-1756957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .search-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: white;
+        }
+
+        .form-group input, .form-group select {
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: #7d84e7; /* Changed text color for dropdown options */
+            transition: all var(--transition-speed);
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group input::placeholder {
+            color: #ffffffb3;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            text-align: center;
+            display: block;
+        }
+
+        .btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(26, 60, 143, 0.2);
+        }
+
+        .search-form .btn {
+            width: 200px;
+            margin: 0;
+        }
+
+        .detail-box .btn {
+            margin-top: 1.5rem;
+            width: 150px;
+        }
+
+        .info_form .btn {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .about_section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .about_section .heading_container {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .about_section h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about_section .row {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: nowrap;
+        }
+
+        .about_section .img-box {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about_section .img-box img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .about_section .detail-box {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about_section .detail-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .why_section {
+            padding: 4rem 0;
+            background: var(--background-color);
+        }
+
+        .why_section .heading_container {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .why_section .row {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .why_section .box {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: transform var(--transition-speed);
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+        }
+
+        .why_section .box:hover {
+            transform: translateY(-5px);
+        }
+
+        .why_section .img-box {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .why_section .img-box img {
+            max-width: 80px;
+        }
+
+        .why_section h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .client_section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .client_section .heading_container {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .client_section .box {
+            background: var(--background-color);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin: 1rem;
+        }
+
+        .client_section .client_id {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .client_section .img-box img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .owl-carousel .owl-item img {
+            display: block;
+            width: auto;
+            margin: 0 auto;
+        }
+
+        .owl-carousel .box {
+            margin: 0 15px;
+        }
+
+        .info_section {
+            background: var(--primary-color);
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .info_section .info_top .row {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        .info_section .info_col {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .info_section h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .info_section .info_form input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .info_section .social_box {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .info_section .social_box a {
+            color: white;
+            font-size: 1.2rem;
+            transition: opacity 0.3s;
+        }
+
+        .info_section .social_box a:hover {
+            opacity: 0.8;
+        }
+
+        .footer_section {
+            background: var(--primary-light);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+
+        .footer_section a {
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .about_section .row {
+                flex-direction: column;
+                flex-wrap: wrap;
+            }
+
+            .why_section .row {
+                flex-direction: column;
+                flex-wrap: wrap;
+            }
+
+            .info_section .info_top .row {
+                flex-direction: column;
+                flex-wrap: wrap;
+            }
+
+            .search-form .btn {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .detail-box .btn {
+                width: 100%;
+                max-width: 150px;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+<header class="bg-gradient-primary">
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <i class="fas fa-parking"></i>
+                <span>ParkEase</span>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h1 class="fade-in">Reserve your parking space</h1>
+        <p class="fade-in">Find and reserve parking spaces with ease. Our smart parking solution helps you save time and eliminate parking stress.</p>
+
+        <div class="search-form fade-in">
+            <div class="form-row" style="justify-content: center;">
+                <button class="btn" style="
+                        font-size: 1rem;
+                        padding: 0.8rem 2rem;
+                        border-radius: 50px;
+                        background: linear-gradient(135deg, #1a3c8f, #2f58cd);
+                        color: white;
+                        border: none;
+                        box-shadow: 0 4px 15px rgba(26,60,143,0.2);
+                        transition: all 0.3s ease;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        font-weight: 500;
+                        letter-spacing: 0.5px;
+                    " onclick="window.location.href='/login'">
+                    <i class="fas fa-parking" style="font-size: 1.1rem;"></i>
+                    Reserve Now
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about_section">
+    <div class="container">
+        <div class="heading_container">
+            <h2>About Us</h2>
+        </div>
+        <div class="row">
+            <div class="img-box">
+                <img th:src="@{/images/about-img.jpg}" alt="">
+            </div>
+            <div class="detail-box">
+                <h3>We Are Here For Help</h3>
+                <p>Welcome to ParkEase, your trusted solution for hassle-free parking reservations! Our mission is to
+                    simplify urban parking by connecting drivers with available spots in real-time, eliminating the
+                    stress of endless searching. With a user-friendly platform and seamless booking process, we empower
+                    you to reserve parking spaces in advance—whether for work, events, or daily errands. Designed with
+                    both drivers and parking lot operators in mind, ParkEase ensures efficiency, transparency, and fair
+                    pricing. Join us in transforming the way you park, one reservation at a time.</p>
+<!--                <a href="" class="btn" style="text-decoration: none">Read More</a>-->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="why_section">
+    <div class="container">
+        <div class="heading_container">
+            <h2>Why Choose Us</h2>
+            <p>With instant real-time parking spot availability, seamless one-tap reservations, guaranteed spot
+                security, competitive pricing, and 24/7 customer support, we make parking effortless—so you can focus
+                on what truly matters.</p>
+        </div>
+        <div class="row">
+            <div class="box">
+                <div class="img-box">
+                    <img th:src="@{/images/w1.png}" alt="">
+                </div>
+                <div class="detail-box">
+                    <h4>No Booking Fees</h4>
+                    <p>Reserve your perfect parking spot with zero hidden costs—what you see is what you pay. We
+                        believe in transparent pricing, so you save money while enjoying stress-free parking.</p>
+                </div>
+            </div>
+            <div class="box">
+                <div class="img-box">
+                    <img th:src="@{/images/w2.png}" alt="">
+                </div>
+                <div class="detail-box">
+                    <h4>Online Payments</h4>
+                    <p>Pay effortlessly via credit/debit cards or mobile wallets. Our encrypted transactions guarantee
+                        safety and speed, so you can book in seconds.</p>
+                </div>
+            </div>
+            <div class="box">
+                <div class="img-box">
+                    <img th:src="@{/images/w3.png}" alt="">
+                </div>
+                <div class="detail-box">
+                    <h4>Simple Booking Process</h4>
+                    <p>Our intuitive design guides you through just three simple
+                        steps: select your location, choose your perfect spot, and confirm with a tap.You can reserve parking faster than finding a street spot.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="client_section">
+    <div class="container">
+        <div class="heading_container">
+            <h2>What Says Our <span>Client</span></h2>
+        </div>
+        <div class="client_container">
+            <div class="owl-carousel client_owl-carousel">
+                <div class="item">
+                    <div class="box">
+                        <div class="detail-box">
+                            <p>"This app saved my work mornings! As someone who parks downtown daily, the 'no booking
+                                fee' policy makes a real difference. My favorite feature? The 30-second booking - it's
+                                faster than brewing my morning coffee."</p>
+                        </div>
+                        <div class="client_id">
+                            <div class="img-box">
+                                <img th:src="@{/images/c2.jpg}" alt="">
+                            </div>
+                            <div class="name">
+                                <h6>Michael T.</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="box">
+                        <div class="detail-box">
+                            <p>"I was skeptical about parking apps until I tried yours. The payment process was seamless
+                                (no errors!), and I appreciated the clear directions to my reserved spot. First time
+                                worked perfectly!"</p>
+                        </div>
+                        <div class="client_id">
+                            <div class="img-box">
+                                <img th:src="@{/images/c1.jpg}" alt="">
+                            </div>
+                            <div class="name">
+                                <h6>Amina K., Abuja</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="info_section">
+    <div class="container">
+        <div class="info_top">
+            <div class="row">
+                <div class="info_col">
+                    <div class="info_form">
+                        <h4>Stay Connected</h4>
+                        <form action="">
+                            <input type="text" placeholder="Enter Your Email" />
+                            <button type="submit" class="btn">Subscribe</button>
+                        </form>
+                        <div class="social_box">
+                            <a href=""><i class="fa-brands fa-facebook"></i></a>
+                            <a href=""><i class="fa-brands fa-twitter"></i></a>
+                            <a href=""><i class="fa-brands fa-linkedin"></i></a>
+                            <a href=""><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="info_col">
+                    <div class="info_detail">
+                        <h4>About Us</h4>
+                        <p>By combining real-time spot availability with transparent pricing and effortless booking,
+                            we eliminate the stress of finding parking. Whether you're a daily commuter or a weekend
+                            explorer, we’ve got your spot.</p>
+                    </div>
+                </div>
+                <div class="info_col">
+                    <div class="info_detail">
+                        <h4>Online Booking</h4>
+                        <p>Reserve your parking spot anytime, anywhere—no calls or queues needed. Our secure platform lets you:<br>
+                            ✓ Book in 30 seconds<br>
+                            ✓ Choose preferred spots<br>
+                            ✓ Get instant e-tickets<br>
+                            ✓ Modify/cancel anytime</p>
+                    </div>
+                </div>
+                <div class="info_col">
+                    <h4>Contact us</h4>
+                    <div class="contact_nav">
+                        <a href="" style="color: white; text-decoration: none">
+                            <i class="fa fa-map-marker"></i>
+                            <span> Yaounde, Cameroon</span> <br>
+                        </a>
+                        <a href="" style="color: white; text-decoration: none">
+                            <i class="fa fa-phone"></i>
+                            <span> +237 693 87 80 71</span> <br>
+                            <i class="fa fa-phone"></i>
+                            <span> 0800-PARK-EASE (Mon-Sun, 8am-8pm)</span> <br>
+                        </a>
+                        <a href="" style="color: white; text-decoration: none">
+                            <i class="fa fa-envelope"></i>
+                            <span>Email : parkease@parkease.ng</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer_section">
+    <div class="container">
+        <p>© <span id="displayYear"></span> All Rights Reserved By ParkEase Online Reservation
+        </p>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+    document.getElementById('displayYear').textContent = new Date().getFullYear();
+
+    $(document).ready(function(){
+        $(".client_owl-carousel").owlCarousel({
+            loop: true,
+            margin: 20,
+            nav: true,
+            dots: true,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                768: {
+                    items: 2
+                },
+                1000: {
+                    items: 2
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

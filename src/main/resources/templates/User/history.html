@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkEase - Reservation History</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a3c8f;
+            --primary-light: #2f58cd;
+            --secondary-color: #95a5a6;
+            --accent-color: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --background-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --selected-color: #007bff;
+            --hover-color: #17a2b8;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+        }
+
+        header {
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .history-section {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .history-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .history-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .filter-group select,
+        .filter-group input[type="date"] {
+            padding: 0.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            background: var(--card-bg);
+            cursor: pointer;
+        }
+
+        .filter-group select:focus,
+        .filter-group input[type="date"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(26, 60, 143, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .reservations-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .reservation-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: transform var(--transition-speed);
+            position: relative;
+        }
+
+        .reservation-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .reservation-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            position: relative;
+            padding-right: 120px; /* Make room for the status badge */
+        }
+
+        .reservation-status {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .status-completed {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .status-confirmed {
+            background: var(--warning-color);
+            color: #212529;
+        }
+
+        .status-cancelled {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .reservation-header h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .reservation-body {
+            padding: 1.5rem;
+        }
+
+        .reservation-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail-item .label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .detail-item .value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .reservation-footer {
+            padding: 1rem 1.5rem;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color var(--transition-speed);
+        }
+
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .empty-state .icon {
+            font-size: 5rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+        }
+
+        .empty-state h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all var(--transition-speed);
+        }
+
+        .print-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .loading-spinner {
+            display: none; /* Changed from flex to none for immediate data display */
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(255, 0, 0, 0.05);
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .history-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filter-group {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .reservations-container {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .reservation-header {
+                padding-right: 1rem;
+                padding-bottom: 2.5rem; /* Make room for the status badge below on mobile */
+            }
+
+            .reservation-status {
+                top: auto;
+                bottom: 0.5rem;
+                right: 0.5rem;
+                transform: none;
+            }
+        }
+
+        @media print {
+            header, .history-filters, .print-btn, .modal, .reservation-footer {
+                display: none !important;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .reservation-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 2rem;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            .page-title {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-gradient-primary">
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-parking"></i>
+                    <span>ParkEase</span>
+                </div>
+                <div class="nav-links">
+                    <a th:href="@{/reservation/{userId}(userId=${userId})}">Reserve</a>
+                    <a href="/logout">Logout</a>
+                    <span th:text="${user.name}"></span>
+                    <i class="fa-solid fa-circle-user logo"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title fade-in">Reservation History</h1>
+
+        <section class="history-section">
+            <p class="fade-in">View and manage all your past and current parking reservations.</p>
+
+            <div class="history-filters fade-in">
+                <div class="filter-group">
+                    <label for="status-filter">Status:</label>
+                    <select id="status-filter">
+                        <option value="all">All</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="quarter-filter">Quarter:</label>
+                    <select id="quarter-filter">
+                        <option value="all">All</option>
+                        <!--values will be added here dynamically-->
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="date-filter">Date:</label>
+                    <input type="date" id="date-filter">
+                </div>
+                <button class="btn btn-outline btn-sm" id="clear-filters">
+                    <i class="fas fa-times"></i> Clear Filters
+                </button>
+            </div>
+
+            <!-- Loading spinner -->
+            <div class="loading-spinner" id="loading-spinner">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- Error message -->
+            <div class="error-message" id="error-message">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>There was an error loading your reservations. Please try again later.</p>
+                <button class="btn btn-outline btn-sm" id="retry-btn">
+                    <i class="fas fa-sync"></i> Retry
+                </button>
+            </div>
+
+            <div class="reservations-container fade-in" id="reservations-container">
+                <!-- Reservations will be dynamically inserted here -->
+            </div>
+
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <div class="icon">
+                    <i class="fas fa-car-side"></i>
+                </div>
+                <h3>No Reservations Found</h3>
+                <p>You have not made any parking reservations yet, or no reservations match your current filter criteria.</p>
+                <a th:href="@{/reservation/{userId}(userId=${userId})}" class="btn">
+                    <i class="fas fa-plus"></i> Make a Reservation
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <button class="print-btn" id="print-btn" title="Print Reservation History">
+        <i class="fas fa-print"></i>
+    </button>
+
+    <!-- Cancellation Modal -->
+    <div class="modal" id="cancel-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Cancel Reservation</h2>
+            <p>Are you sure you want to cancel your reservation at <span id="cancel-location"></span>?</p>
+            <p>This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="cancel-no">No, Keep It</button>
+                <button class="btn btn-danger" id="cancel-yes">Yes, Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        // Extract everything from the user object
+        const user = /*[[${user}]]*/ {};
+        const userId = user?.id || 0; // Derive from user object
+
+        // Debug log
+        console.log("User object:", user);
+        console.log("Derived userId:", userId);
+        /*]]>*/
+    </script>
+    <script>
+        // API configuration
+        const API_BASE_URL = ""; // Replace with your actual API base URL
+        const API_KEY = 'YOUR_API_KEY'; // Replace with your actual API key
+
+        // User authentication token (would normally be obtained from login process)
+        // const AUTH_TOKEN = 'user_auth_token'; // Replace with actual user authentication token
+
+        // Helper function to make authenticated API requests
+        async function apiRequest(endpoint, method = 'GET', data = null) {
+            const url = `${API_BASE_URL}${endpoint}`;
+
+            const headers = {
+                // 'Authorization': `Bearer ${AUTH_TOKEN}`,
+                // 'X-API-Key': API_KEY,
+                'Content-Type': 'application/json'
+            };
+
+            const options = {
+                method: method,
+                headers: headers,
+                credentials: 'include' // Include cookies for sessions if needed
+            };
+
+            if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+                options.body = JSON.stringify(data);
+            }
+
+            try {
+                const response = await fetch(url, options);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                // Handle empty responses (e.g., DELETE requests)
+                if (response.status === 204 /* No Content */ || response.headers.get('Content-Length') === '0') {
+                    return null; // or return { success: true }
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error('API request failed:', error);
+                throw error;
+            }
+        }
+
+        // Function to fetch all user reservations
+        async function fetchReservations() {
+            showLoading(true);
+            hideError();
+
+            try {
+                // For demo purposes, we'll use the fallback data directly
+                // In a real app, you'd uncomment this line to call the API
+                const data = await apiRequest(`/all-reservations/${userId}`);
+                return data || [];
+
+                // Using fallback data for immediate display
+                // return FALLBACK_RESERVATIONS;
+            } catch (error) {
+                showError();
+                return [];
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Function to cancel a reservation via API
+        async function cancelReservationAPI(reservationId) {
+            showLoading(true);
+            hideError();
+
+            try {
+                // In a real app, this would be an actual API call
+                await apiRequest(`/cancel-reservation/${reservationId}`, 'PATCH');
+
+                // For demo, we'll just update the local data
+                // const reservation = reservations.find(res => res.id === reservationId);
+                // if (reservation) {
+                //     reservation.status = 'cancelled';
+                // }
+
+                await fetchReservations();
+                await loadReservations();
+
+                // Refresh reservations list after successful cancellation
+                // filterReservations();
+
+                // Close the modal
+                document.getElementById('cancel-modal').style.display = 'none';
+
+                return true;
+            } catch (error) {
+                document.getElementById('cancel-modal').style.display = 'none';
+                showError('Failed to cancel reservation. Please try again.');
+                return false;
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Function to fetch receipt details for a reservation
+        async function fetchReceipt(reservationId) {
+            showLoading(true);
+            hideError();
+
+            try {
+                // In a real app, this would be an actual API call
+                // const receipt = await apiRequest(`/reservations/${reservationId}/receipt`);
+
+                // For demo, we'll return mock receipt data
+                const receipt = {
+                    receiptId: `REC-${reservationId}-${Date.now().toString().substring(6)}`,
+                    amount: reservations.find(r => r.id === reservationId)?.price || 0,
+                    date: new Date().toISOString()
+                };
+
+                return receipt;
+            } catch (error) {
+                showError('Failed to load receipt. Please try again.');
+                return null;
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Function to show/hide loading spinner
+        function showLoading(show) {
+            const spinner = document.getElementById('loading-spinner');
+            spinner.style.display = show ? 'flex' : 'none';
+        }
+
+        // Function to show/hide error message
+        function showError(message = 'There was an error loading your reservations. Please try again later.') {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.querySelector('p').textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError() {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.style.display = 'none';
+        }
+
+        // Function to format date and time
+        function formatLocalDateTime(dateStr, timeStr) {
+            // Combine date and time into an ISO-like string (local time)
+            const localDateTimeStr = `${dateStr}T${timeStr}`;
+            const date = new Date(localDateTimeStr);
+
+            // Validate the date
+            if (isNaN(date.getTime())) {
+                throw new Error("Invalid date or time input");
+            }
+
+            // Formatting options
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true // Ensure AM/PM format
+            };
+
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // Function to format date only
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // Global variable to store reservations
+        let reservations = [];
+
+        // Function to load and display reservations
+        async function loadReservations() {
+            try {
+                // Fetch reservations from API
+                reservations = await fetchReservations();
+                console.log(reservations)
+
+                // Update display based on filters
+                filterReservations();
+                populateLocationDropdown(reservations);
+            } catch (error) {
+                console.error('Failed to load reservations:', error);
+                showError();
+            }
+        }
+
+        // Function to populate the location dropdown
+        function populateLocationDropdown(reservations) {
+            const quarterSelect = document.getElementById('quarter-filter');
+
+            // Clear existing options except the first one
+            while (quarterSelect.options.length > 1) {
+                quarterSelect.remove(1);
+            }
+            // Track unique locations using a Set
+            const uniqueLocations = new Set();
+
+            // Add new options from reservations (only if unique)
+            reservations.forEach(reservation => {
+                const locationName = reservation.parkingLot?.location?.locationName;
+
+                if (locationName && !uniqueLocations.has(locationName)) {
+                    uniqueLocations.add(locationName); // Mark as added
+
+                    const option = document.createElement('option');
+                    option.value = locationName.toLowerCase().replace(/\s+/g, '-');
+                    option.textContent = locationName;
+                    quarterSelect.appendChild(option);
+                }
+            });
+        }
+
+        // Function to display reservations
+        function displayReservations(filteredReservations) {
+            const container = document.getElementById('reservations-container');
+            const emptyState = document.getElementById('empty-state');
+
+            container.innerHTML = '';
+
+            if (filteredReservations.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            filteredReservations.forEach(reservation => {
+                const card = document.createElement('div');
+                card.className = 'reservation-card fade-in';
+
+                // Determine the status text and class
+                let statusText = '';
+                let statusClass = '';
+
+                switch(reservation.state) {
+                    case 'Confirmed':
+                        statusText = 'Confirmed';
+                        statusClass = 'status-confirmed';
+                        break;
+                    case 'Completed':
+                        statusText = 'Completed';
+                        statusClass = 'status-completed';
+                        break;
+                    case 'Cancelled':
+                        statusText = 'Cancelled';
+                        statusClass = 'status-cancelled';
+                        break;
+                    default:
+                        statusText = 'Confirmed';
+                        statusClass = 'status-confirmed';
+                }
+
+                card.innerHTML = `
+                    <div class="reservation-header">
+                        <h3>${reservation.parkingLot.location.locationName} - ${reservation.parkingLot.parkingLotID} ${reservation.parkingSpot.parkingSpotID}</h3>
+                        <p>${formatDate(reservation.currentDate)}</p>
+                        <span class="reservation-status ${statusClass}">${statusText}</span>
+                    </div>
+                    <div class="reservation-body">
+                        <div class="reservation-details">
+                            <div class="detail-item">
+                                <span class="label">Start Date and Time:</span>
+                                <span class="value">${formatLocalDateTime(reservation.reservationStartDate,reservation.startTime)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">End Date and Time:</span>
+                                <span class="value">${formatLocalDateTime(reservation.reservationEndDate,reservation.endTime)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Duration:</span>
+                                <span class="value">${reservation.duration} ${reservation.duration > 1 ? 'hours' : 'hour'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Total Price:</span>
+                                <span class="value">${reservation.cost.toLocaleString()} FCFA</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reservation-footer">
+                        <button class="btn btn-sm btn-outline" onclick="viewReceipt(${reservation.reservationID})">
+                            <i class="fas fa-receipt"></i> Receipt
+                        </button>
+                        ${reservation.state === 'Confirmed' ? `
+                            <button class="btn btn-sm btn-danger" onclick="showCancelModal(${reservation.reservationID})">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // Function to filter reservations
+        function filterReservations() {
+            const statusFilter = document.getElementById('status-filter').value;
+            const quarterFilter = document.getElementById('quarter-filter').value;
+            const dateFilter = document.getElementById('date-filter').value;
+
+            let filtered = [...reservations];
+
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(res => res.state === statusFilter);
+            }
+
+            if (quarterFilter !== 'all') {
+                filtered = filtered.filter(res => res.parkingLot.location.locationName.toLowerCase() === quarterFilter.toLowerCase());
+            }
+
+            if (dateFilter) {
+                const filterDate = new Date(dateFilter);
+                filtered = filtered.filter(res => {
+                    const startDate = new Date(res.reservationStartDate);
+                    return startDate.toDateString() === filterDate.toDateString();
+                });
+            }
+
+            displayReservations(filtered);
+        }
+
+        // Function to show the cancel modal
+        function showCancelModal(reservationId) {
+            const reservation = reservations.find(res => res.reservationID === reservationId);
+
+            if (reservation) {
+                document.getElementById('cancel-location').textContent = `${reservation.parkingLot.location.locationName} (${reservation.parkingLotId} ${reservation.parkingSpotId})`;
+                document.getElementById('cancel-modal').style.display = 'flex';
+
+                // Store the reservation ID in the yes button's data attribute
+                document.getElementById('cancel-yes').setAttribute('data-id', reservationId);
+            }
+        }
+
+        // Function to cancel a reservation
+        function cancelReservation(reservationId) {
+            cancelReservationAPI(reservationId);
+        }
+
+        // Function to view a reservation receipt
+        async function viewReceipt(reservationId) {
+            try {
+                const receipt = await fetchReceipt(reservationId);
+
+                if (receipt) {
+                    // In a real application, this would open a modal or navigate to a receipt page
+                    // For this demo, we'll just alert with the receipt ID
+                    alert(`Receipt loaded successfully. Receipt ID: ${receipt.receiptId}`);
+
+                    // Alternatively, you could create a modal to display the receipt
+                    // or redirect to a separate receipt page
+                }
+            } catch (error) {
+                console.error('Failed to view receipt:', error);
+            }
+        }
+
+        // Fallback data for development or if API is unavailable
+        const FALLBACK_RESERVATIONS = [
+            {
+                id: 1,
+                quarter: "Bastos",
+                lot: "Lot A",
+                spot: "A4",
+                startDate: "2025-05-18T10:00:00",
+                endDate: "2025-05-18T12:00:00",
+                hours: 2,
+                price: 200,
+                status: "completed"
+            },
+            {
+                id: 2,
+                quarter: "Etoa-Meki",
+                lot: "Lot B",
+                spot: "B2",
+                startDate: "2025-05-19T14:00:00",
+                endDate: "2025-05-19T17:00:00",
+                hours: 3,
+                price: 300,
+                status: "cancelled"
+            },
+            {
+                id: 3,
+                quarter: "Mvan",
+                lot: "Lot C",
+                spot: "C1",
+                startDate: "2025-05-20T09:00:00",
+                endDate: "2025-05-20T15:00:00",
+                hours: 6,
+                price: 600,
+                status: "confirmed"
+            },
+            {
+                id: 4,
+                quarter: "Bastos",
+                lot: "Lot D",
+                spot: "D6",
+                startDate: "2025-05-24T13:00:00",
+                endDate: "2025-05-24T18:00:00",
+                hours: 5,
+                price: 500,
+                status: "confirmed"
+            },
+            {
+                id: 5,
+                quarter: "Etoa-Meki",
+                lot: "Lot A",
+                spot: "A9",
+                startDate: "2025-05-25T10:00:00",
+                endDate: "2025-05-25T12:00:00",
+                hours: 2,
+                price: 200,
+                status: "confirmed"
+            }
+        ];
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load initial reservations
+            loadReservations();
+
+            // Set up event listeners for filters
+            document.getElementById('status-filter').addEventListener('change', filterReservations);
+            document.getElementById('quarter-filter').addEventListener('change', filterReservations);
+            document.getElementById('date-filter').addEventListener('change', filterReservations);
+
+            // Clear filters button
+            document.getElementById('clear-filters').addEventListener('click', () => {
+                document.getElementById('status-filter').value = 'all';
+                document.getElementById('quarter-filter').value = 'all';
+                document.getElementById('date-filter').value = '';
+                filterReservations();
+            });
+
+            // Print button
+            document.getElementById('print-btn').addEventListener('click', () => {
+                window.print();
+            });
+
+            // Modal close button
+            document.querySelector('.close-btn').addEventListener('click', () => {
+                document.getElementById('cancel-modal').style.display = 'none';
+            });
+
+            // Cancel confirmation buttons
+            document.getElementById('cancel-no').addEventListener('click', () => {
+                document.getElementById('cancel-modal').style.display = 'none';
+            });
+
+            document.getElementById('cancel-yes').addEventListener('click', (e) => {
+                const reservationId = parseInt(e.target.getAttribute('data-id'));
+                cancelReservation(reservationId);
+            });
+
+            // Retry button in error message
+            document.getElementById('retry-btn').addEventListener('click', () => {
+                loadReservations();
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                const modal = document.getElementById('cancel-modal');
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Handle escape key to close modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('cancel-modal').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

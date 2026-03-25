@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parking Reservation System - Register</title>
+  <link rel="icon" th:href="@{/images/favicon.png}" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: url("/images/andrey-kirov-i7qsJX0Ym44-unsplash.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Add overlay to ensure form visibility */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+
+    .registration-container {
+      display: flex;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+      width: 1000px;
+      max-width: 100%;
+      height: 650px;
+      max-height: 100%;
+    }
+
+    /* Left side - Brand side */
+    .brand-side {
+      background: linear-gradient(135deg, #2f58cd, #1a3c8f);
+      color: white;
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+
+    .brand-side::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+      z-index: -1;
+    }
+
+    .logo-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .logo i {
+      font-size: 32px;
+      margin-right: 12px;
+      background: white;
+      color: #1a3c8f;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Circle pulse animation behind logo */
+    .logo-container::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 27px;
+      transform: translate(-50%, -50%);
+      width: 65px;
+      height: 65px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      z-index: 1;
+      animation: pulseLogo 2s infinite;
+    }
+
+    @keyframes pulseLogo {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+      }
+    }
+
+    .welcome-text {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .welcome-description {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    .benefits-list {
+      animation: fadeInUp 1.4s ease-out;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      opacity: 0.9;
+      transform: translateX(-20px);
+      animation: slideInLeft 0.5s ease-out forwards;
+    }
+
+    .benefit-item:nth-child(1) { animation-delay: 0.6s; }
+    .benefit-item:nth-child(2) { animation-delay: 0.8s; }
+    .benefit-item:nth-child(3) { animation-delay: 1s; }
+    .benefit-item:nth-child(4) { animation-delay: 1.2s; }
+
+    @keyframes slideInLeft {
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .benefit-item i {
+      font-size: 20px;
+      margin-right: 15px;
+      color: #fff;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+
+    .benefit-item:hover i {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1) rotate(10deg);
+    }
+
+    /* Decorative car animation */
+    .car-animation {
+      position: absolute;
+      bottom: 30px;
+      right: -60px;
+      width: 120px;
+      height: 60px;
+      animation: driveCar 15s linear infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes driveCar {
+      0% {
+        right: -60px;
+      }
+      100% {
+        right: 100%;
+      }
+    }
+
+    .car-body {
+      position: absolute;
+      bottom: 10px;
+      width: 60px;
+      height: 25px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px 20px 0 0;
+    }
+
+    .car-top {
+      position: absolute;
+      bottom: 35px;
+      left: 10px;
+      width: 40px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px 10px 0 0;
+    }
+
+    .wheel {
+      position: absolute;
+      bottom: 5px;
+      width: 15px;
+      height: 15px;
+      background: #333;
+      border-radius: 50%;
+      animation: rotateWheel 1s linear infinite;
+    }
+
+    .wheel-front {
+      left: 45px;
+    }
+
+    .wheel-back {
+      left: 10px;
+    }
+
+    @keyframes rotateWheel {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Right side - Form side */
+    .form-side {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      position: relative; /* Add positioning context */
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+      animation: fadeInDown 0.8s ease-out;
+      padding-top: 15px; /* Ensure header is not cut off */
+    }
+
+    .form-header h2 {
+      color: #1a3c8f;
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .form-header p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .form-section {
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .form-section h3 {
+      color: #1a3c8f;
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-section h3 i {
+      margin-right: 8px;
+      font-size: 16px;
+      color: #2f58cd;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      position: relative;
+      flex: 1;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: #555;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 15px 12px 40px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      outline: none;
+      background: #f7f9fc;
+    }
+
+    .form-group i {
+      position: absolute;
+      bottom: 13px;
+      left: 15px;
+      color: #95a5a6;
+      transition: all 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #2f58cd;
+      box-shadow: 0 0 10px rgba(47, 88, 205, 0.15);
+      background: white;
+    }
+
+    .form-group:hover input,
+    .form-group:hover select {
+      background: white;
+    }
+
+    .form-group input:focus + i,
+    .form-group:hover i {
+      color: #2f58cd;
+      transform: scale(1.1);
+    }
+
+    .terms-container {
+      display: flex;
+      align-items: flex-start;
+      margin: 20px 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .terms-container input {
+      margin-right: 10px;
+      margin-top: 3px;
+      accent-color: #1a3c8f;
+    }
+
+    .terms-container a {
+      color: #1a3c8f;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .terms-container a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-register {
+      background: linear-gradient(135deg, #2f58cd, #1a3c8f);
+      color: white;
+      border: none;
+      padding: 14px;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-register::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+    }
+
+    .btn-register:hover {
+      background: linear-gradient(135deg, #1a3c8f, #2f58cd);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(26, 60, 143, 0.2);
+    }
+
+    .btn-register:hover::before {
+      animation: shimmerButton 1.5s infinite;
+    }
+
+    @keyframes shimmerButton {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .btn-register:active {
+      transform: translateY(0);
+    }
+
+    .btn-register i {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #1a3c8f;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Form step indicator */
+    .steps-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .steps-container::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #e0e0e0;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .step {
+      position: relative;
+      z-index: 2;
+      background: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #1a3c8f;
+      font-weight: 600;
+      border: 2px solid #1a3c8f;
+      transition: all 0.3s;
+    }
+
+    .step.active {
+      background: #1a3c8f;
+      color: white;
+      transform: scale(1.2);
+      box-shadow: 0 0 10px rgba(26, 60, 143, 0.3);
+    }
+
+    .step-label {
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      color: #666;
+      width: max-content;
+    }
+
+    /* Media Queries */
+    @media screen and (max-width: 900px) {
+      .registration-container {
+        flex-direction: column;
+        height: auto;
+        max-height: none;
+      }
+
+      .form-side {
+        padding: 30px 20px;
+        order: 2; /* Change order for mobile view */
+      }
+
+      .brand-side {
+        padding: 40px 20px;
+        order: 1; /* Change order for mobile view */
+      }
+
+      .car-animation {
+        display: none;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-content {
+      max-width: 350px;
+      width: 98%;
+      padding: 1.2rem 1rem;
+    }
+  </style>
+</head>
+<body>
+<div class="registration-container">
+  <!-- Brand side (now on the left) -->
+  <div class="brand-side">
+    <div class="logo-container">
+      <div class="logo">
+        <i class="fas fa-parking"></i>
+        <span>ParkEase</span>
+      </div>
+    </div>
+
+    <h1 class="welcome-text">Join Our Parking Community</h1>
+    <p class="welcome-description">
+      Create an account today and gain access<br> to premium parking facilities across the city with our<br> smart reservation system.
+    </p>
+
+    <div class="benefits-list">
+      <div class="benefit-item">
+        <i class="fas fa-ticket-alt"></i>
+        <span>Exclusive discounts for members</span>
+      </div>
+      <div class="benefit-item">
+        <i class="fas fa-history"></i>
+        <span>Pre-book parking spots in advance</span>
+      </div>
+      <div class="benefit-item">
+        <i class="fas fa-bell"></i>
+        <span>Real-time notifications</span>
+      </div>
+      <div class="benefit-item">
+        <i class="fas fa-star"></i>
+        <span>Earn loyalty points with every booking</span>
+      </div>
+    </div>
+
+    <!-- Decorative car animation -->
+    <div class="car-animation">
+      <div class="car-body"></div>
+      <div class="car-top"></div>
+      <div class="wheel wheel-front"></div>
+      <div class="wheel wheel-back"></div>
+    </div>
+  </div>
+
+  <!-- Form side (now on the right) -->
+  <div class="form-side">
+    <div class="form-header">
+      <h2>Create Your Account</h2>
+      <p>Fill in your details to get started with ParkEase</p>
+    </div>
+
+
+
+    <form th:action="@{/signup}" th:object="${user}" method="post" id="registration-form">
+      <!-- Personal Information Section -->
+      <div class="form-section">
+        <h3><i class="fas fa-user"></i> Personal Information</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" th:field="*{name}" required>
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" placeholder="(optional)">
+            <i class="fas fa-user"></i>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" th:field="*{email}" required>
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" th:field="*{phone}" required>
+            <i class="fas fa-phone"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Info Section -->
+      <div class="form-section">
+        <h3><i class="fas fa-lock"></i> Account Information</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" th:field="*{username}" required>
+            <i class="fas fa-user-circle"></i>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" th:field="*{password}" required>
+            <i class="fas fa-lock"></i>
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" required>
+            <i class="fas fa-check-circle"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terms and Submit -->
+      <div class="terms-container">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">I agree to the <a href="/Terms-and-policy">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+      </div>
+
+      <button type="submit" class="btn-register">
+        <i class="fas fa-user-plus"></i>
+        Create Account
+      </button>
+
+      <div class="login-link">
+        Already have an account? <a th:href="@{/login}">Sign in</a>
+      </div>
+
+      <!-- Show error if email exists -->
+      <div th:if="${error}" style="color: red; margin-top: 10px;">
+        <p th:text="${error}"></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("registration-form");
+    const button = document.querySelector(".btn-register");
+
+    form.addEventListener("submit", function (e) {
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+
+      // Password confirmation check
+      if (password !== confirmPassword) {
+        e.preventDefault(); // Stop form submission
+        alert("Passwords do not match!");
+        return false;
+      }
+
+      // Show loading animation
+      button.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Creating Account...';
+      button.disabled = true;
+    });
+
+    // Optional: Step indicator logic if using step progress UI
+    const steps = document.querySelectorAll('.step');
+    steps.forEach(step => {
+      step.addEventListener('click', function () {
+        steps.forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+        // Add logic here to show/hide sections if needed
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

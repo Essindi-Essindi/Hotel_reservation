@@ -1,0 +1,22 @@
+<div class="admin-layout">
+
+r  <app-sidebar></app-sidebar>
+
+  <!-- Main content -->
+  <div class="main-content">
+
+    <!-- User info -->
+    <div class="user-info" (click)="toggleUserDropdown()">
+      <i class="fas fa-user"></i>
+
+      <div class="user-dropdown" [class.active]="userDropdownOpen">
+        <div class="user-dropdown-item">Profile</div>
+        <div class="user-dropdown-item logout">Logout</div>
+      </div>
+    </div>
+
+    <!-- Page content -->
+    <router-outlet></router-outlet>
+
+  </div>
+</div>

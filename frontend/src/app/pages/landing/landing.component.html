@@ -1,0 +1,217 @@
+<div class="landing-root animate-fade-in">
+
+  <!-- Gold corner ornaments (decorative) -->
+  <div class="corner-ornament corner-tl" aria-hidden="true"></div>
+  <div class="corner-ornament corner-br" aria-hidden="true"></div>
+
+  <!-- ── Header / Nav ── -->
+  <header class="landing-header animate-fade-in">
+    <div class="logo">
+      <div class="logo-wordmark">
+        <span class="gold-line logo-line"></span>
+        <span class="font-serif tracking-luxury logo-name">Wardiere</span>
+        <span class="gold-line logo-line"></span>
+      </div>
+      <h1 class="font-display logo-title">HOTEL</h1>
+    </div>
+
+    <nav class="landing-nav" aria-label="Main navigation">
+      <a href="#facilities" class="nav-link font-serif">Facilities</a>
+      <a href="#book" class="nav-link font-serif">Book</a>
+      <a routerLink="/sign-in" class="nav-link font-serif">Sign In</a>
+    </nav>
+
+    <!-- Mobile sign-in shortcut -->
+    <a routerLink="/sign-in" class="mobile-signin font-serif tracking-luxury">Sign in</a>
+  </header>
+
+  <!-- ── Hero Section ── -->
+  <section class="hero-section">
+
+    <!-- Left: Copy -->
+    <div class="hero-copy">
+
+      <div class="eyebrow animate-fade-up">
+        <span class="gold-line eyebrow-line"></span>
+        <span class="font-serif tracking-luxury text-gold">Wardiere Inc.</span>
+      </div>
+
+      <h2 class="font-display hero-title animate-fade-up delay-100">HOTEL</h2>
+
+      <p class="font-serif hero-subtitle animate-fade-up delay-200">
+        Perfectly comfortable meeting environment in Eyang City —
+        where every stay becomes a memory.
+      </p>
+
+      <!-- Facilities -->
+      <div id="facilities" class="facilities-block animate-fade-up delay-300">
+        <div class="eyebrow">
+          <span class="gold-line eyebrow-line"></span>
+          <span class="font-serif tracking-luxury text-gold">Facilities</span>
+        </div>
+        <ul class="facilities-list font-serif">
+          <li *ngFor="let f of facilities" class="facility-item">
+            <span class="facility-dot animate-shimmer" aria-hidden="true"></span>
+            {{ f }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- CTAs -->
+      <div id="book" class="cta-group animate-fade-up delay-500">
+        <button class="btn btn-hero" (click)="openBookNow()">Book Now</button>
+        <a routerLink="/sign-in" class="btn btn-outline-gold">Member Sign In</a>
+      </div>
+
+      <!-- Contact info -->
+      <div class="contact-info font-serif animate-fade-up delay-700">
+        <span class="tracking-luxury text-gold" style="font-size:0.65rem;text-transform:uppercase;">Reservations</span>
+        <span>123-456-7890</span>
+        <span class="contact-divider" aria-hidden="true">|</span>
+        <span>www.wardierehotel.com</span>
+      </div>
+    </div>
+
+    <!-- Right: Diamond image collage (desktop) -->
+    <div class="diamond-collage" aria-hidden="true">
+      <!-- Rotating gold outline frames -->
+      <div class="collage-ring collage-ring-lg"></div>
+      <div class="collage-ring collage-ring-sm"></div>
+
+      <!-- Flowers diamond (top-left) -->
+      <div class="diamond-wrapper diamond-flowers">
+        <div class="diamond-frame shadow-elegant">
+          <img src="hotel-flowers.jpg" alt="Hotel flowers" loading="lazy" />
+        </div>
+        <div class="diamond-outline"></div>
+      </div>
+
+      <!-- Suite diamond (top-right, large) -->
+      <div class="diamond-wrapper diamond-suite">
+        <div class="diamond-frame shadow-elegant">
+          <img src="hotel-suite.jpg" alt="Luxury hotel suite" loading="lazy" />
+        </div>
+        <div class="diamond-outline"></div>
+      </div>
+
+      <!-- Breakfast diamond (bottom-right) -->
+      <div class="diamond-wrapper diamond-breakfast">
+        <div class="diamond-frame shadow-elegant">
+          <img src="hotel-breakfast.jpg" alt="Breakfast in bed" loading="lazy" />
+        </div>
+        <div class="diamond-outline"></div>
+      </div>
+
+      <!-- Floating gold dots -->
+      <div class="gold-dot gold-dot-1 animate-shimmer"></div>
+      <div class="gold-dot gold-dot-2 animate-shimmer delay-300"></div>
+    </div>
+
+    <!-- Mobile imagery -->
+    <div class="mobile-images" aria-hidden="true">
+      <div class="mobile-diamond">
+        <div class="diamond-frame shadow-elegant">
+          <img src="hotel-suite.jpg" alt="Suite" loading="lazy" />
+        </div>
+      </div>
+      <div class="mobile-diamond mobile-diamond-offset">
+        <div class="diamond-frame shadow-elegant">
+          <img src="hotel-flowers.jpg" alt="Flowers" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="landing-footer font-serif tracking-luxury">
+    <span>© Wardiere Hotel — Eyang City</span>
+    <span class="text-gold">An Editorial Stay</span>
+  </footer>
+</div>
+
+<!-- ── Book Now Dialog ── -->
+<div class="dialog-overlay" *ngIf="bookOpen" (click)="closeOnOverlay($event)">
+  <div class="dialog-box" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+
+    <!-- Maroon header -->
+    <div class="dialog-header">
+      <div class="eyebrow">
+        <span class="gold-line eyebrow-line"></span>
+        <span class="font-serif tracking-luxury text-gold">Reserve your stay</span>
+      </div>
+      <h2 id="dialog-title" class="font-display dialog-title">Book Now</h2>
+      <p class="font-serif dialog-subtitle">A few details and your suite at Wardiere awaits.</p>
+      <div class="dialog-corner-ornament" aria-hidden="true"></div>
+    </div>
+
+    <!-- Form body -->
+    <form class="dialog-form" (ngSubmit)="submitBooking()" #bookForm="ngForm" novalidate>
+
+      <!-- Dates -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Check-in</label>
+          <input type="date" class="form-input" [(ngModel)]="booking.checkIn" name="checkIn" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Check-out</label>
+          <input type="date" class="form-input" [(ngModel)]="booking.checkOut" name="checkOut" required />
+        </div>
+      </div>
+
+      <!-- Times -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Arrival Time</label>
+          <select class="form-input" [(ngModel)]="booking.arrivalTime" name="arrivalTime">
+            <option *ngFor="let t of times" [value]="t">{{ t }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Departure Time</label>
+          <select class="form-input" [(ngModel)]="booking.departureTime" name="departureTime">
+            <option *ngFor="let t of times" [value]="t">{{ t }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Room + Guests -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Room Type</label>
+          <select class="form-input" [(ngModel)]="booking.roomType" name="roomType" (change)="recalcCost()">
+            <option value="" disabled>Choose your suite</option>
+            <option *ngFor="let r of roomTypes" [value]="r.name">{{ r.name }} — ${{ r.price }}/night</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Guests</label>
+          <input type="number" class="form-input" [(ngModel)]="booking.guests" name="guests"
+                 min="1" max="8" (change)="recalcCost()" />
+        </div>
+      </div>
+
+      <!-- Preference -->
+      <div class="form-group">
+        <label class="form-label">Room Preference (Optional)</label>
+        <input type="text" class="form-input" [(ngModel)]="booking.preference" name="preference"
+               placeholder="High floor, garden view, late check-in…" />
+      </div>
+
+      <!-- Summary -->
+      <div class="booking-summary">
+        <span class="font-serif summary-nights">
+          <strong>{{ nights || '—' }}</strong> night{{ nights === 1 ? '' : 's' }}
+          <span *ngIf="booking.roomType"> · {{ booking.roomType }}</span>
+        </span>
+        <span class="font-display summary-cost text-gold">${{ totalCost.toLocaleString() }}</span>
+      </div>
+
+      <!-- Footer actions -->
+      <div class="dialog-actions">
+        <button type="button" class="btn-ghost font-serif" (click)="bookOpen = false">Cancel</button>
+        <button type="submit" class="btn btn-hero">Confirm Reservation</button>
+      </div>
+    </form>
+  </div>
+</div>

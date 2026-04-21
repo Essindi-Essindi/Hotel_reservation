@@ -20,5 +20,5 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer locationId;
 
-    private String LocationName;
+    private String locationName;
 }

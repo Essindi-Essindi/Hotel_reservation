@@ -1,6 +1,6 @@
-package com.example.reservationmanagement.model;
+package com.example.hotelmanagement.service;
 
-import jakarta.persistence.*;
+import com.example.hotelmanagement.model.ReservationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,25 +10,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Reservation {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer reservationID;
 
-    private LocalDateTime DateIssued;
+    private LocalDateTime currentDate;
     private LocalDate reservationStartDate;
     private LocalDate reservationEndDate;
     private LocalTime startTime;
     private LocalTime endTime;
     private Integer duration;
 
-    @Enumerated(EnumType.STRING)
     private ReservationStatus state;
 
     private Boolean deleted = Boolean.FALSE;
@@ -40,5 +36,4 @@ public class Reservation {
 
     private LocalDateTime cancelledAt;
     private LocalDateTime deletedAt;
-
 }

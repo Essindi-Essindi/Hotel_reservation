@@ -1,20 +1,18 @@
 package com.example.hotelmanagement.dto;
 
+import com.example.hotelmanagement.model.RoomStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LocationDto {
+public class NewRoomDto {
 
-    private Integer locationID;
-    private String locationName;
+    private String hotelName;
+    private String roomName;
 
-//    private List<NewHotelDto> hotels;
 }

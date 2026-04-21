@@ -1,6 +1,5 @@
 package com.example.hotelmanagement.dto;
 
-import com.example.hotelmanagement.model.RoomStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RoomDto {
+public class NewHotelDto {
 
-    private String roomId;
-    private RoomStatus roomStatus;
+    private String hotelName;
+    private Integer totalRooms;
+    private String locationName;
 
+//    private List<NewRoomDto> rooms;
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -9,6 +9,7 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { AuthShellComponent } from '../../auth-shell/auth-shell.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -22,10 +23,11 @@ export class SignUpComponent {
   showPassword = false;
   submitted = false;
   successMessage = '';
+  errorMessage = '';
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.form = this.fb.group({
       name:     ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern(/^[a-zA-Z0-9_]+$/)]],
@@ -60,6 +62,7 @@ export class SignUpComponent {
 
   onSubmit(): void {
     this.submitted = true;
+    this.errorMessage = '';
     if (this.form.invalid) return;
 
     // Maps to Java User { name, username, email, phone, password } — role assigned server-side
@@ -71,10 +74,17 @@ export class SignUpComponent {
       password: this.password.value
     };
 
-    // TODO: Call AuthService.register(payload) → POST /signup
-    console.log('Register payload:', payload);
-    this.successMessage = `Welcome to Place-Finder, ${this.name.value}!`;
-    this.form.reset();
-    this.submitted = false;
+    this.authService.register(payload).subscribe({
+      next: (response) => {
+        this.successMessage = `Welcome to Place-Finder, ${this.name.value}!`;
+        this.form.reset();
+        this.submitted = false;
+        // Optionally navigate to sign-in or dashboard
+        // this.router.navigate(['/sign-in']);
+      },
+      error: (error) => {
+        this.errorMessage = error;
+      }
+    });
   }
 }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthShellComponent } from '../../auth-shell/auth-shell.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,10 +17,11 @@ export class SignInComponent {
   showPassword = false;
   submitted = false;
   successMessage = '';
+  errorMessage = '';
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.form = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       password: ['', [Validators.required, Validators.maxLength(100)]],
@@ -47,14 +49,23 @@ export class SignInComponent {
 
   onSubmit(): void {
     this.submitted = true;
+    this.errorMessage = '';
     if (this.form.invalid) return;
 
-    // TODO: Call AuthService.login({ username, password }) → maps to Spring Security
-    console.log('Login payload:', {
+    const credentials = {
       username: this.username.value,
       password: this.password.value
-    });
+    };
 
-    this.successMessage = `Welcome back, ${this.username.value}.`;
+    this.authService.login(credentials).subscribe({
+      next: (response) => {
+        this.successMessage = `Welcome back, ${this.username.value}.`;
+        // Navigate to dashboard or home page
+        this.router.navigate(['/']); // Adjust route as needed
+      },
+      error: (error) => {
+        this.errorMessage = error;
+      }
+    });
   }
 }

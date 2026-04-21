@@ -1,13 +1,13 @@
-package com.example.usermanagement;
+package com.example.pricingservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserManagementApplication {
+public class PricingServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UserManagementApplication.class, args);
+        SpringApplication.run(PricingServiceApplication.class, args);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.usermanagement.model;
 
 import com.example.usermanagement.dto.UserDto;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +27,10 @@ public class User {
     private String password;
     private String email;
     private String phone;
-    private String role;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private String role = "GUEST";
 
     public UserDto toDto() {
         return UserDto.builder()
@@ -35,5 +39,4 @@ public class User {
                 .role(this.role)
                 .build();
     }
-
 }

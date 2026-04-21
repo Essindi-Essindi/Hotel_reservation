@@ -1,0 +1,76 @@
+/* admin-layout.component.css */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+
+/* --- Main content --- */
+.main-content {
+  margin-left: 260px;
+  flex: 1;
+  padding: 2rem;
+  transition: margin-left 0.3s ease;
+  position: relative;
+  min-height: 100vh;
+  background: #f5f7fa;
+}
+
+.main-content.collapsed {
+  margin-left: 70px;
+}
+
+/* --- User dropdown --- */
+.user-info {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #1a3c8f;
+}
+
+.user-dropdown {
+  display: none;
+  position: absolute;
+  top: 46px;
+  right: 0;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  min-width: 140px;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.user-dropdown.active {
+  display: block;
+}
+
+.user-dropdown-item {
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.user-dropdown-item:hover {
+  background: #f5f7fa;
+}
+
+.user-dropdown-item.logout {
+  color: #dc3545;
+  border-top: 1px solid #f0f0f0;
+}
+
+.user-dropdown-item.logout:hover {
+  background: #fff5f5;
+}

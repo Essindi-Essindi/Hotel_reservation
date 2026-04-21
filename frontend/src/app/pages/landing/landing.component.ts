@@ -2,130 +2,65 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
-interface RoomType {
-  name: string;
-  price: number;
-}
-
-interface BookingForm {
-  checkIn: string;
-  checkOut: string;
-  arrivalTime: string;
-  departureTime: string;
-  roomType: string;
-  guests: number;
-  preference: string;
-}
+import { LogoComponent } from '../../logo/logo.component';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, LogoComponent],
   templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css'],
+  styleUrls: ['./landing.component.css']
 })
 export class LandingComponent {
 
-  bookOpen = false;
+  searchQuery = '';
 
-  facilities: string[] = [
-    'Executive lounge access',
-    'Productive work environment',
-    'Complimentary snacks',
-    'Complete breakfast',
+  stats = [
+    { icon: '★', value: '4.9/5',  label: 'from 12,800+ stays' },
+    { icon: '⊙', value: '840+',   label: 'hotels worldwide'   },
   ];
 
-  roomTypes: RoomType[] = [
-    { name: 'Deluxe Suite',     price: 320 },
-    { name: 'Executive Room',   price: 220 },
-    { name: 'Royal Penthouse',  price: 780 },
+  destinations = [
+    { name: 'Coastal', count: 248, image: 'destination-coastal.jpg', tag: 'Oceanfront'     },
+    { name: 'Alpine',  count: 132, image: 'destination-alpine.jpg',  tag: 'Mountain'       },
+    { name: 'Urban',   count: 386, image: 'destination-city.jpg',    tag: 'City Icons'     },
+    { name: 'Desert',  count: 74,  image: 'destination-desert.jpg',  tag: 'Private Oases'  },
   ];
 
-  // Generate half-hour time slots from 06:00 to 23:30
-  times: string[] = (() => {
-    const out: string[] = [];
-    for (let h = 6; h <= 23; h++) {
-      for (const m of [0, 30]) {
-        out.push(
-          `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`
-        );
-      }
+  featuredHotels = [
+    { name: 'Villa Serena',  location: 'Amalfi Coast, Italy',    price: 620, rating: 4.9, image: 'destination-coastal.jpg' },
+    { name: 'Maison du Lac', location: 'Zermatt, Switzerland',   price: 480, rating: 4.8, image: 'destination-alpine.jpg'  },
+    { name: 'The Belmonde',  location: 'Paris, France',          price: 540, rating: 4.9, image: 'destination-city.jpg'    },
+  ];
+
+  features = [
+    {
+      icon: '✦',
+      title: 'Curated, never compiled',
+      desc: 'Every property is hand-selected by our travel editors — no algorithms, no filler.'
+    },
+    {
+      icon: '◈',
+      title: 'Member rates, guaranteed',
+      desc: 'Best price across the network or we refund the difference. Always.'
+    },
+    {
+      icon: '◇',
+      title: 'Concierge, on call',
+      desc: 'From private transfers to a corner suite at sunset — one message away.'
     }
-    return out;
-  })();
+  ];
 
-  booking: BookingForm = {
-    checkIn: '',
-    checkOut: '',
-    arrivalTime: '14:00',
-    departureTime: '11:00',
-    roomType: '',
-    guests: 2,
-    preference: '',
-  };
-
-  get nights(): number {
-    if (!this.booking.checkIn || !this.booking.checkOut) return 0;
-    const diff =
-      new Date(this.booking.checkOut).getTime() -
-      new Date(this.booking.checkIn).getTime();
-    const n = Math.round(diff / (1000 * 60 * 60 * 24));
-    return n > 0 ? n : 0;
-  }
-
-  get totalCost(): number {
-    const room = this.roomTypes.find(r => r.name === this.booking.roomType);
-    return room ? this.nights * room.price : 0;
-  }
-
-  openBookNow(): void {
-    this.bookOpen = true;
-  }
-
-  closeOnOverlay(event: MouseEvent): void {
-    if ((event.target as HTMLElement).classList.contains('dialog-overlay')) {
-      this.bookOpen = false;
+  testimonials = [
+    {
+      quote: "I've stopped using anything else. Place-Finder finds places I didn't know I was looking for.",
+      name: 'Amélie R.',
+      role: 'Member since 2023'
+    },
+    {
+      quote: "The concierge upgraded our anniversary stay to a suite with a private terrace. Unforgettable.",
+      name: 'James & Priya K.',
+      role: 'Lifetime members'
     }
-  }
-
-  recalcCost(): void {
-    // Triggered by room/guest changes — cost recomputed via getters
-  }
-
-  submitBooking(): void {
-    if (!this.booking.checkIn || !this.booking.checkOut || !this.booking.roomType) {
-      alert('Please fill in all required fields.');
-      return;
-    }
-    if (this.nights <= 0) {
-      alert('Check-out must be after check-in.');
-      return;
-    }
-
-    // Maps to Java Reservation entity — wire up your service here
-    const payload = {
-      reservationStartDate: this.booking.checkIn,
-      reservationEndDate:   this.booking.checkOut,
-      startTime:            this.booking.arrivalTime,
-      endTime:              this.booking.departureTime,
-      roomType:             this.booking.roomType,
-      guests:               this.booking.guests,
-      preference:           this.booking.preference,
-      duration:             this.nights,
-      cost:                 this.totalCost,
-      state:                'PENDING',
-    };
-
-    console.log('Reservation payload:', payload);
-    alert(`Reservation requested! ${this.nights} night(s) · ${this.booking.roomType} · $${this.totalCost}`);
-
-    // Reset
-    this.booking = {
-      checkIn: '', checkOut: '',
-      arrivalTime: '14:00', departureTime: '11:00',
-      roomType: '', guests: 2, preference: '',
-    };
-    this.bookOpen = false;
-  }
+  ];
 }

@@ -1,89 +1,111 @@
 /* ============================================================
-   Wardiere Hotel — Global Design System
-   Maroon & Beige · Playfair Display + Cormorant Garamond
+   PLACE-FINDER — Global Design System
+   Maroon & Beige luxury palette
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-/* ── CSS Variables ── */
+/* ── CSS Custom Properties ── */
 :root {
-  /* Core surfaces */
-  --background:        hsl(38, 36%, 94%);
-  --foreground:        hsl(350, 45%, 16%);
-  --card:              hsl(36, 40%, 96%);
-  --card-foreground:   hsl(350, 45%, 16%);
+  /* Surfaces */
+  --bg:             hsl(38, 36%, 94%);
+  --bg-card:        hsl(36, 40%, 96%);
+  --fg:             hsl(350, 45%, 16%);
 
-  /* Maroon — primary brand */
-  --primary:           hsl(350, 55%, 22%);
-  --primary-foreground:hsl(38, 50%, 94%);
-  --primary-glow:      hsl(350, 60%, 32%);
-  --primary-deep:      hsl(350, 65%, 14%);
+  /* Maroon brand */
+  --primary:        hsl(350, 55%, 22%);
+  --primary-light:  hsl(350, 60%, 32%);
+  --primary-deep:   hsl(350, 65%, 14%);
+  --primary-fg:     hsl(38, 50%, 94%);
 
-  /* Beige — secondary */
-  --secondary:         hsl(36, 35%, 88%);
-  --secondary-foreground: hsl(350, 50%, 20%);
+  /* Beige secondary */
+  --secondary:      hsl(36, 35%, 88%);
+  --muted:          hsl(36, 25%, 90%);
+  --muted-fg:       hsl(350, 15%, 40%);
 
-  --muted:             hsl(36, 25%, 90%);
-  --muted-foreground:  hsl(350, 15%, 35%);
+  /* Champagne gold */
+  --gold:           hsl(38, 60%, 62%);
+  --gold-soft:      hsl(40, 50%, 78%);
 
-  /* Champagne gold accent */
-  --accent:            hsl(38, 55%, 65%);
-  --gold:              hsl(38, 60%, 62%);
-  --gold-soft:         hsl(40, 50%, 78%);
+  /* Borders & inputs */
+  --border:         hsl(36, 25%, 82%);
+  --input-bg:       hsl(36, 30%, 91%);
+  --ring:           hsl(350, 55%, 30%);
 
-  --destructive:       hsl(0, 75%, 42%);
-  --border:            hsl(36, 25%, 82%);
-  --input-bg:          hsl(36, 30%, 88%);
-  --ring:              hsl(350, 55%, 30%);
+  /* Destructive */
+  --error:          hsl(0, 72%, 42%);
 
   /* Gradients */
-  --gradient-maroon:         linear-gradient(135deg, hsl(350,65%,14%) 0%, hsl(350,55%,22%) 50%, hsl(350,60%,32%) 100%);
-  --gradient-radial-maroon:  radial-gradient(ellipse at top, hsl(350,60%,28%) 0%, hsl(350,65%,14%) 70%);
-  --gradient-beige:          linear-gradient(180deg, hsl(38,40%,96%) 0%, hsl(36,35%,90%) 100%);
-  --gradient-overlay:        linear-gradient(180deg, hsl(350,65%,14%,0.1) 0%, hsl(350,65%,14%,0.85) 100%);
+  --grad-maroon:    linear-gradient(135deg, hsl(350,65%,14%) 0%, hsl(350,55%,22%) 50%, hsl(350,60%,32%) 100%);
+  --grad-radial:    radial-gradient(ellipse at top, hsl(350,60%,28%) 0%, hsl(350,65%,14%) 70%);
+  --grad-beige:     linear-gradient(180deg, hsl(38,40%,96%) 0%, hsl(36,35%,90%) 100%);
+  --grad-overlay:   linear-gradient(180deg, hsl(350,65%,14%,0.08) 0%, hsl(350,65%,14%,0.88) 100%);
 
   /* Shadows */
   --shadow-elegant: 0 30px 60px -20px hsl(350,65%,14%,0.4);
   --shadow-soft:    0 10px 40px -10px hsl(350,50%,20%,0.15);
+  --shadow-gold:    0 0 40px hsl(38,60%,62%,0.3);
 
   /* Easing */
-  --ease-elegant: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-serif:   'Cormorant Garamond', Georgia, serif;
+  --font-sans:    'DM Sans', system-ui, sans-serif;
+
+  /* Radius */
+  --radius: 0.2rem;
 }
 
-/* ── Reset & Base ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
-  font-family: 'Playfair Display', serif;
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
   letter-spacing: -0.02em;
-  line-height: 1;
+  line-height: 1.1;
 }
 
-/* ── Utility Classes ── */
-.font-display  { font-family: 'Playfair Display', serif; }
-.font-serif    { font-family: 'Cormorant Garamond', serif; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; font-family: inherit; }
+input, select, textarea { font-family: inherit; }
+
+/* ── Utility classes ── */
 .tracking-luxury { letter-spacing: 0.35em; }
+.font-serif      { font-family: var(--font-serif); }
+.font-display    { font-family: var(--font-display); }
+.text-gold       { color: var(--gold); }
+.text-muted      { color: var(--muted-fg); }
+.text-primary    { color: var(--primary); }
 
-.bg-gradient-radial-maroon { background: var(--gradient-radial-maroon); }
-.bg-gradient-beige         { background: var(--gradient-beige); }
-.bg-gradient-maroon        { background: var(--gradient-maroon); }
-
-.text-gold   { color: var(--gold); }
-.border-gold { border-color: var(--gold); }
-
-.shadow-elegant { box-shadow: var(--shadow-elegant); }
-.shadow-soft    { box-shadow: var(--shadow-soft); }
+/* ── Diamond frame ── */
+.diamond-frame {
+  transform: rotate(45deg);
+  overflow: hidden;
+}
+.diamond-frame img {
+  transform: rotate(-45deg) scale(1.45);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 /* ── Animations ── */
 @keyframes fade-up {
@@ -99,116 +121,12 @@ h1, h2, h3, h4 {
   50%       { opacity: 1; }
 }
 
-.animate-fade-up  { animation: fade-up  1s var(--ease-elegant) both; }
+.animate-fade-up  { animation: fade-up  1s var(--ease-out) both; }
 .animate-fade-in  { animation: fade-in  1.2s ease-out both; }
 .animate-shimmer  { animation: shimmer-gold 3s ease-in-out infinite; }
+
 .delay-100 { animation-delay: 0.1s; }
 .delay-200 { animation-delay: 0.2s; }
 .delay-300 { animation-delay: 0.3s; }
 .delay-500 { animation-delay: 0.5s; }
 .delay-700 { animation-delay: 0.7s; }
-
-/* ── Diamond image frame ── */
-.diamond-frame {
-  transform: rotate(45deg);
-  overflow: hidden;
-}
-.diamond-frame img {
-  transform: rotate(-45deg) scale(1.45);
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* ── Buttons ── */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  padding: 1rem 2.5rem;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.4s var(--ease-elegant);
-}
-
-.btn-hero {
-  background: linear-gradient(135deg, hsl(40,70%,78%), hsl(38,60%,55%));
-  color: hsl(350,65%,14%);
-  font-weight: 600;
-}
-.btn-hero:hover { filter: brightness(1.08); transform: translateY(-1px); }
-
-.btn-outline-gold {
-  background: transparent;
-  color: hsl(38,40%,92%);
-  border: 1px solid var(--gold);
-}
-.btn-outline-gold:hover {
-  background: hsl(38,60%,62%,0.12);
-  transform: translateY(-1px);
-}
-
-.btn-maroon {
-  background: var(--gradient-maroon);
-  color: hsl(38,50%,94%);
-  width: 100%;
-  font-size: 0.7rem;
-  padding: 1.1rem 2rem;
-}
-.btn-maroon:hover { filter: brightness(1.1); transform: translateY(-1px); }
-
-.btn-outline-primary {
-  background: transparent;
-  color: var(--primary);
-  border: 1px solid hsl(350,55%,22%,0.3);
-  width: 100%;
-  padding: 1.1rem 2rem;
-  font-size: 0.7rem;
-}
-.btn-outline-primary:hover { background: hsl(350,55%,22%,0.05); }
-
-/* ── Form inputs ── */
-.form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-
-.form-label {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: hsl(350,55%,22%,0.7);
-}
-
-.form-input {
-  height: 3rem;
-  padding: 0 1rem;
-  background: hsl(36,30%,88%,0.6);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1rem;
-  color: var(--foreground);
-  transition: border-color 0.3s, box-shadow 0.3s;
-  width: 100%;
-  outline: none;
-}
-.form-input::placeholder { color: hsl(350,15%,55%); }
-.form-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px hsl(350,55%,22%,0.12);
-}
-.form-input.error { border-color: var(--destructive); }
-
-.form-error {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.75rem;
-  color: var(--destructive);
-}
-
-/* ── Gold divider ── */
-.gold-line { display: block; height: 1px; background: var(--gold); }

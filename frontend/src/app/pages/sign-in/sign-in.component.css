@@ -1,244 +1,179 @@
-/* ============================================================
-   Wardiere Hotel — Sign In Component Styles
-   app/sign-in/sign-in.component.css
-   ============================================================ */
-
-/* ── Shared Auth Shell ── */
-.auth-root {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr;
-}
-@media (min-width: 1024px) {
-  .auth-root { grid-template-columns: 1fr 1fr; }
-}
-
-/* ── Image side ── */
-.auth-image-side {
-  position: relative;
-  display: none;
-  overflow: hidden;
-}
-@media (min-width: 1024px) { .auth-image-side { display: block; } }
-
-.auth-bg-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.auth-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, hsl(350,65%,14%,0.1) 0%, hsl(350,65%,14%,0.85) 100%);
-}
-
-.auth-ornament {
-  position: absolute;
-  width: 6rem;
-  height: 6rem;
-  pointer-events: none;
-}
-.auth-ornament-tl {
-  top: 2.5rem; left: 2.5rem;
-  border-left:  1px solid hsl(38,60%,62%,0.6);
-  border-top:   1px solid hsl(38,60%,62%,0.6);
-}
-.auth-ornament-br {
-  bottom: 2.5rem; right: 2.5rem;
-  border-right:  1px solid hsl(38,60%,62%,0.6);
-  border-bottom: 1px solid hsl(38,60%,62%,0.6);
-}
-
-.auth-image-brand {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 3rem;
-  color: hsl(38,40%,92%);
-}
-
-.auth-tagline {
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
-  color: hsl(38,40%,92%);
-  line-height: 1.1;
-  margin-top: 1rem;
-  max-width: 26rem;
-}
-.auth-tagline-sub {
-  font-size: 1.1rem;
-  color: hsl(38,40%,92%,0.8);
-  margin-top: 0.75rem;
-  max-width: 26rem;
-}
-
-/* ── Form side ── */
-.auth-form-side {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 2.5rem 1.5rem;
-  background: var(--gradient-beige);
-}
-@media (min-width: 640px) { .auth-form-side { padding: 2.5rem 3rem; } }
-@media (min-width: 1024px) { .auth-form-side { padding: 2.5rem 5rem; } }
-
-.auth-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.auth-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-}
-.logo-wordmark {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.logo-line {
-  display: inline-block;
-  width: 1.25rem;
-  height: 1px;
-}
-
-.auth-back-link {
-  font-size: 0.65rem;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: hsl(350,55%,22%,0.7);
-  text-decoration: none;
-  transition: color 0.4s;
-}
-.auth-back-link:hover { color: var(--primary); }
-
-/* ── Form card ── */
-.auth-form-card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 28rem;
-  width: 100%;
-  margin: 0 auto;
-  padding: 3rem 0;
-}
-
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-.eyebrow-line {
-  display: inline-block;
-  width: 2rem;
-  height: 1px;
-  flex-shrink: 0;
-}
-
-.auth-title {
-  font-size: clamp(2.8rem, 6vw, 3.5rem);
-  color: var(--primary);
-  line-height: 1;
-}
-.auth-subtitle {
-  font-size: 1.1rem;
-  color: var(--muted-foreground);
-  margin-top: 0.75rem;
-  line-height: 1.5;
-}
-
-/* ── Auth Form ── */
-.auth-form {
+.signin-form {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  margin-top: 2.5rem;
 }
 
-/* Password field */
-.password-wrap { position: relative; }
-.pw-toggle {
+/* ── Field ── */
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.field-label {
+  font-family: var(--font-serif);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  color: hsl(350 50% 22% / 0.7);
+}
+
+.field-input {
+  height: 3rem;
+  padding: 0 1rem;
+  background: hsl(36 30% 91% / 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--fg);
+  font-size: 0.95rem;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  width: 100%;
+}
+.field-input::placeholder { color: hsl(350 15% 55%); }
+.field-input:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px hsl(350 55% 30% / 0.12);
+}
+.field-input--error {
+  border-color: var(--error);
+}
+.field-input--error:focus {
+  box-shadow: 0 0 0 3px hsl(0 72% 42% / 0.12);
+}
+
+/* Password wrap */
+.field-password-wrap {
+  position: relative;
+}
+.field-password-wrap .field-input {
+  padding-right: 2.8rem;
+}
+.toggle-pw {
   position: absolute;
-  right: 0.75rem;
+  right: 0.85rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
-  cursor: pointer;
-  color: var(--muted-foreground);
-  transition: color 0.3s;
+  color: var(--muted-fg);
   display: flex;
   align-items: center;
-  padding: 0;
+  transition: color 0.2s;
 }
-.pw-toggle:hover { color: var(--primary); }
+.toggle-pw:hover { color: var(--primary); }
 
-/* Remember + forgot row */
-.auth-row {
+.field-error {
+  font-size: 0.75rem;
+  color: var(--error);
+}
+
+/* ── Remember + Forgot ── */
+.form-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
-.checkbox-label {
+.remember-label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: var(--muted-foreground);
+  gap: 8px;
+  color: var(--muted-fg);
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
-.checkbox-input { accent-color: var(--primary); }
 
-.auth-link {
+.check-input {
+  accent-color: var(--primary);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.forgot-link {
   color: var(--primary);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  font-size: 0.95rem;
-  transition: color 0.4s;
+  font-size: 0.85rem;
+  transition: color 0.25s;
 }
-.auth-link:hover { color: var(--gold); }
+.forgot-link:hover { color: var(--gold); }
 
-/* OR divider */
-.or-divider {
+/* ── Buttons ── */
+.btn-primary {
+  height: 3.2rem;
+  background: var(--primary);
+  color: var(--primary-fg);
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: background 0.3s var(--ease-out), transform 0.2s;
+}
+.btn-primary:hover {
+  background: var(--primary-light);
+  transform: translateY(-1px);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-outline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.2rem;
+  background: transparent;
+  border: 1px solid hsl(350 55% 22% / 0.3);
+  border-radius: var(--radius);
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 0.25s, border-color 0.25s;
+}
+.btn-outline:hover {
+  background: hsl(350 55% 22% / 0.05);
+  border-color: var(--primary);
+}
+
+/* ── Divider ── */
+.divider {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-.or-line {
+.divider-line {
   flex: 1;
   height: 1px;
   background: var(--border);
 }
-.or-text {
-  font-size: 0.6rem;
-  letter-spacing: 0.35em;
+.divider-text {
+  font-size: 0.65rem;
   text-transform: uppercase;
-  color: var(--muted-foreground);
+  color: var(--muted-fg);
 }
 
-/* Footer text */
-.auth-footer-text {
-  margin-top: 2rem;
+/* ── Footer link ── */
+.form-footer {
   text-align: center;
-  font-size: 0.9rem;
-  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  color: var(--muted-fg);
 }
+.form-footer-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.25s;
+}
+.form-footer-link:hover { color: var(--gold); }
 
-/* Copyright */
-.auth-copyright {
-  text-align: center;
-  font-size: 0.6rem;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: hsl(350,55%,22%,0.4);
-  padding-top: 1rem;
+/* ── Success banner ── */
+.success-banner {
+  background: hsl(350 55% 22% / 0.08);
+  border: 1px solid hsl(350 55% 22% / 0.2);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  color: var(--primary);
+  font-family: var(--font-serif);
 }

@@ -1,71 +1,80 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl
+} from '@angular/forms';
+import { AuthShellComponent } from '../../auth-shell/auth-shell.component';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, AuthShellComponent],
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css'],
+  styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
-
-  form = {
-    name: '',
-    username: '',
-    email: '',
-    phone: '',
-    password: '',
-    terms: false,
-  };
-
-  errors: Record<string, string> = {};
+  hotelLobby = 'hotel-lobby.jpg';
   showPassword = false;
+  submitted = false;
+  successMessage = '';
+
+  form: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({
+      name:     ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern(/^[a-zA-Z0-9_]+$/)]],
+      email:    ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
+      phone:    ['', [Validators.maxLength(20), Validators.pattern(/^[0-9+\-\s()]*$/)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+      terms:    [false, [Validators.requiredTrue]]
+    });
+  }
+
+  get name()     { return this.form.get('name')!; }
+  get username() { return this.form.get('username')!; }
+  get email()    { return this.form.get('email')!; }
+  get phone()    { return this.form.get('phone')!; }
+  get password() { return this.form.get('password')!; }
+  get terms()    { return this.form.get('terms')!; }
+
+  errorFor(ctrl: AbstractControl, field: string): string {
+    if (!this.submitted || !ctrl.errors) return '';
+    const e = ctrl.errors;
+    if (e['required'])   return `${field} is required`;
+    if (e['requiredTrue']) return 'You must accept the terms';
+    if (e['minlength'])  return `${field} must be at least ${e['minlength'].requiredLength} characters`;
+    if (e['maxlength'])  return `${field} is too long`;
+    if (e['email'])      return 'Invalid email address';
+    if (e['pattern']) {
+      if (field === 'Username') return 'Letters, numbers and underscores only';
+      if (field === 'Phone')    return 'Invalid phone number';
+    }
+    return '';
+  }
 
   onSubmit(): void {
-    this.errors = {};
-
-    // Basic validation — mirrors the React zod schema
-    if (!this.form.name || this.form.name.trim().length < 2) {
-      this.errors['name'] = 'Name must be at least 2 characters.';
-    }
-
-    if (!this.form.username || this.form.username.trim().length < 3) {
-      this.errors['username'] = 'Username must be at least 3 characters.';
-    } else if (!/^[a-zA-Z0-9_]+$/.test(this.form.username)) {
-      this.errors['username'] = 'Letters, numbers and underscores only.';
-    }
-
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!this.form.email || !emailRe.test(this.form.email)) {
-      this.errors['email'] = 'Invalid email address.';
-    }
-
-    if (!this.form.password || this.form.password.length < 8) {
-      this.errors['password'] = 'Password must be at least 8 characters.';
-    }
-
-    if (!this.form.terms) {
-      this.errors['terms'] = 'You must accept the terms.';
-    }
-
-    if (Object.keys(this.errors).length > 0) return;
+    this.submitted = true;
+    if (this.form.invalid) return;
 
     // Maps to Java User { name, username, email, phone, password } — role assigned server-side
     const payload = {
-      name:     this.form.name,
-      username: this.form.username,
-      email:    this.form.email,
-      phone:    this.form.phone,
-      password: this.form.password,
+      name:     this.name.value,
+      username: this.username.value,
+      email:    this.email.value,
+      phone:    this.phone.value || null,
+      password: this.password.value
     };
 
-    console.log('Sign up payload:', payload);
-    alert(`Account created! Welcome to Wardiere, ${this.form.name}.`);
-
-    // Reset form
-    this.form = { name: '', username: '', email: '', phone: '', password: '', terms: false };
+    // TODO: Call AuthService.register(payload) → POST /signup
+    console.log('Register payload:', payload);
+    this.successMessage = `Welcome to Place-Finder, ${this.name.value}!`;
+    this.form.reset();
+    this.submitted = false;
   }
 }

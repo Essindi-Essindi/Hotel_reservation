@@ -1,0 +1,546 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.history-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f0ea;
+  min-height: 100vh;
+  padding-top: 80px; 
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-title {
+  text-align: center;
+  color: #571726;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.history-section {
+  text-align: center;
+}
+
+.history-section > p {
+  color: #6b5b4e;
+  margin-bottom: 2rem;
+}
+
+.history-filters {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.filter-group label {
+  font-weight: 600;
+  color: #333;
+}
+
+.filter-group select,
+.filter-group input {
+  padding: 0.4rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.btn-clear {
+  background: #571726;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-clear:hover {
+  background: #6e2334;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #571726;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.reservations-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.reservation-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.reservation-card:hover {
+  transform: translateY(-3px);
+}
+
+.card-header {
+  background: #571726;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.card-header p {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.status {
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-confirmed {
+  background: #e6b422;
+  color: #2c2b26;
+}
+
+.status-completed {
+  background: #2c7a4d;
+  color: white;
+}
+
+.status-cancelled {
+  background: #c0392b;
+  color: white;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #eee;
+}
+
+.detail:last-child {
+  border-bottom: none;
+}
+
+.detail .label {
+  font-weight: 500;
+  color: #6b5b4e;
+}
+
+.detail .value {
+  font-weight: 600;
+  color: #3c2a2a;
+}
+
+.card-footer {
+  padding: 1rem;
+  background: #faf5eb;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-receipt,
+.btn-cancel,
+.btn-delete {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-receipt {
+  background: #571726;
+  color: white;
+}
+
+.btn-receipt:hover {
+  background: #6e2334;
+}
+
+.btn-cancel {
+  background: #e6b422;
+  color: #2c2b26;
+}
+
+.btn-cancel:hover {
+  background: #d4a010;
+}
+
+.btn-delete {
+  background: #c0392b;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #a93226;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+}
+
+.empty-state p {
+  color: #6b5b4e;
+  margin-bottom: 1rem;
+}
+
+.btn-book {
+  display: inline-block;
+  background: #571726;
+  color: white;
+  text-decoration: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+}
+
+.print-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #571726;
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 99;
+}
+
+.print-btn:hover {
+  background: #6e2334;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+.modal-content h3 {
+  color: #571726;
+  margin-bottom: 1rem;
+}
+
+.modal-content p {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.modal-actions button {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.modal-actions button:first-child {
+  background: #ddd;
+  color: #333;
+}
+
+.confirm-cancel {
+  background: #e6b422;
+  color: #2c2b26;
+}
+
+.confirm-delete {
+  background: #c0392b;
+  color: white;
+}
+
+.receipt-modal .modal-content {
+  max-width: 500px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.receipt-content {
+  position: relative;
+}
+
+.close-receipt {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #999;
+  z-index: 10;
+  transition: color 0.2s;
+}
+
+.close-receipt:hover {
+  color: #571726;
+}
+
+.receipt-paper {
+  background: white;
+  padding: 2rem;
+}
+
+.receipt-header {
+  text-align: center;
+  border-bottom: 2px solid #571726;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.receipt-header i {
+  font-size: 2.5rem;
+  color: #571726;
+  margin-bottom: 0.5rem;
+}
+
+.receipt-header h2 {
+  color: #571726;
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.receipt-header p {
+  color: #6b5b4e;
+  font-size: 0.9rem;
+}
+
+.receipt-body {
+  margin-bottom: 1.5rem;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+}
+
+.receipt-label {
+  font-weight: 600;
+  color: #6b5b4e;
+}
+
+.receipt-value {
+  font-weight: 500;
+  color: #3c2a2a;
+}
+
+.receipt-value.total {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #2c7a4d;
+}
+
+.receipt-divider {
+  height: 1px;
+  background: #eee;
+  margin: 0.5rem 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.receipt-footer {
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #ddd;
+  font-size: 0.8rem;
+  color: #c0392b;
+}
+
+.receipt-thankyou {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-size: 0.8rem;
+  color: #6b5b4e;
+}
+
+.receipt-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: #faf5eb;
+  border-top: 1px solid #eee;
+}
+
+.btn-download,
+.btn-close {
+  flex: 1;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-download {
+  background: #2c7a4d;
+  color: white;
+}
+
+.btn-download:hover {
+  background: #1e5a38;
+}
+
+.btn-close {
+  background: #ddd;
+  color: #333;
+}
+
+.btn-close:hover {
+  background: #ccc;
+}
+
+@media (max-width: 768px) {
+  .history-container {
+    padding-top: 120px;
+  }
+  
+  .container {
+    padding: 1rem;
+  }
+  
+  .history-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-group {
+    justify-content: space-between;
+  }
+  
+  .reservations-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-footer {
+    flex-direction: column;
+  }
+  
+  .print-btn {
+    bottom: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .receipt-paper {
+    padding: 1rem;
+  }
+}
+
+@media print {
+  .history-filters,
+  .print-btn,
+  .card-footer,
+  .modal,
+  .receipt-actions,
+  .close-receipt {
+    display: none !important;
+  }
+  
+  .reservation-card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .receipt-modal .modal-content {
+    box-shadow: none;
+    padding: 0;
+  }
+  
+  .receipt-paper {
+    padding: 0;
+  }
+}

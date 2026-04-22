@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import {environment} from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080'; // Adjust to your backend URL
+  private apiUrl = environment.ApiUrl; // Adjust to your backend URL
   private tokenKey = 'authToken';
 
   constructor(private http: HttpClient) {}
 
   // Sign in method
-  login(credentials: { username: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
+  login(credentials: { email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/auth/login`, credentials).pipe(
       tap((response: any) => {
         // Assuming the backend returns a token in the response
         if (response.token) {
@@ -27,7 +29,7 @@ export class AuthService {
 
   // Sign up method
   register(userData: { name: string; username: string; email: string; phone?: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signup`, userData).pipe(
+    return this.http.post(`${this.apiUrl}/api/auth/register`, userData).pipe(
       tap((response: any) => {
         // Optionally, if registration auto-logs in, save token
         if (response.token) {

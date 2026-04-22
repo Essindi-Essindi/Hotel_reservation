@@ -53,9 +53,12 @@ export class SignInComponent {
     if (this.form.invalid) return;
 
     const credentials = {
-      username: this.username.value,
+      email: this.username.value,
       password: this.password.value
     };
+
+    console.log("Form username", this.username.value);
+    console.log("Credential username", credentials.email);
 
     this.authService.login(credentials).subscribe({
       next: (response) => {

@@ -1,0 +1,53 @@
+<div class="auth-shell">
+
+  <!-- ── Left: Image side ── -->
+  <div class="auth-image-side">
+    <img [src]="image" [alt]="imageAlt" class="auth-bg-img" />
+    <div class="auth-overlay"></div>
+
+    <!-- Gold corner ornaments -->
+    <div class="ornament ornament--tl"></div>
+    <div class="ornament ornament--br"></div>
+
+    <!-- Bottom branding -->
+    <div class="auth-image-brand animate-fade-up delay-300">
+      <div class="brand-eyebrow">
+        <span class="brand-line"></span>
+        <span class="brand-label tracking-luxury">Place-Finder</span>
+      </div>
+      <h2 class="brand-headline">The world's finest hotels, curated.</h2>
+      <p class="brand-sub">One membership. Thousands of extraordinary stays.</p>
+    </div>
+  </div>
+
+  <!-- ── Right: Form side ── -->
+  <div class="auth-form-side">
+
+    <!-- Top nav -->
+    <div class="auth-topbar">
+      <a routerLink="/" aria-label="Back to home">
+        <app-logo variant="dark"></app-logo>
+      </a>
+      <a routerLink="/" class="auth-home-link tracking-luxury">← Home</a>
+    </div>
+
+    <!-- Centered form area -->
+    <div class="auth-form-center animate-fade-up">
+      <div class="auth-form-eyebrow">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text tracking-luxury">{{ eyebrow }}</span>
+      </div>
+
+      <h1 class="auth-title">{{ title }}</h1>
+      <p class="auth-subtitle font-serif">{{ subtitle }}</p>
+
+      <div class="auth-form-body">
+        <!-- Page-specific form is projected here -->
+        <ng-content></ng-content>
+      </div>
+    </div>
+
+    <p class="auth-copyright tracking-luxury">© Place-Finder</p>
+  </div>
+
+</div>

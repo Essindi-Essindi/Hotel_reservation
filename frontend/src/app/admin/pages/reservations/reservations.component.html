@@ -6,17 +6,10 @@
   <app-page-header
     eyebrow="Reservations"
     title="Reservation Management"
-    description="View, filter, and manage all room reservations across your properties."
+    description="Manage all room reservations across your properties."
     [hasActions]="true"
   >
-    <button class="btn-outline">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-      </svg>
-      Export
-    </button>
-    <button class="btn-luxury">
+    <button class="btn-luxury" (click)="openCreateModal()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
       </svg>
@@ -90,13 +83,13 @@
             <td class="text-right">
               <div class="action-btns">
                 <!-- View -->
-                <button class="icon-action" title="View">
+                <button class="icon-action" title="View" (click)="openViewModal(r)">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
                   </svg>
                 </button>
                 <!-- Edit -->
-                <button class="icon-action" title="Edit">
+                <button class="icon-action" title="Edit" (click)="openEditModal(r)">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
                   </svg>
@@ -121,4 +114,247 @@
     </div>
   </div>
 
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CREATE MODAL
+     ═══════════════════════════════════════════════════════════ -->
+<div class="modal-backdrop" *ngIf="showModal() && modalMode() === 'create'" (click)="onBackdropClick($event)">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-create-title">
+
+    <div class="modal-header">
+      <div>
+        <p class="modal-eyebrow">Reservations</p>
+        <h2 class="modal-title" id="modal-create-title">New Reservation</h2>
+      </div>
+      <button class="close-btn" (click)="closeModal()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Guest name -->
+      <div class="form-group">
+        <label class="form-label">Guest Name</label>
+        <input class="form-input" type="text" placeholder="Full name" [(ngModel)]="form.guest" />
+      </div>
+
+      <!-- Hotel -->
+      <div class="form-group">
+        <label class="form-label">Hotel</label>
+        <select class="form-select" [(ngModel)]="form.hotelId" (ngModelChange)="onHotelChange($event)">
+          <option value="" disabled selected>Select a hotel</option>
+          <option *ngFor="let h of hotels" [value]="h.id">{{ h.name }}</option>
+        </select>
+      </div>
+
+      <!-- Room & Group -->
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">Room ID</label>
+          <input class="form-input" type="text" placeholder="e.g. 204" [(ngModel)]="form.roomId" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Room Group</label>
+          <input class="form-input" type="text" placeholder="e.g. Deluxe Suite" [(ngModel)]="form.groupName" />
+        </div>
+      </div>
+
+      <!-- Dates -->
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">Check-in</label>
+          <input class="form-input" type="date" [(ngModel)]="form.checkIn" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Check-out</label>
+          <input class="form-input" type="date" [(ngModel)]="form.checkOut" />
+        </div>
+      </div>
+
+      <!-- Status & Amount -->
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" [(ngModel)]="form.status">
+            <option value="Confirmed">Confirmed</option>
+            <option value="Pending">Pending</option>
+            <option value="Checked In">Checked In</option>
+            <option value="Checked Out">Checked Out</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Amount ($)</label>
+          <input class="form-input" type="number" placeholder="0.00" [(ngModel)]="form.amount" />
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-outline" (click)="closeModal()">Cancel</button>
+      <button class="btn-luxury" (click)="saveReservation()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+          <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+        </svg>
+        Save Reservation
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     VIEW MODAL
+     ═══════════════════════════════════════════════════════════ -->
+<div class="modal-backdrop" *ngIf="showModal() && modalMode() === 'view'" (click)="onBackdropClick($event)">
+  <div class="modal-card modal-card--view" role="dialog" aria-modal="true" aria-labelledby="modal-view-title"
+       *ngIf="selectedReservation() as r">
+
+    <div class="modal-header">
+      <div>
+        <p class="modal-eyebrow">{{ r.id }}</p>
+        <h2 class="modal-title" id="modal-view-title">Reservation Details</h2>
+      </div>
+      <button class="close-btn" (click)="closeModal()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Guest hero strip -->
+    <div class="view-guest-strip">
+      <div class="avatar-lg">{{ getInitials(r.guest) }}</div>
+      <div>
+        <p class="view-guest-name">{{ r.guest }}</p>
+        <app-status-badge [status]="r.status" />
+      </div>
+      <div class="view-amount">${{ r.amount.toLocaleString() }}</div>
+    </div>
+
+    <!-- Detail grid -->
+    <div class="view-grid">
+      <div class="view-item">
+        <span class="view-label">Hotel</span>
+        <span class="view-value">{{ r.hotelName }}</span>
+      </div>
+      <div class="view-item">
+        <span class="view-label">Room</span>
+        <span class="view-value">{{ r.groupName }} · Room {{ r.roomId }}</span>
+      </div>
+      <div class="view-item">
+        <span class="view-label">Check-in</span>
+        <span class="view-value">{{ r.checkIn }}</span>
+      </div>
+      <div class="view-item">
+        <span class="view-label">Check-out</span>
+        <span class="view-value">{{ r.checkOut }}</span>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-outline" (click)="closeModal()">Close</button>
+      <button class="btn-luxury" (click)="openEditModal(r)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+        </svg>
+        Edit
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     EDIT MODAL
+     ═══════════════════════════════════════════════════════════ -->
+<div class="modal-backdrop" *ngIf="showModal() && modalMode() === 'edit'" (click)="onBackdropClick($event)">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-edit-title">
+
+    <div class="modal-header">
+      <div>
+        <p class="modal-eyebrow">{{ selectedReservation()?.id }}</p>
+        <h2 class="modal-title" id="modal-edit-title">Edit Reservation</h2>
+      </div>
+      <button class="close-btn" (click)="closeModal()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Guest name -->
+      <div class="form-group">
+        <label class="form-label">Guest Name</label>
+        <input class="form-input" type="text" placeholder="Full name" [(ngModel)]="form.guest" />
+      </div>
+
+      <!-- Hotel -->
+      <div class="form-group">
+        <label class="form-label">Hotel</label>
+        <select class="form-select" [(ngModel)]="form.hotelId" (ngModelChange)="onHotelChange($event)">
+          <option *ngFor="let h of hotels" [value]="h.id">{{ h.name }}</option>
+        </select>
+      </div>
+
+      <!-- Room & Group -->
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">Room ID</label>
+          <input class="form-input" type="text" placeholder="e.g. 204" [(ngModel)]="form.roomId" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Room Group</label>
+          <input class="form-input" type="text" placeholder="e.g. Deluxe Suite" [(ngModel)]="form.groupName" />
+        </div>
+      </div>
+
+      <!-- Dates -->
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">Check-in</label>
+          <input class="form-input" type="date" [(ngModel)]="form.checkIn" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Check-out</label>
+          <input class="form-input" type="date" [(ngModel)]="form.checkOut" />
+        </div>
+      </div>
+
+      <!-- Status & Amount -->
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" [(ngModel)]="form.status">
+            <option value="Confirmed">Confirmed</option>
+            <option value="Pending">Pending</option>
+            <option value="Checked In">Checked In</option>
+            <option value="Checked Out">Checked Out</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Amount ($)</label>
+          <input class="form-input" type="number" [(ngModel)]="form.amount" />
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-outline" (click)="closeModal()">Cancel</button>
+      <button class="btn-luxury" (click)="saveReservation()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+          <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+        </svg>
+        Save Changes
+      </button>
+    </div>
+
+  </div>
 </div>

@@ -63,8 +63,13 @@ export class SignInComponent {
     this.authService.login(credentials).subscribe({
       next: (response) => {
         this.successMessage = `Welcome back, ${this.username.value}.`;
+        console.log("role", response.role);
         // Navigate to dashboard or home page
-        this.router.navigate(['/']); // Adjust route as needed
+        if(response.role == 'ADMIN') {
+          this.router.navigate(['/admin']);
+        }else{
+          this.router.navigate(['/reservation']);
+        }
       },
       error: (error) => {
         this.errorMessage = error;

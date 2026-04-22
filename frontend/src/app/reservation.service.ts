@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from '../environments/environment';
 
 export interface NewReservationDto {
   currentDate: string;
@@ -62,78 +63,78 @@ export interface NewRoomDto {
   providedIn: 'root'
 })
 export class ReservationService {
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = environment.ApiUrl;
 
   constructor(private http: HttpClient) {}
 
   // ============ HOTEL ENDPOINTS ============
-  
+
   // Get all hotels - GET /all
   getAllHotels(): Observable<Hotel[]> {
-    return this.http.get<Hotel[]>(`${this.apiUrl}/hotels/all`);
+    return this.http.get<Hotel[]>(`${this.apiUrl}/hotel/all`);
   }
 
   // Create hotel - POST /add
   createHotel(newHotel: any): Observable<Hotel> {
-    return this.http.post<Hotel>(`${this.apiUrl}/hotels/add`, newHotel);
+    return this.http.post<Hotel>(`${this.apiUrl}/hotel/add`, newHotel);
   }
 
   // Update hotel - PUT /update
   updateHotel(hotel: any): Observable<Hotel> {
-    return this.http.put<Hotel>(`${this.apiUrl}/hotels/update`, hotel);
+    return this.http.put<Hotel>(`${this.apiUrl}/hotel/update`, hotel);
   }
 
   // Delete hotel - DELETE /delete
   deleteHotel(hotelName: string): Observable<Hotel> {
-    return this.http.delete<Hotel>(`${this.apiUrl}/hotels/delete?hotelName=${hotelName}`);
+    return this.http.delete<Hotel>(`${this.apiUrl}/hotel/delete?hotelName=${hotelName}`);
   }
 
   // ============ ROOM ENDPOINTS ============
-  
+
   // Get all rooms for a hotel - GET /all?hotelName=xxx
   getAllRoomsForHotel(hotelName: string): Observable<Room[]> {
-    return this.http.get<Room[]>(`${this.apiUrl}/rooms/all?hotelName=${hotelName}`);
+    return this.http.get<Room[]>(`${this.apiUrl}/room/all?hotelName=${hotelName}`);
   }
 
   // Update room status - PUT /update?roomId=xxx
   updateRoomStatus(roomId: string): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/rooms/update?roomId=${roomId}`, {});
+    return this.http.put<any>(`${this.apiUrl}/room/update?roomId=${roomId}`, {});
   }
 
   // Delete room - DELETE /delete?roomId=xxx
   deleteRoom(roomId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/rooms/delete?roomId=${roomId}`);
+    return this.http.delete<any>(`${this.apiUrl}/room/delete?roomId=${roomId}`);
   }
 
   // Create room - POST /add
   createRoom(roomDto: NewRoomDto): Observable<Room> {
-    return this.http.post<Room>(`${this.apiUrl}/rooms/add`, roomDto);
+    return this.http.post<Room>(`${this.apiUrl}/room/add`, roomDto);
   }
 
   // ============ RESERVATION ENDPOINTS ============
-  
+
   // Get all reservations (admin) - GET /all
   getAllReservations(): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(`${this.apiUrl}/reservations/all`);
+    return this.http.get<Reservation[]>(`${this.apiUrl}/reservation/all`);
   }
 
   // Get reservations by user ID - GET /all/user/{userId}
   getAllReservationsByUserId(userId: number): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(`${this.apiUrl}/reservations/all/user/${userId}`);
+    return this.http.get<Reservation[]>(`${this.apiUrl}/reservation/all/user/${userId}`);
   }
 
   // Cancel reservation - PUT /cancel/{reservationId}
   cancelReservation(reservationId: number): Observable<Reservation> {
-    return this.http.put<Reservation>(`${this.apiUrl}/reservations/cancel/${reservationId}`, {});
+    return this.http.put<Reservation>(`${this.apiUrl}/reservation/cancel/${reservationId}`, {});
   }
 
   // Delete reservation (soft delete) - DELETE /delete/{reservationId}
   deleteReservation(reservationId: number): Observable<Reservation> {
-    return this.http.delete<Reservation>(`${this.apiUrl}/reservations/delete/${reservationId}`);
+    return this.http.delete<Reservation>(`${this.apiUrl}/reservation/delete/${reservationId}`);
   }
 
   // Create reservation - POST /add
   createReservation(reservation: NewReservationDto): Observable<Reservation> {
-    return this.http.post<Reservation>(`${this.apiUrl}/reservations/add`, reservation);
+    return this.http.post<Reservation>(`${this.apiUrl}/reservation/add`, reservation);
   }
 }

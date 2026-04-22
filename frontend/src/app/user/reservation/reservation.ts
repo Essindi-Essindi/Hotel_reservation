@@ -14,18 +14,18 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 })
 export class ReservationComponent implements OnInit {
 
-  useMockData: boolean = true; 
-  
+  useMockData: boolean = false;
+
   hotels: Hotel[] = [];
   rooms: Room[] = [];
   filteredRooms: Room[] = [];
-  
+
 
   selectedHotelId: string = '';
   selectedHotelName: string = '';
   selectedRoomId: string = '';
   selectedRoom: Room | null = null;
-  
+
 
   showModal: boolean = false;
   showReceipt: boolean = false;
@@ -33,7 +33,7 @@ export class ReservationComponent implements OnInit {
   isLoading: boolean = false;
   isLoadingRooms: boolean = false;
   errorMessage: string = '';
-  
+
 
   newReservation: NewReservationDto = {
     currentDate: '',
@@ -69,7 +69,7 @@ export class ReservationComponent implements OnInit {
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    
+
     this.newReservation.reservationStartDate = today.toISOString().split('T')[0];
     this.newReservation.reservationEndDate = tomorrow.toISOString().split('T')[0];
   }
@@ -86,36 +86,36 @@ export class ReservationComponent implements OnInit {
 
   loadHotels(): void {
     this.isLoading = true;
-    
+
     if (this.useMockData) {
       setTimeout(() => {
         this.hotels = [
-          { 
-            hotelID: 'SAFYAD', 
+          {
+            hotelID: 'SAFYAD',
             location: { locationId: 1, locationName: 'Bastos' },
             isDeleted: false,
             deletedAt: null,
             totalRooms: 5,
             price: 299
           },
-          { 
-            hotelID: 'H002', 
+          {
+            hotelID: 'H002',
             location: { locationId: 2, locationName: 'Coastal Bay' },
             isDeleted: false,
             deletedAt: null,
             totalRooms: 8,
             price: 399
           },
-          { 
-            hotelID: 'H003', 
+          {
+            hotelID: 'H003',
             location: { locationId: 3, locationName: 'Highland Valley' },
             isDeleted: false,
             deletedAt: null,
             totalRooms: 10,
             price: 229
           },
-          { 
-            hotelID: 'H004', 
+          {
+            hotelID: 'H004',
             location: { locationId: 4, locationName: 'Arts District' },
             isDeleted: false,
             deletedAt: null,
@@ -123,7 +123,7 @@ export class ReservationComponent implements OnInit {
             price: 189
           }
         ];
-        
+
         this.isLoading = false;
       }, 500);
     } else {
@@ -145,29 +145,29 @@ export class ReservationComponent implements OnInit {
   onHotelChange(): void {
     const selectedHotel = this.getSelectedHotel();
     if (!selectedHotel) return;
-    
-    this.selectedHotelName = selectedHotel.location.locationName;
+
+    this.selectedHotelName = selectedHotel.hotelID;
     this.newReservation.hotelId = this.selectedHotelId;
     this.selectedRoomId = '';
     this.selectedRoom = null;
     this.filteredRooms = [];
-    
+
     this.loadRoomsForHotel();
   }
 
   loadRoomsForHotel(): void {
     if (!this.selectedHotelName) return;
-    
+
     this.isLoadingRooms = true;
-    
+
     if (this.useMockData) {
       setTimeout(() => {
         const selectedHotel = this.getSelectedHotel();
         if (!selectedHotel) return;
-        
+
         const totalRooms = selectedHotel.totalRooms;
         const generatedRooms: Room[] = [];
-        
+
         for (let i = 1; i <= totalRooms; i++) {
           const isOccupied = (i === 3);
           generatedRooms.push({
@@ -176,7 +176,7 @@ export class ReservationComponent implements OnInit {
             hotel: selectedHotel
           });
         }
-        
+
         this.rooms = generatedRooms;
         this.filteredRooms = generatedRooms;
         this.isLoadingRooms = false;
@@ -199,7 +199,7 @@ export class ReservationComponent implements OnInit {
 
   onRoomSelect(room: Room): void {
     if (room.status !== 'AVAILABLE') return;
-    
+
     this.selectedRoomId = room.roomID;
     this.selectedRoom = room;
     this.newReservation.roomId = room.roomID;
@@ -218,13 +218,13 @@ export class ReservationComponent implements OnInit {
   }
 
   getHotelDisplayName(hotel: Hotel): string {
-    return hotel.location?.locationName || 'Hotel';
+    return hotel.hotelID || 'Hotel';
   }
 
   getHotelName(): string {
     const hotel = this.getSelectedHotel();
     if (!hotel) return '';
-    return hotel.location?.locationName || 'Hotel';
+    return hotel.hotelID || 'Hotel';
   }
 
   getHotelLocation(): string {
@@ -243,7 +243,7 @@ export class ReservationComponent implements OnInit {
       const start = new Date(this.newReservation.reservationStartDate);
       const end = new Date(this.newReservation.reservationEndDate);
       const nights = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
-      
+
       if (nights > 0) {
         this.newReservation.duration = nights;
         this.newReservation.cost = nights * this.getRoomPrice();
@@ -270,11 +270,11 @@ export class ReservationComponent implements OnInit {
 
   confirmBooking(): void {
     if (!this.selectedRoom) return;
-    
+
     this.isLoading = true;
     this.calculateDurationAndCost();
     this.newReservation.currentDate = new Date().toISOString();
-    
+
     if (this.useMockData) {
 
       setTimeout(() => {
@@ -295,15 +295,15 @@ export class ReservationComponent implements OnInit {
           cancelledAt: null,
           deletedAt: null
         };
-        
+
         this.confirmedReservation = reservation;
         this.selectedReceiptReservation = reservation;
-        
+
         const roomIndex = this.rooms.findIndex(r => r.roomID === this.selectedRoom!.roomID);
         if (roomIndex !== -1) {
           this.rooms[roomIndex].status = 'OCCUPIED';
         }
-        
+
         this.filteredRooms = [...this.rooms];
         this.showReceipt = true;
         this.isLoading = false;
@@ -313,7 +313,7 @@ export class ReservationComponent implements OnInit {
         next: (reservation) => {
           this.confirmedReservation = reservation;
           this.selectedReceiptReservation = reservation;
-          
+
           this.reservationService.updateRoomStatus(this.selectedRoom!.roomID).subscribe({
             next: () => {
               const roomIndex = this.rooms.findIndex(r => r.roomID === this.selectedRoom!.roomID);
@@ -324,7 +324,7 @@ export class ReservationComponent implements OnInit {
             },
             error: (err) => console.error('Failed to update room status:', err)
           });
-          
+
           this.showReceipt = true;
           this.isLoading = false;
         },
@@ -339,11 +339,11 @@ export class ReservationComponent implements OnInit {
 
   downloadReceipt(): void {
     if (!this.selectedReceiptReservation) return;
-    
+
     const hotelName = this.getHotelName();
     const hotelLocation = this.getHotelLocation();
     const hotelPrice = this.getRoomPrice();
-    
+
     const receiptHtml = `
       <!DOCTYPE html>
       <html>
@@ -433,7 +433,7 @@ export class ReservationComponent implements OnInit {
       </body>
       </html>
     `;
-    
+
     const blob = new Blob([receiptHtml], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

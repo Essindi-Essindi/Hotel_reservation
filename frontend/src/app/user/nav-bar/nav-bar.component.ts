@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 export interface UserProfile {
@@ -19,10 +19,13 @@ export interface UserProfile {
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-  @Input() userId: number = 1;
-  userName: string = 'Guest User';
-  
- 
+
+  constructor(private router: Router) {
+  }
+  @Input() userId: number = Number(localStorage.getItem("userId")) || 1;
+  userName: string = localStorage.getItem("username") || 'Guest User';
+
+
   showProfileModal: boolean = false;
   editProfile: UserProfile = {
     id: 1,
@@ -31,7 +34,7 @@ export class NavBarComponent implements OnInit {
     email: '',
     phone: ''
   };
-  
+
   private backupProfile: UserProfile | null = null;
 
   ngOnInit(): void {
@@ -39,21 +42,32 @@ export class NavBarComponent implements OnInit {
   }
 
   loadUserData(): void {
-    const user = localStorage.getItem('placefinder_user');
-    if (user) {
-      const userData: UserProfile = JSON.parse(user);
+    // const user = localStorage.getItem('placefinder_user');
+    const fullName = localStorage.getItem("name");
+    const username = localStorage.getItem("username");
+    const email = localStorage.getItem("email");
+    const phone =  localStorage.getItem("telephone");
+    const userId = localStorage.getItem("userId");
+    if (fullName && username && email && phone && phone) {
+      const userData: UserProfile = {
+        id: Number(userId),
+        name: fullName,
+        username: username,
+        email: email,
+        phone: phone,
+      };
       this.userName = userData.name || 'Guest User';
       this.userId = userData.id || 1;
       this.editProfile = { ...userData };
     } else {
-      this.userName = 'Alex Johnson';
-      this.userId = 1;
+      this.userName = username || 'Alex Johnson';
+      this.userId = Number(userId) || 1;
       this.editProfile = {
-        id: 1,
-        name: 'Alex Johnson',
-        username: 'alexj',
-        email: 'alex.johnson@example.com',
-        phone: '+1 (555) 123-4567'
+        id: Number(userId) || 1,
+        name: fullName || 'Alex Johnson',
+        username: username || 'alexj',
+        email: email || 'alex.johnson@example.com',
+        phone: phone || '+1 (555) 123-4567'
       };
       this.saveToLocalStorage();
     }
@@ -100,11 +114,11 @@ export class NavBarComponent implements OnInit {
     }
 
     this.userName = this.editProfile.name;
-    
+
     this.saveToLocalStorage();
-    
+
     this.closeProfileModal();
-    
+
     this.showToastMessage('Profile updated successfully!');
   }
 
@@ -138,5 +152,6 @@ export class NavBarComponent implements OnInit {
       phone: ''
     };
     this.showToastMessage('Logged out successfully');
+    this.router.navigate(['']);
   }
 }

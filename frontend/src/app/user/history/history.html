@@ -48,12 +48,12 @@
               {{reservation.state}}
             </span>
           </div>
-          
+
           <div class="card-body">
-            <div class="detail">
-              <span class="label">Reservation ID:</span>
-              <span class="value">{{reservation.reservationID}}</span>
-            </div>
+<!--            <div class="detail">-->
+<!--              <span class="label">Reservation ID:</span>-->
+<!--              <span class="value">{{reservation.reservationID}}</span>-->
+<!--            </div>-->
             <div class="detail">
               <span class="label">Booked On:</span>
               <span class="value">{{reservation.DateIssued | date:'MMM dd, yyyy'}}</span>
@@ -75,7 +75,7 @@
               <span class="value">${{reservation.cost}}</span>
             </div>
           </div>
-          
+
           <div class="card-footer">
             <button class="btn-receipt" (click)="openReceiptModal(reservation)">
               View Receipt
@@ -138,28 +138,28 @@
           <h2>PlaceFinder</h2>
           <p>Hotel Reservation Receipt</p>
         </div>
-        
+
         <div class="receipt-body" *ngIf="selectedReceiptReservation">
-          <div class="receipt-row">
-            <span class="receipt-label">Reservation ID:</span>
-            <span class="receipt-value">{{selectedReceiptReservation.reservationID}}</span>
-          </div>
+<!--          <div class="receipt-row">-->
+<!--            <span class="receipt-label">Reservation ID:</span>-->
+<!--            <span class="receipt-value">{{selectedReceiptReservation.reservationID}}</span>-->
+<!--          </div>-->
           <div class="receipt-row">
             <span class="receipt-label">Date Issued:</span>
             <span class="receipt-value">{{selectedReceiptReservation.DateIssued | date:'MMMM dd, yyyy - h:mm a'}}</span>
           </div>
           <div class="receipt-divider"></div>
-          
+
           <div class="receipt-row">
             <span class="receipt-label">Hotel:</span>
             <span class="receipt-value">{{getHotelName(selectedReceiptReservation.hotelId)}}</span>
           </div>
           <div class="receipt-row">
-            <span class="receipt-label">Room ID:</span>
+            <span class="receipt-label">Room:</span>
             <span class="receipt-value">{{selectedReceiptReservation.roomId}}</span>
           </div>
           <div class="receipt-divider"></div>
-          
+
           <div class="receipt-row">
             <span class="receipt-label">Check-in:</span>
             <span class="receipt-value">{{selectedReceiptReservation.reservationStartDate}} at {{selectedReceiptReservation.startTime}}</span>
@@ -173,7 +173,7 @@
             <span class="receipt-value">{{selectedReceiptReservation.duration}} night(s)</span>
           </div>
           <div class="receipt-divider"></div>
-          
+
           <div class="receipt-row">
             <span class="receipt-label">Total Cost:</span>
             <span class="receipt-value total">${{selectedReceiptReservation.cost}}</span>
@@ -184,17 +184,17 @@
               {{selectedReceiptReservation.state}}
             </span>
           </div>
-          
+
           <div class="receipt-footer" *ngIf="selectedReceiptReservation.state === 'Cancelled' && selectedReceiptReservation.cancelledAt">
             <p><i class="fas fa-info-circle"></i> Cancelled on: {{selectedReceiptReservation.cancelledAt | date:'MMM dd, yyyy'}}</p>
           </div>
         </div>
-        
+
         <div class="receipt-thankyou">
           <p>Thank you for choosing PlaceFinder!</p>
         </div>
       </div>
-      
+
       <div class="receipt-actions">
         <button class="btn-download" (click)="downloadReceipt()">
           <i class="fas fa-download"></i> Download Receipt

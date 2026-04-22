@@ -13,26 +13,26 @@ import { ReservationService, Reservation, Hotel } from '../../reservation.servic
   styleUrls: ['./history.css']
 })
 export class History implements OnInit {
-  useMockData: boolean = true;  
-  
+  useMockData: boolean = false;
+
   userId: number = 1;
   reservations: Reservation[] = [];
   filteredReservations: Reservation[] = [];
   hotels: Hotel[] = [];
-  
+
   isLoading: boolean = false;
   showCancelModal: boolean = false;
   showDeleteModal: boolean = false;
   showReceiptModal: boolean = false;
   selectedReservation: Reservation | null = null;
   selectedReceiptReservation: Reservation | null = null;
-  
+
   filters = {
     state: 'all',
     hotelId: 'all',
     date: ''
   };
-  
+
   uniqueHotelIds: string[] = [];
 
   constructor(private reservationService: ReservationService) {}
@@ -54,32 +54,32 @@ export class History implements OnInit {
   loadHotels(): void {
     if (this.useMockData) {
       this.hotels = [
-        { 
-          hotelID: 'H001', 
+        {
+          hotelID: 'H001',
           location: { locationId: 1, locationName: 'Grand Plaza Hotel - Downtown City Center' },
           isDeleted: false,
           deletedAt: null,
           totalRooms: 12,
           price: 299
         },
-        { 
-          hotelID: 'H002', 
+        {
+          hotelID: 'H002',
           location: { locationId: 2, locationName: 'Ocean View Resort - Coastal Bay' },
           isDeleted: false,
           deletedAt: null,
           totalRooms: 8,
           price: 399
         },
-        { 
-          hotelID: 'H003', 
+        {
+          hotelID: 'H003',
           location: { locationId: 3, locationName: 'Mountain Retreat Lodge - Highland Valley' },
           isDeleted: false,
           deletedAt: null,
           totalRooms: 10,
           price: 229
         },
-        { 
-          hotelID: 'H004', 
+        {
+          hotelID: 'H004',
           location: { locationId: 4, locationName: 'Sunset Boutique Hotel - Arts District' },
           isDeleted: false,
           deletedAt: null,
@@ -101,7 +101,7 @@ export class History implements OnInit {
 
   loadReservations(): void {
     this.isLoading = true;
-    
+
     if (this.useMockData) {
       setTimeout(() => {
         const today = new Date();
@@ -195,7 +195,7 @@ export class History implements OnInit {
             deletedAt: null
           }
         ];
-        
+
         this.extractUniqueHotelIds();
         this.applyFilters();
         this.isLoading = false;
@@ -224,9 +224,9 @@ export class History implements OnInit {
   getHotelName(hotelId: string): string {
     const hotel = this.hotels.find(h => h.hotelID === hotelId);
     if (hotel) {
-      return hotel.location?.locationName?.split(' - ')[0] || hotelId;
+      return hotel.hotelID?.split(' - ')[0] || hotelId;
     }
-  
+
     const hotels: { [key: string]: string } = {
       'H001': 'Grand Plaza Hotel',
       'H002': 'Ocean View Resort',
@@ -246,19 +246,19 @@ export class History implements OnInit {
 
   applyFilters(): void {
     let filtered = this.reservations.filter(r => !r.deleted);
-    
+
     if (this.filters.state !== 'all') {
       filtered = filtered.filter(r => r.state === this.filters.state);
     }
-    
+
     if (this.filters.hotelId !== 'all') {
       filtered = filtered.filter(r => r.hotelId === this.filters.hotelId);
     }
-    
+
     if (this.filters.date) {
       filtered = filtered.filter(r => r.reservationStartDate === this.filters.date);
     }
-    
+
     this.filteredReservations = filtered;
   }
 
@@ -295,10 +295,10 @@ export class History implements OnInit {
   downloadReceipt(): void {
     const receiptElement = document.getElementById('receiptPaper');
     if (!receiptElement || !this.selectedReceiptReservation) return;
-    
+
     const hotelName = this.getHotelName(this.selectedReceiptReservation.hotelId);
     const hotelLocation = this.getHotelLocation(this.selectedReceiptReservation.hotelId);
-    
+
     const receiptHtml = `
       <!DOCTYPE html>
       <html>
@@ -403,7 +403,7 @@ export class History implements OnInit {
             <h2>PlaceFinder</h2>
             <p>Hotel Reservation Receipt</p>
           </div>
-          
+
           <div class="receipt-body">
             <div class="receipt-row">
               <span class="receipt-label">Reservation ID:</span>
@@ -414,7 +414,7 @@ export class History implements OnInit {
               <span class="receipt-value">${new Date(this.selectedReceiptReservation.DateIssued).toLocaleString()}</span>
             </div>
             <div class="receipt-divider"></div>
-            
+
             <div class="receipt-row">
               <span class="receipt-label">Hotel:</span>
               <span class="receipt-value">${hotelName}</span>
@@ -428,7 +428,7 @@ export class History implements OnInit {
               <span class="receipt-value">${this.selectedReceiptReservation.roomId}</span>
             </div>
             <div class="receipt-divider"></div>
-            
+
             <div class="receipt-row">
               <span class="receipt-label">Check-in:</span>
               <span class="receipt-value">${this.selectedReceiptReservation.reservationStartDate} at ${this.selectedReceiptReservation.startTime}</span>
@@ -442,7 +442,7 @@ export class History implements OnInit {
               <span class="receipt-value">${this.selectedReceiptReservation.duration} night(s)</span>
             </div>
             <div class="receipt-divider"></div>
-            
+
             <div class="receipt-row">
               <span class="receipt-label">Total Cost:</span>
               <span class="receipt-value total">$${this.selectedReceiptReservation.cost}</span>
@@ -453,14 +453,14 @@ export class History implements OnInit {
                 ${this.selectedReceiptReservation.state}
               </span>
             </div>
-            
+
             ${this.selectedReceiptReservation.state === 'Cancelled' && this.selectedReceiptReservation.cancelledAt ? `
             <div class="receipt-footer">
               <p><i class="fas fa-info-circle"></i> Cancelled on: ${new Date(this.selectedReceiptReservation.cancelledAt).toLocaleDateString()}</p>
             </div>
             ` : ''}
           </div>
-          
+
           <div class="receipt-thankyou">
             <p>Thank you for choosing PlaceFinder!</p>
           </div>
@@ -468,7 +468,7 @@ export class History implements OnInit {
       </body>
       </html>
     `;
-    
+
     const blob = new Blob([receiptHtml], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -494,7 +494,7 @@ export class History implements OnInit {
 
   confirmCancel(): void {
     if (!this.selectedReservation) return;
-    
+
     if (this.useMockData) {
       const reservation = this.reservations.find(r => r.reservationID === this.selectedReservation!.reservationID);
       if (reservation) {
@@ -534,7 +534,7 @@ export class History implements OnInit {
 
   confirmDelete(): void {
     if (!this.selectedReservation) return;
-    
+
     if (this.useMockData) {
       const reservation = this.reservations.find(r => r.reservationID === this.selectedReservation!.reservationID);
       if (reservation) {

@@ -21,6 +21,13 @@ export class AuthService {
         // Assuming the backend returns a token in the response
         if (response.token) {
           localStorage.setItem(this.tokenKey, response.token);
+          localStorage.setItem("username", response.username);
+          localStorage.setItem("password", response.password);
+          localStorage.setItem("name", response.name);
+          localStorage.setItem("email", response.email);
+          localStorage.setItem("telephone", response.phone);
+          localStorage.setItem("userId", response.id);
+          console.log(response)
         }
       }),
       catchError(this.handleError)

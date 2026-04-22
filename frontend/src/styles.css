@@ -1,1 +1,79 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  background: #f6f3f1;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+/* Page container */
+.page {
+  padding: 25px;
+}
+
+/* Section title */
+.page-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #3a1c23;
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #7b1e2b, #a8323e);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* Table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  padding: 10px;
+  font-size: 13px;
+  color: #999;
+}
+
+.table td {
+  padding: 12px;
+  border-top: 1px solid #eee;
+}
+
+/* Hover lift */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* Sidebar items */
+.sidebar-item {
+  transition: all 0.25s ease;
+}
+
+.sidebar-item:hover {
+  transform: translateX(5px);
+}

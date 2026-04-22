@@ -5,9 +5,9 @@ spring:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
       routes:
         - id: user-service
-          uri: lb://USER-MANAGEMENT
+          uri: lb://USERMANAGEMENT
           predicates:
-            - Path=/auth/**,/superadmin/**,/admin/**,/student/**
+            - Path=/api/auth/**,/api/users/**
 
         - id: reservation-service
           uri: lb://RESERVATIONMANAGEMENT

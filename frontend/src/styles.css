@@ -1,19 +1,6 @@
-/* ============================================================
-   WARDIERE — Unified Design System
-   Admin design system + Landing page styles
-   Maroon & Beige luxury palette
-   Fonts: Playfair Display + Cormorant Garamond (display)
-          DM Sans (landing body) + Inter (admin body)
-   ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* ============================================================
-   CSS CUSTOM PROPERTIES
-   Admin tokens use hsl() channel syntax (e.g. --primary: 350 55% 22%)
-   Landing tokens use direct hsl() values  (e.g. --bg: hsl(38,36%,94%))
-   Both sets live in :root so every component can access either.
-   ============================================================ */
 :root {
 
   /* ── Admin surfaces ─────────────────────────────────────── */

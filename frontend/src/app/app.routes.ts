@@ -5,19 +5,18 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { AdminLayoutComponent } from './admin/layout/admin-layout/admin-layout.component';
 import { DashboardComponent } from './admin/pages/dashboard/dashboard.component';
 
+
 export const routes: Routes = [
   // ── Public pages ──
   { path: '',        component: LandingComponent },
   { path: 'sign-in', component: SignInComponent  },
   { path: 'sign-up', component: SignUpComponent  },
-
   {
-    path: 'admin',
-    component: AdminLayoutComponent,
-    children: [
-      { path: 'dashboard', component: DashboardComponent },
-    ],
-  },
+      path: 'admin',
+      loadChildren: () =>
+        import('./admin/admin.module').then(m => m.AdminModule),
+    },
+    
 
   // ── Fallback ──
   { path: '**', redirectTo: '' },

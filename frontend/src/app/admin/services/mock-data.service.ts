@@ -67,7 +67,7 @@ export class MockDataService {
   hotels: Hotel[] = [
     {
       id: 'h1',
-      name: 'Wardiere Grand Palace',
+      name: 'PlaceFinder Grand Palace',
       city: 'Rimberio',
       address: '12 Avenue des Roses, Rimberio City, 75008',
       image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80',
@@ -97,7 +97,7 @@ export class MockDataService {
     },
     {
       id: 'h2',
-      name: 'Wardiere Marina Resort',
+      name: 'PlaceFinder Marina Resort',
       city: "Côte d'Azur",
       address: '88 Promenade de la Mer, Côte d\'Azur',
       image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&q=80',
@@ -120,7 +120,7 @@ export class MockDataService {
     },
     {
       id: 'h3',
-      name: 'Wardiere Mountain Lodge',
+      name: 'PlaceFinder Mountain Lodge',
       city: 'Aspen Heights',
       address: '1 Alpine Ridge, Aspen Heights',
       image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80',
@@ -143,7 +143,7 @@ export class MockDataService {
     },
     {
       id: 'h4',
-      name: 'Wardiere City Boutique',
+      name: 'PlaceFinder City Boutique',
       city: 'Rimberio',
       address: '5 Rue du Palais, Rimberio City',
       image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80',
@@ -174,18 +174,18 @@ export class MockDataService {
   ];
 
   reservations: Reservation[] = [
-    { id: 'RES-001', guest: 'Sophie Laurent', hotelId: 'h1', hotelName: 'Wardiere Grand Palace', groupName: 'Floor 1 · Garden Wing', roomId: 'A1', checkIn: '2026-04-22', checkOut: '2026-04-25', status: 'Checked In', amount: 1140 },
-    { id: 'RES-002', guest: 'Marco Bellini', hotelId: 'h1', hotelName: 'Wardiere Grand Palace', groupName: 'Floor 2 · Terrace Wing', roomId: 'B1', checkIn: '2026-04-23', checkOut: '2026-04-27', status: 'Confirmed', amount: 1520 },
-    { id: 'RES-003', guest: 'Amara Diallo', hotelId: 'h2', hotelName: 'Wardiere Marina Resort', groupName: 'Sea View Wing', roomId: 'A2', checkIn: '2026-04-20', checkOut: '2026-04-24', status: 'Checked In', amount: 1280 },
-    { id: 'RES-004', guest: 'James Thornton', hotelId: 'h2', hotelName: 'Wardiere Marina Resort', groupName: 'Garden Suites', roomId: 'B2', checkIn: '2026-04-25', checkOut: '2026-04-28', status: 'Confirmed', amount: 960 },
-    { id: 'RES-005', guest: 'Yuki Nakamura', hotelId: 'h3', hotelName: 'Wardiere Mountain Lodge', groupName: 'Alpine Wing', roomId: 'A1', checkIn: '2026-04-21', checkOut: '2026-04-23', status: 'Checked Out', amount: 640 },
-    { id: 'RES-006', guest: 'Leila Mansouri', hotelId: 'h1', hotelName: 'Wardiere Grand Palace', groupName: 'Floor 3 · Presidential', roomId: 'A1', checkIn: '2026-04-22', checkOut: '2026-04-26', status: 'Confirmed', amount: 2400 },
-    { id: 'RES-007', guest: 'Carlos Vega', hotelId: 'h4', hotelName: 'Wardiere City Boutique', groupName: 'Deluxe Floor', roomId: 'A1', checkIn: '2026-04-18', checkOut: '2026-04-20', status: 'Checked Out', amount: 640 },
-    { id: 'RES-008', guest: 'Nina Petrov', hotelId: 'h2', hotelName: 'Wardiere Marina Resort', groupName: 'Sea View Wing', roomId: 'B3', checkIn: '2026-04-24', checkOut: '2026-04-29', status: 'Pending', amount: 1600 },
-    { id: 'RES-009', guest: 'David Osei', hotelId: 'h3', hotelName: 'Wardiere Mountain Lodge', groupName: 'Summit Suites', roomId: 'B1', checkIn: '2026-04-26', checkOut: '2026-04-28', status: 'Confirmed', amount: 700 },
-    { id: 'RES-010', guest: 'Isabelle Moreau', hotelId: 'h4', hotelName: 'Wardiere City Boutique', groupName: 'Classic Floor', roomId: 'C2', checkIn: '2026-04-15', checkOut: '2026-04-17', status: 'Cancelled', amount: 640 },
-    { id: 'RES-011', guest: 'Ahmed Khalil', hotelId: 'h1', hotelName: 'Wardiere Grand Palace', groupName: 'Floor 1 · Garden Wing', roomId: 'D1', checkIn: '2026-04-22', checkOut: '2026-04-24', status: 'Checked In', amount: 760 },
-    { id: 'RES-012', guest: 'Fatou Sy', hotelId: 'h2', hotelName: 'Wardiere Marina Resort', groupName: 'Sea View Wing', roomId: 'C4', checkIn: '2026-04-22', checkOut: '2026-04-25', status: 'Checked In', amount: 1020 },
+    { id: 'RES-001', guest: 'Sophie Laurent', hotelId: 'h1', hotelName: 'PlaceFinder Grand Palace', groupName: 'Floor 1 · Garden Wing', roomId: 'A1', checkIn: '2026-04-22', checkOut: '2026-04-25', status: 'Checked In', amount: 1140 },
+    { id: 'RES-002', guest: 'Marco Bellini', hotelId: 'h1', hotelName: 'PlaceFinder Grand Palace', groupName: 'Floor 2 · Terrace Wing', roomId: 'B1', checkIn: '2026-04-23', checkOut: '2026-04-27', status: 'Confirmed', amount: 1520 },
+    { id: 'RES-003', guest: 'Amara Diallo', hotelId: 'h2', hotelName: 'PlaceFinder Marina Resort', groupName: 'Sea View Wing', roomId: 'A2', checkIn: '2026-04-20', checkOut: '2026-04-24', status: 'Checked In', amount: 1280 },
+    { id: 'RES-004', guest: 'James Thornton', hotelId: 'h2', hotelName: 'PlaceFinder Marina Resort', groupName: 'Garden Suites', roomId: 'B2', checkIn: '2026-04-25', checkOut: '2026-04-28', status: 'Confirmed', amount: 960 },
+    { id: 'RES-005', guest: 'Yuki Nakamura', hotelId: 'h3', hotelName: 'PlaceFinder Mountain Lodge', groupName: 'Alpine Wing', roomId: 'A1', checkIn: '2026-04-21', checkOut: '2026-04-23', status: 'Checked Out', amount: 640 },
+    { id: 'RES-006', guest: 'Leila Mansouri', hotelId: 'h1', hotelName: 'PlaceFinder Grand Palace', groupName: 'Floor 3 · Presidential', roomId: 'A1', checkIn: '2026-04-22', checkOut: '2026-04-26', status: 'Confirmed', amount: 2400 },
+    { id: 'RES-007', guest: 'Carlos Vega', hotelId: 'h4', hotelName: 'PlaceFinder City Boutique', groupName: 'Deluxe Floor', roomId: 'A1', checkIn: '2026-04-18', checkOut: '2026-04-20', status: 'Checked Out', amount: 640 },
+    { id: 'RES-008', guest: 'Nina Petrov', hotelId: 'h2', hotelName: 'PlaceFinder Marina Resort', groupName: 'Sea View Wing', roomId: 'B3', checkIn: '2026-04-24', checkOut: '2026-04-29', status: 'Pending', amount: 1600 },
+    { id: 'RES-009', guest: 'David Osei', hotelId: 'h3', hotelName: 'PlaceFinder Mountain Lodge', groupName: 'Summit Suites', roomId: 'B1', checkIn: '2026-04-26', checkOut: '2026-04-28', status: 'Confirmed', amount: 700 },
+    { id: 'RES-010', guest: 'Isabelle Moreau', hotelId: 'h4', hotelName: 'PlaceFinder City Boutique', groupName: 'Classic Floor', roomId: 'C2', checkIn: '2026-04-15', checkOut: '2026-04-17', status: 'Cancelled', amount: 640 },
+    { id: 'RES-011', guest: 'Ahmed Khalil', hotelId: 'h1', hotelName: 'PlaceFinder Grand Palace', groupName: 'Floor 1 · Garden Wing', roomId: 'D1', checkIn: '2026-04-22', checkOut: '2026-04-24', status: 'Checked In', amount: 760 },
+    { id: 'RES-012', guest: 'Fatou Sy', hotelId: 'h2', hotelName: 'PlaceFinder Marina Resort', groupName: 'Sea View Wing', roomId: 'C4', checkIn: '2026-04-22', checkOut: '2026-04-25', status: 'Checked In', amount: 1020 },
   ];
 
   occupancyTrend: OccupancyTrend[] = [

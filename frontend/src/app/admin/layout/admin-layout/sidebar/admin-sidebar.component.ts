@@ -66,7 +66,7 @@ interface NavItem {
       </div>
     </aside>
   `,
-  styleUrl: './admin-sidebar.component.css',
+  styleUrl: './admin-sidebar.component.scss',
 })
 export class AdminSidebarComponent {
   @Input() collapsed = false;

@@ -18,8 +18,8 @@ interface NotificationPref {
 })
 export class SettingsComponent {
   // Hotel info
-  brandName = 'Wardiere Hotel';
-  contactEmail = 'reservations@wardiere.com';
+  brandName = 'PlaceFinder Hotel';
+  contactEmail = 'reservations@PlaceFinder.com';
   phone = '+1 (555) 234-1290';
   country = 'France';
   address = '12 Avenue des Roses, Rimberio City, 75008';

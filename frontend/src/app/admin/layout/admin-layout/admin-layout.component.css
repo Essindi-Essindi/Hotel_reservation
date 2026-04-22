@@ -1,11 +1,4 @@
-/* ============================================================
-   WARDIERE Admin Layout Shell
-   Mirrors the React AppLayout / AppSidebar structure exactly
-   Design tokens included so this file works without styles.css
-   ============================================================ */
-
-/* ── Design tokens ─────────────────────────────────────────── */
-:root {
+root {
   --background: 36 33% 97%;
   --foreground: 350 35% 12%;
   --card: 0 0% 100%;

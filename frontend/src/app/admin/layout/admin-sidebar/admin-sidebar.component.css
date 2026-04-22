@@ -310,3 +310,23 @@
   justify-content: center;
   color: var(--sb-gold);
 }
+
+.sidebar-item .icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  display: block;
+}
+
+.sidebar-item .icon svg path,
+.sidebar-item .icon svg line,
+.sidebar-item .icon svg rect,
+.sidebar-item .icon svg polyline,
+.sidebar-item .icon svg circle {
+  stroke: currentColor;
+}
+
+.sidebar-item .icon svg * {
+  vector-effect: non-scaling-stroke;
+}

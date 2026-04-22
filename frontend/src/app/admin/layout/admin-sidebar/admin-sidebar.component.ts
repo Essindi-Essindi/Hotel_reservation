@@ -1,11 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { SafeHtml } from '@angular/platform-browser';
 
 interface NavItem {
   title: string;
   url: string;
-  icon: string; // lucide-like SVG path string or FA class
+  icon: string; 
+  safeIcon?: SafeHtml; 
   exact?: boolean;
 }
 

@@ -164,3 +164,79 @@
   line-height: 1;
   color: hsl(var(--foreground));
 }
+.kpi-card {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.6);
+  overflow: hidden;
+}
+
+/* Accent mode */
+.kpi-card.accent {
+  color: white;
+}
+
+/* Header */
+.kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kpi-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsl(var(--muted));
+  border-radius: 0.5rem;
+  color: hsl(var(--foreground)); /* VERY IMPORTANT */
+}
+
+/* Make SVG visible */
+.kpi-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* Delta badge */
+.delta-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.delta-badge.up {
+  color: #22c55e;
+}
+
+.delta-badge.down {
+  color: #ef4444;
+}
+
+.delta-badge svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* Text */
+.kpi-label {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.kpi-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+}

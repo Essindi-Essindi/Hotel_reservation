@@ -1,0 +1,46 @@
+.logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.logo-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-line {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.logo-sub {
+  font-family: var(--font-serif);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  opacity: 0.9;
+}
+
+.logo-main {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+/* Variants */
+.logo--light .logo-sub,
+.logo--light .logo-main {
+  color: var(--primary-fg);
+}
+
+.logo--dark .logo-sub,
+.logo--dark .logo-main {
+  color: var(--primary);
+}

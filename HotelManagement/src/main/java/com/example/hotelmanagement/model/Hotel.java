@@ -27,4 +27,6 @@ public class Hotel {
     private LocalDateTime deletedAt;
 
     private Integer totalRooms;
+    private Float price;
+
 }

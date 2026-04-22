@@ -14,6 +14,7 @@ public class NewHotelDto {
     private String hotelName;
     private Integer totalRooms;
     private String locationName;
+    private Float price;
 
 //    private List<NewRoomDto> rooms;
 }

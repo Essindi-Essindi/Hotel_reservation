@@ -35,6 +35,7 @@ public class HotelService {
         Location location = locationService.getLocationByName(newHotelDto.getLocationName());
         hotel.setLocation(location);
         hotel.setTotalRooms(newHotelDto.getTotalRooms());
+        hotel.setPrice(newHotelDto.getPrice());
 
         return hotelRepo.save(hotel);
     }
@@ -45,6 +46,8 @@ public class HotelService {
         existingHotel.setTotalRooms(hotel.getTotalRooms() != null ? hotel.getTotalRooms() : existingHotel.getTotalRooms());
         Location location = locationService.getLocationByName(hotel.getLocationName());
         existingHotel.setLocation(location!= null ? location : existingHotel.getLocation());
+        existingHotel.setPrice(hotel.getPrice() != null ? hotel.getPrice() : existingHotel.getPrice());
+
         return hotelRepo.save(existingHotel);
     }
 

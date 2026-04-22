@@ -15,5 +15,6 @@ public class UpdateHotelDto {
     private String hotelName;
     private String locationName;
     private Integer totalRooms;
+    private Float price;
 
 }

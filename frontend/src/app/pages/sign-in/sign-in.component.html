@@ -1,0 +1,79 @@
+<app-auth-shell
+  [image]="hotelSuite"
+  imageAlt="Luxury hotel suite"
+  eyebrow="Welcome back"
+  title="Sign In"
+  subtitle="Continue your journey of curated comfort.">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="signin-form">
+
+    <!-- Success banner -->
+    <div *ngIf="successMessage" class="success-banner">
+      ✓ {{ successMessage }}
+    </div>
+
+    <!-- Username -->
+    <div class="field">
+      <label for="username" class="field-label tracking-luxury">Username</label>
+      <input
+        id="username"
+        type="text"
+        formControlName="username"
+        autocomplete="username"
+        placeholder="janedoe"
+        class="field-input"
+        [class.field-input--error]="submitted && username.invalid">
+      <span *ngIf="usernameError()" class="field-error font-serif">{{ usernameError() }}</span>
+    </div>
+
+    <!-- Password -->
+    <div class="field">
+      <label for="password" class="field-label tracking-luxury">Password</label>
+      <div class="field-password-wrap">
+        <input
+          id="password"
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          autocomplete="current-password"
+          placeholder="••••••••"
+          class="field-input"
+          [class.field-input--error]="submitted && password.invalid">
+        <button type="button" class="toggle-pw" (click)="showPassword = !showPassword" [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+          <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          <svg *ngIf="showPassword"  xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        </button>
+      </div>
+      <span *ngIf="passwordError()" class="field-error font-serif">{{ passwordError() }}</span>
+    </div>
+
+    <!-- Remember + Forgot -->
+    <div class="form-meta">
+      <label class="remember-label font-serif">
+        <input type="checkbox" formControlName="rememberMe" class="check-input" />
+        Remember me
+      </label>
+      <a href="#" class="forgot-link font-serif">Forgot password?</a>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn-primary">SIGN IN</button>
+
+    <!-- Divider -->
+    <div class="divider">
+      <span class="divider-line"></span>
+      <span class="divider-text tracking-luxury font-serif">or</span>
+      <span class="divider-line"></span>
+    </div>
+
+    <!-- Guest -->
+    <a routerLink="/" class="btn-outline">Continue as Guest</a>
+
+    <!-- Footer link -->
+    <p class="form-footer font-serif">
+      New to Place-Finder?
+      <a routerLink="/sign-up" class="form-footer-link">Create an account</a>
+    </p>
+
+  </form>
+
+</app-auth-shell>

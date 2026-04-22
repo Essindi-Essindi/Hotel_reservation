@@ -1,96 +1,511 @@
-/* =======================
-   ADMIN LAYOUT WRAPPER
-======================= */
-.admin-layout {
-    display: flex;
-    min-height: 100vh;
-    background: var(--background-color);
+/* ============================================================
+   Dashboard — shared layout helpers
+   Design tokens included so this file works without styles.css
+   ============================================================ */
+
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  --background: 36 33% 97%;
+  --foreground: 350 35% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 350 35% 12%;
+  --primary: 350 55% 22%;
+  --primary-foreground: 36 50% 95%;
+  --primary-glow: 350 60% 32%;
+  --accent: 38 55% 58%;
+  --accent-foreground: 350 55% 18%;
+  --accent-soft: 38 50% 88%;
+  --secondary: 36 30% 92%;
+  --secondary-foreground: 350 45% 20%;
+  --muted: 36 25% 94%;
+  --muted-foreground: 350 10% 38%;
+  --destructive: 0 70% 45%;
+  --destructive-foreground: 36 50% 95%;
+  --success: 145 50% 35%;
+  --warning: 35 85% 50%;
+  --info: 210 60% 45%;
+  --border: 36 25% 86%;
+  --input: 36 25% 88%;
+  --ring: 350 55% 22%;
+  --radius: 0.875rem;
+  --shadow-soft:    0 2px 12px -4px hsl(350 40% 20% / 0.08);
+  --shadow-elegant: 0 10px 40px -12px hsl(350 50% 18% / 0.18);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* =======================
-   MAIN CONTENT FIX
-======================= */
-.main-content {
-    flex: 1;
-    margin-left: var(--sidebar-width);
-    padding: 2.5rem;
-    position: relative;
-    transition: margin-left 0.3s ease;
-    background: var(--background-color);
-    min-height: 100vh;
+.dark {
+  --background: 350 30% 8%;
+  --foreground: 36 40% 92%;
+  --card: 350 35% 12%;
+  --card-foreground: 36 40% 92%;
+  --primary: 38 55% 58%;
+  --primary-foreground: 350 55% 12%;
+  --secondary: 350 30% 18%;
+  --secondary-foreground: 36 40% 92%;
+  --muted: 350 25% 16%;
+  --muted-foreground: 36 20% 65%;
+  --accent: 38 55% 58%;
+  --destructive: 0 70% 50%;
+  --border: 350 25% 20%;
+  --input: 350 25% 20%;
 }
 
-/* when sidebar collapsed */
-.sidebar.collapsed ~ .main-content {
-    margin-left: var(--sidebar-collapsed-width);
+/* ── Shared page spacing ────────────────────────────────────── */
+.page-space {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-/* =======================
-   DASHBOARD SECTION
-======================= */
-.section {
-    padding: 2rem;
+/* ── Shared card base ───────────────────────────────────────── */
+.luxury-card {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.6);
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px -4px hsl(350 40% 20% / 0.08);
+  transition: box-shadow 0.3s, border-color 0.3s;
 }
 
-.section h2 {
-    margin-bottom: 3rem;
+.luxury-card:hover {
+  box-shadow: 0 10px 40px -12px hsl(350 50% 18% / 0.18);
+  border-color: hsl(var(--accent) / 0.4);
 }
 
-/* =======================
-   DASHBOARD GRID
-======================= */
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+.p-6 { padding: 1.5rem; }
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  height: 36px;
+  padding: 0 0.875rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  background: transparent;
+  color: hsl(var(--foreground));
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
 }
 
-/* =======================
-   DASHBOARD CARDS
-======================= */
-.dashboard-card {
-    background: var(--gradient-card);
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    text-align: center;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(26, 60, 143, 0.1);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 160px;
+.btn-outline:hover {
+  background: hsl(var(--secondary));
+  border-color: hsl(var(--accent) / 0.4);
 }
 
-.dashboard-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(26, 60, 143, 0.15);
+.btn-luxury {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  height: 36px;
+  padding: 0 1rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, hsl(350, 55%, 22%), hsl(350, 60%, 32%));
+  color: hsl(36, 50%, 95%);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.2s;
 }
 
-/* title */
-.dashboard-card h3 {
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    margin-bottom: 1rem;
+.btn-luxury:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
-/* number */
-.dashboard-card p {
-    font-size: 2rem;
-    font-weight: 700;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+/* ── Hero strip ──────────────────────────────────────────────── */
+.hero-strip {
+  position: relative;
+  height: 176px;
+  border-radius: 1rem;
+  overflow: hidden;
 }
 
-/* =======================
-   REMOVE GLOBAL BODY FLEX (IMPORTANT)
-======================= */
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+@media (min-width: 768px) {
+  .hero-strip { height: 208px; }
+}
+
+.hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    hsl(350 55% 22% / 0.95) 0%,
+    hsl(350 55% 22% / 0.7) 50%,
+    hsl(350 55% 22% / 0.3) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .hero-content { padding: 0 2.5rem; }
+}
+
+.hero-eyebrow {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: hsl(var(--accent));
+  margin-bottom: 0.5rem;
+}
+
+.hero-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.75rem;
+  color: hsl(36, 50%, 95%);
+  max-width: 32rem;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .hero-headline { font-size: 2.25rem; }
+}
+
+/* Diamond decorations */
+.hero-diamond {
+  position: absolute;
+  border: 1px solid hsl(var(--accent) / 0.4);
+  transform: rotate(45deg);
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hero-diamond { display: block; }
+}
+
+.hero-diamond--outer {
+  width: 96px;
+  height: 96px;
+  top: 1.5rem;
+  right: 2rem;
+}
+
+.hero-diamond--inner {
+  width: 48px;
+  height: 48px;
+  top: 3rem;
+  right: 3.5rem;
+  border-color: hsl(var(--accent) / 0.6);
+}
+
+/* ── KPI grid ────────────────────────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .kpi-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ── Shared section heading patterns ─────────────────────────── */
+.eyebrow-text {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: hsl(var(--accent));
+  font-weight: 500;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: hsl(var(--foreground));
+  margin-top: 0.25rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.ghost-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  color: hsl(var(--accent));
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.ghost-link:hover { opacity: 0.8; }
+
+/* ── Hotel Occupancy list ─────────────────────────────────────── */
+.occupancy-list { display: flex; flex-direction: column; gap: 1.25rem; }
+.occupancy-row { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.occupancy-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: 0.875rem;
+}
+
+.occ-hotel-name { font-weight: 500; color: hsl(var(--foreground)); }
+.occ-hotel-sub  { font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin-top: 0.125rem; }
+.occ-right      { text-align: right; }
+.occ-pct        { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: hsl(var(--foreground)); }
+.occ-sub        { font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin-top: 0.125rem; }
+
+.progress-track {
+  height: 8px;
+  width: 100%;
+  background: hsl(var(--secondary));
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, hsl(350, 55%, 22%), hsl(350, 60%, 32%));
+  border-radius: 9999px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Charts grid ─────────────────────────────────────────────── */
+.charts-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .charts-grid { grid-template-columns: 2fr 1fr; }
+}
+
+.chart-main,
+.chart-side { min-height: 320px; }
+
+/* Bar chart */
+.bar-chart-wrap { margin-top: 1.5rem; }
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.375rem;
+  height: 200px;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid hsl(var(--border));
+  border-left: 1px solid hsl(var(--border));
+}
+
+.bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.bar-col:hover .bar-tooltip {
+  display: block;
+}
+
+.bar-tooltip {
+  display: none;
+  position: absolute;
+  top: -4.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.6875rem;
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: 0 4px 12px hsl(350 40% 20% / 0.12);
+}
+
+.bar-tooltip span {
+  display: block;
+  color: hsl(var(--muted-foreground));
+}
+
+.bar-tooltip span:first-child {
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 100%;
+  width: 100%;
+  padding: 0 2px;
+}
+
+.bar {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bar.bar-revenue   { background: hsl(350 55% 22% / 0.75); }
+.bar.bar-occupancy { background: hsl(38 55% 58% / 0.7); }
+
+.bar-label {
+  position: absolute;
+  bottom: -1.25rem;
+  font-size: 0.625rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.25rem;
+}
+
+.legend-dot.dot-revenue   { background: hsl(350 55% 22%); }
+.legend-dot.dot-occupancy { background: hsl(38 55% 58%); }
+
+/* Room-status side chart */
+.room-status-chart { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+
+.rs-row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.75rem;
+}
+
+.rs-label {
+  width: 80px;
+  flex-shrink: 0;
+  color: hsl(var(--muted-foreground));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rs-track {
+  flex: 1;
+  height: 8px;
+  background: hsl(var(--secondary));
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.rs-fill {
+  height: 100%;
+  background: linear-gradient(135deg, hsl(350, 55%, 22%), hsl(350, 60%, 32%));
+  border-radius: 9999px;
+}
+
+.rs-pct {
+  width: 32px;
+  text-align: right;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+
+/* ── Table ───────────────────────────────────────────────────── */
+.table-scroll { overflow-x: auto; margin: 0 -0.5rem; }
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.data-table thead tr {
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.data-table thead th {
+  padding: 0.75rem 0.5rem;
+  text-align: left;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: hsl(var(--muted-foreground));
+  font-weight: 500;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid hsl(var(--border) / 0.5);
+  transition: background 0.15s;
+}
+
+.data-table tbody tr:hover {
+  background: hsl(var(--secondary) / 0.4);
+}
+
+.data-table tbody td {
+  padding: 0.75rem 0.5rem;
+  vertical-align: middle;
+}
+
+.guest-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: hsl(var(--secondary));
+  color: hsl(var(--primary));
+  font-size: 0.6875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.guest-name  { font-weight: 500; color: hsl(var(--foreground)); }
+.text-muted  { color: hsl(var(--muted-foreground)); }
+.font-medium { font-weight: 500; color: hsl(var(--foreground)); }
+.text-right  { text-align: right; }
+
+@media (max-width: 768px) {
+  .hide-sm { display: none; }
 }

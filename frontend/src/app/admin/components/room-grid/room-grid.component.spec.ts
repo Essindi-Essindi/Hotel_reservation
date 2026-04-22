@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminSidebarComponent } from './admin-sidebar.component';
+import { RoomGridComponent } from './room-grid.component';
 
-describe('AdminSidebarComponent', () => {
-  let component: AdminSidebarComponent;
-  let fixture: ComponentFixture<AdminSidebarComponent>;
+describe('RoomGridComponent', () => {
+  let component: RoomGridComponent;
+  let fixture: ComponentFixture<RoomGridComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminSidebarComponent]
+      imports: [RoomGridComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminSidebarComponent);
+    fixture = TestBed.createComponent(RoomGridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

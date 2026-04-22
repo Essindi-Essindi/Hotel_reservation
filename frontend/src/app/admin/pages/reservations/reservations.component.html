@@ -1,0 +1,124 @@
+<!-- Reservations Page — mirrors Lovable Reservations.tsx -->
+
+<div class="page-space">
+
+  <!-- Page Header -->
+  <app-page-header
+    eyebrow="Reservations"
+    title="Reservation Management"
+    description="View, filter, and manage all room reservations across your properties."
+    [hasActions]="true"
+  >
+    <button class="btn-outline">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Export
+    </button>
+    <button class="btn-luxury">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      New Reservation
+    </button>
+  </app-page-header>
+
+  <!-- Filter bar -->
+  <div class="luxury-card filter-card">
+    <div class="filter-row">
+      <!-- Search -->
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Search guest, ID, or hotel…"
+          [ngModel]="query()"
+          (ngModelChange)="query.set($event)"
+        />
+      </div>
+
+      <!-- Hotel filter -->
+      <select class="filter-select" [ngModel]="hotelId()" (ngModelChange)="hotelId.set($event)">
+        <option value="All">All Hotels</option>
+        <option *ngFor="let h of hotels" [value]="h.id">{{ h.name }}</option>
+      </select>
+
+      <!-- Status filter -->
+      <select class="filter-select filter-select--narrow" [ngModel]="status()" (ngModelChange)="status.set($event)">
+        <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="luxury-card table-card">
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Guest</th>
+            <th>Hotel · Room</th>
+            <th class="hide-md">Check-in</th>
+            <th class="hide-md">Check-out</th>
+            <th>Status</th>
+            <th class="text-right">Amount</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of filtered()">
+            <td class="mono-id">{{ r.id }}</td>
+            <td>
+              <div class="guest-cell">
+                <div class="avatar-sm">{{ getInitials(r.guest) }}</div>
+                <span class="guest-name">{{ r.guest }}</span>
+              </div>
+            </td>
+            <td>
+              <p class="table-primary">{{ r.hotelName }}</p>
+              <p class="table-sub">{{ r.groupName }} · Room {{ r.roomId }}</p>
+            </td>
+            <td class="text-muted hide-md">{{ r.checkIn }}</td>
+            <td class="text-muted hide-md">{{ r.checkOut }}</td>
+            <td><app-status-badge [status]="r.status" /></td>
+            <td class="text-right font-medium">${{ r.amount.toLocaleString() }}</td>
+            <td class="text-right">
+              <div class="action-btns">
+                <!-- View -->
+                <button class="icon-action" title="View">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+                <!-- Edit -->
+                <button class="icon-action" title="Edit">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                  </svg>
+                </button>
+                <!-- Delete -->
+                <button class="icon-action icon-action--danger" title="Delete" (click)="deleteReservation(r.id)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Empty state -->
+          <tr *ngIf="filtered().length === 0">
+            <td colspan="8" class="empty-state">No reservations match your filters.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

@@ -1,15 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SidebarComponent } from '../admin-sidebar/sidebar.component';
+import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { AdminTopbarComponent } from '../admin-topbar/admin-topbar.component';
 
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, AdminTopbarComponent],
+  imports: [RouterOutlet, AdminSidebarComponent, AdminTopbarComponent],
   template: `
     <div class="admin-shell" [class.sidebar-collapsed]="sidebarCollapsed()">
-      <app-sidebar
+      <app-admin-sidebar
         [collapsed]="sidebarCollapsed()"
         (toggleCollapse)="sidebarCollapsed.set(!sidebarCollapsed())"
       />
@@ -21,7 +21,7 @@ import { AdminTopbarComponent } from '../admin-topbar/admin-topbar.component';
       </div>
     </div>
   `,
-  styleUrl: './admin-layout.component.scss',
+  styleUrl: './admin-layout.component.css',
 })
 export class AdminLayoutComponent {
   sidebarCollapsed = signal(false);

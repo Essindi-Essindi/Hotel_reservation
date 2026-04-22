@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminSidebarComponent } from './admin-sidebar.component';
+import { KpiCardComponent } from './kpi-card.component';
 
-describe('AdminSidebarComponent', () => {
-  let component: AdminSidebarComponent;
-  let fixture: ComponentFixture<AdminSidebarComponent>;
+describe('KpiCardComponent', () => {
+  let component: KpiCardComponent;
+  let fixture: ComponentFixture<KpiCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminSidebarComponent]
+      imports: [KpiCardComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdminSidebarComponent);
+    fixture = TestBed.createComponent(KpiCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,4 +1,4 @@
-<!-- Hotels Page — mirrors Lovable Hotels.tsx exactly -->
+<!-- Hotels Page -->
 
 <div class="page-space">
 
@@ -6,32 +6,68 @@
   <app-page-header
     eyebrow="Properties"
     title="Hotel Management"
-    description="Manage your properties, room groups, and individual rooms."
+    description="Manage your properties and individual rooms."
     [hasActions]="true"
   >
-    <button class="btn-luxury" (click)="openNew()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-      </svg>
-      New Hotel
-    </button>
+    <div class="header-actions">
+      <button class="btn-outline" (click)="openAddRoom()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/>
+        </svg>
+        Add Room
+      </button>
+      <button class="btn-luxury" (click)="openNew()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        New Hotel
+      </button>
+    </div>
   </app-page-header>
 
+  <!-- Loading state -->
+  <div *ngIf="loadingHotels()" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading hotels…</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="hotelsError()" class="alert-error">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    {{ hotelsError() }}
+    <button class="link-btn" (click)="ngOnInit()">Retry</button>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!loadingHotels() && !hotelsError() && hotels().length === 0" class="empty-hotels">
+    <div class="empty-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    </div>
+    <p class="empty-title">No hotels yet</p>
+    <p class="empty-sub">Create your first property to get started.</p>
+    <button class="btn-luxury" style="margin-top:1rem" (click)="openNew()">New Hotel</button>
+  </div>
+
   <!-- Hotel Cards Grid -->
-  <div class="hotels-grid">
-    <div *ngFor="let h of hotels" class="hotel-card luxury-card group-card">
+  <div *ngIf="!loadingHotels() && hotels().length > 0" class="hotels-grid">
+    <div *ngFor="let h of hotels()" class="hotel-card luxury-card">
 
       <!-- Image strip with gradient overlay -->
       <div class="hotel-img-wrap">
-        <img [src]="h.image" [alt]="h.name" class="hotel-img" />
+        <div class="hotel-img-placeholder"></div>
         <div class="hotel-img-overlay"></div>
         <div class="hotel-img-caption">
-          <h3 class="hotel-card-name">{{ h.name }}</h3>
+          <h3 class="hotel-card-name">{{ h.hotelName }}</h3>
           <p class="hotel-card-city">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
             </svg>
-            {{ h.city }}
+            {{ h.locationName }}
           </p>
         </div>
       </div>
@@ -40,18 +76,18 @@
       <div class="hotel-card-body">
         <div class="hotel-stats-grid">
           <div class="stat-box">
-            <p class="stat-label">Groups</p>
-            <p class="stat-val">{{ h.groups.length }}</p>
+            <p class="stat-label">Rooms</p>
+            <p class="stat-val">{{ h.totalRooms }}</p>
           </div>
           <div class="stat-box">
-            <p class="stat-label">Rooms</p>
-            <p class="stat-val">{{ totalRooms(h) }}</p>
+            <p class="stat-label">Reserved</p>
+            <p class="stat-val stat-val--accent">{{ reservedCount(h) }}</p>
+          </div>
+          <div class="stat-box">
+            <p class="stat-label">Price</p>
+            <p class="stat-val">${{ h.price | number:'1.0-0' }}</p>
           </div>
         </div>
-
-        <p class="reserved-note">
-          <span class="font-medium">{{ reservedCount(h) }}</span> currently reserved
-        </p>
 
         <div class="hotel-card-actions">
           <button class="btn-outline flex-1" (click)="openManage(h)">
@@ -60,7 +96,7 @@
             </svg>
             Manage
           </button>
-          <button class="btn-ghost-danger" (click)="deleteHotel(h.id)">
+          <button class="btn-ghost-danger" (click)="deleteHotel(h.hotelName)" title="Delete hotel">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <polyline points="3 6 5 6 21 6"/>
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
@@ -73,13 +109,16 @@
 
 </div>
 
-<!-- ── Manage Hotel Modal ──────────────────────────────────────── -->
+
+<!-- ── Manage Hotel Modal ─────────────────────────────────────────────────── -->
 <div class="modal-backdrop" *ngIf="selectedHotel()" (click)="closeManage()">
   <div class="modal-panel modal-lg" (click)="$event.stopPropagation()">
+
     <div class="modal-header">
       <div>
-        <h2 class="modal-title">{{ selectedHotel()!.name }}</h2>
-        <p class="modal-sub">{{ selectedHotel()!.address }}</p>
+        <p class="modal-eyebrow">Manage · {{ selectedHotel()!.locationName }}</p>
+        <h2 class="modal-title">{{ selectedHotel()!.hotelName }}</h2>
+        <p class="modal-sub">${{ selectedHotel()!.price | number:'1.2-2' }} / night · {{ selectedHotel()!.totalRooms }} rooms</p>
       </div>
       <button class="modal-close" (click)="closeManage()">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -88,83 +127,246 @@
       </button>
     </div>
 
-    <!-- Tab bar -->
-    <div class="tab-bar">
-      <button
-        *ngFor="let g of selectedHotel()!.groups"
-        class="tab-btn"
-        [class.active]="activeGroupId() === g.id"
-        (click)="setActiveGroup(g.id)"
-      >{{ g.name }}</button>
+    <div class="tab-content">
+      <!-- Loading rooms -->
+      <div *ngIf="loadingRooms()" class="loading-inline">
+        <div class="spinner spinner-sm"></div>
+        <span>Loading rooms…</span>
+      </div>
+
+      <!-- Rooms table -->
+      <div *ngIf="!loadingRooms() && selectedHotel()!.roomsLoaded" class="room-list-wrap">
+        <div class="room-list-header">
+          <span class="room-list-title">Rooms ({{ selectedHotel()!.rooms.length }})</span>
+        </div>
+        <div class="room-table-scroll">
+          <table class="room-table">
+            <thead>
+              <tr>
+                <th>Room ID</th>
+                <th>Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of selectedHotel()!.rooms"
+                  [class.room-row--reserved]="r.status?.toLowerCase() === 'reserved'">
+                <td><span class="room-id">{{ r.roomId }}</span></td>
+                <td>{{ r.roomName }}</td>
+                <td>
+                  <span class="room-status-badge"
+                    [class.room-status-badge--reserved]="r.status?.toLowerCase() === 'reserved'"
+                    [class.room-status-badge--free]="r.status?.toLowerCase() === 'free'"
+                    [class.room-status-badge--maintenance]="r.status?.toLowerCase() === 'maintenance'">
+                    <span class="status-dot"></span>
+                    {{ r.status ?? 'Free' }}
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="selectedHotel()!.rooms.length === 0">
+                <td colspan="3" class="room-table-empty">No rooms found for this hotel.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <!-- Tab content -->
-    <div class="tab-content" *ngIf="activeGroup(selectedHotel()!) as g">
-      <div class="group-meta">
-        <span class="meta-chip">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
-          </svg>
-          {{ g.rows }} × {{ g.cols }}
-        </span>
-        <span class="meta-chip">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/>
-          </svg>
-          {{ g.rooms.length }} rooms
-        </span>
-      </div>
-      <app-room-grid [rows]="g.rows" [cols]="g.cols" [rooms]="g.rooms" cellSize="sm" />
-    </div>
   </div>
 </div>
 
-<!-- ── New Hotel Modal ────────────────────────────────────────── -->
+
+<!-- ── New Hotel Modal ───────────────────────────────────────────────────── -->
 <div class="modal-backdrop" *ngIf="showNewModal()" (click)="closeNew()">
   <div class="modal-panel modal-lg" (click)="$event.stopPropagation()">
+
     <div class="modal-header">
       <div>
         <h2 class="modal-title">Add New Hotel</h2>
-        <p class="modal-sub">Create a hotel with its first room group and define the room layout.</p>
+        <p class="modal-sub">Create a hotel and auto-generate its rooms.</p>
       </div>
-      <button class="modal-close" (click)="closeNew()">
+      <button class="modal-close" (click)="closeNew()" [disabled]="creatingHotel()">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
       </button>
     </div>
 
-    <div class="modal-body">
+    <div class="modal-body" [formGroup]="hotelForm">
+
+      <!-- Error / warning banners -->
+      <div *ngIf="createError()" class="alert-error mb-1">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        {{ createError() }}
+      </div>
+      <div *ngIf="roomWarning()" class="alert-warning mb-1">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        {{ roomWarning() }}
+        <button class="link-btn" (click)="closeNew()">Close</button>
+      </div>
+
+      <!-- Basic fields -->
       <div class="form-grid">
+
+        <!-- Hotel Name -->
         <div class="field-group">
-          <label class="field-label">Hotel Name</label>
-          <input class="field-input" [(ngModel)]="newName" placeholder="PlaceFinder Royal Reserve" />
+          <label class="field-label">Hotel Name *</label>
+          <input class="field-input" formControlName="hotelName"
+                 [class.field-input--error]="hasError(hotelForm, 'hotelName', 'required') || hasError(hotelForm, 'hotelName', 'minlength')"
+                 placeholder="Grand Royal Reserve" />
+          <p *ngIf="hasError(hotelForm, 'hotelName', 'required')" class="field-error">Name is required.</p>
+          <p *ngIf="hasError(hotelForm, 'hotelName', 'minlength')" class="field-error">Minimum 2 characters.</p>
         </div>
+
+        <!-- Price -->
         <div class="field-group">
-          <label class="field-label">City</label>
-          <input class="field-input" [(ngModel)]="newCity" placeholder="Rimberio" />
+          <label class="field-label">Price per Night ($) *</label>
+          <input class="field-input" type="number" min="0" formControlName="price"
+                 [class.field-input--error]="hasError(hotelForm, 'price', 'required') || hasError(hotelForm, 'price', 'min')"
+                 placeholder="150" />
+          <p *ngIf="hasError(hotelForm, 'price', 'required')" class="field-error">Price is required.</p>
+          <p *ngIf="hasError(hotelForm, 'price', 'min')" class="field-error">Must be ≥ 0.</p>
         </div>
+
+        <!-- Location dropdown -->
         <div class="field-group col-span-2">
-          <label class="field-label">Address</label>
-          <input class="field-input" [(ngModel)]="newAddress" placeholder="12 Avenue des Roses" />
+          <label class="field-label">Location *</label>
+          <div class="location-row">
+            <select class="field-input field-select" formControlName="locationName"
+                    [class.field-input--error]="hasError(hotelForm, 'locationName', 'required')">
+              <option value="" disabled>Select a location…</option>
+              <option *ngFor="let loc of locations()" [value]="loc.locationName">
+                {{ loc.locationName }}
+              </option>
+            </select>
+            <button type="button" class="btn-add-location" (click)="toggleAddLocation()" title="Add new location">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+            </button>
+          </div>
+          <p *ngIf="hasError(hotelForm, 'locationName', 'required')" class="field-error">Please select a location.</p>
+
+          <!-- Inline add-location input -->
+          <div *ngIf="showAddLocation()" class="inline-location-form">
+            <input class="field-input" [(ngModel)]="newLocationName" [ngModelOptions]="{standalone: true}"
+                   placeholder="New location name…"
+                   (keyup.enter)="saveNewLocation()" />
+            <button class="btn-luxury btn-sm" (click)="saveNewLocation()" [disabled]="addingLocation() || !newLocationName.trim()">
+              <span *ngIf="!addingLocation()">Save</span>
+              <span *ngIf="addingLocation()" class="spinner spinner-xs"></span>
+            </button>
+            <button class="btn-outline btn-sm" (click)="toggleAddLocation()">Cancel</button>
+          </div>
+          <p *ngIf="locationAddError()" class="field-error">{{ locationAddError() }}</p>
         </div>
+
+        <!-- Total rooms -->
         <div class="field-group col-span-2">
-          <label class="field-label">Room Group Name</label>
-          <input class="field-input" [(ngModel)]="newGroupName" placeholder="Floor 1 · Garden Wing" />
+          <label class="field-label">Number of Rooms *</label>
+          <input class="field-input" type="number" min="1" max="500" formControlName="totalRooms"
+                 [class.field-input--error]="hasError(hotelForm, 'totalRooms', 'required') || hasError(hotelForm, 'totalRooms', 'min')"
+                 placeholder="10" />
+          <p *ngIf="hasError(hotelForm, 'totalRooms', 'min')" class="field-error">At least 1 room required.</p>
+        </div>
+
+      </div>
+
+      <!-- Room names section -->
+      <div *ngIf="roomNames.length > 0" class="generator-section">
+        <p class="eyebrow-text">Room Names</p>
+        <h4 class="gen-title">Customise room names <span class="gen-hint">(or leave as auto-generated)</span></h4>
+        <div class="room-names-grid">
+          <div *ngFor="let name of roomNames; let i = index" class="field-group">
+            <label class="field-label">Room {{ i + 1 }}</label>
+            <input class="field-input field-input--sm"
+                   [value]="roomNames[i]"
+                   (input)="updateRoomName(i, $any($event.target).value)"
+                   [placeholder]="'Room ' + (i + 1)" />
+          </div>
         </div>
       </div>
 
-      <!-- Grid generator -->
-      <div class="generator-section">
-        <p class="eyebrow-text">Room Layout</p>
-        <h4 class="gen-title">Visual Grid Generator</h4>
-        <app-room-grid [generatorMode]="true" />
+    </div><!-- /modal-body -->
+
+    <div class="modal-footer">
+      <button class="btn-outline" (click)="closeNew()" [disabled]="creatingHotel()">Cancel</button>
+      <button class="btn-luxury" (click)="createHotel()" [disabled]="creatingHotel()">
+        <span *ngIf="!creatingHotel()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Create Hotel
+        </span>
+        <span *ngIf="creatingHotel()" class="creating-label">
+          <span class="spinner spinner-xs"></span>
+          Creating…
+        </span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ── Standalone Add Room Modal ─────────────────────────────────────────── -->
+<div class="modal-backdrop" *ngIf="showAddRoomModal()" (click)="closeAddRoom()">
+  <div class="modal-panel modal-sm" (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+      <div>
+        <h2 class="modal-title">Add Room</h2>
+        <p class="modal-sub">Add a single room to an existing hotel.</p>
+      </div>
+      <button class="modal-close" (click)="closeAddRoom()" [disabled]="addingRoom()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-body" [formGroup]="roomForm">
+
+      <div *ngIf="addRoomError()" class="alert-error mb-1">{{ addRoomError() }}</div>
+
+      <div class="form-grid form-grid--single">
+
+        <div class="field-group">
+          <label class="field-label">Hotel *</label>
+          <select class="field-input field-select" formControlName="hotelName"
+                  [class.field-input--error]="hasError(roomForm, 'hotelName', 'required')">
+            <option value="" disabled>Select hotel…</option>
+            <option *ngFor="let name of hotelNames()" [value]="name">{{ name }}</option>
+          </select>
+          <p *ngIf="hasError(roomForm, 'hotelName', 'required')" class="field-error">Please select a hotel.</p>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Room Name *</label>
+          <input class="field-input" formControlName="roomName"
+                 [class.field-input--error]="hasError(roomForm, 'roomName', 'required')"
+                 placeholder="e.g. Suite 201" />
+          <p *ngIf="hasError(roomForm, 'roomName', 'required')" class="field-error">Room name is required.</p>
+        </div>
+
       </div>
     </div>
 
     <div class="modal-footer">
-      <button class="btn-outline" (click)="closeNew()">Cancel</button>
-      <button class="btn-luxury" (click)="createHotel()">Create Hotel</button>
+      <button class="btn-outline" (click)="closeAddRoom()" [disabled]="addingRoom()">Cancel</button>
+      <button class="btn-luxury" (click)="submitAddRoom()" [disabled]="addingRoom()">
+        <span *ngIf="!addingRoom()">Add Room</span>
+        <span *ngIf="addingRoom()" class="creating-label">
+          <span class="spinner spinner-xs"></span>
+          Adding…
+        </span>
+      </button>
     </div>
+
   </div>
 </div>

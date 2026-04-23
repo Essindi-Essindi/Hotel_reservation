@@ -1,4 +1,3 @@
-
 name: Deploy
 
 on:
@@ -38,7 +37,7 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/cloud-hotel-management "./HotelManagement"
           docker push ${{ secrets.DOCKER_USERNAME }}/cloud-hotel-management
 
-       - name: Build & push post service
+      - name: Build & push post service 
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/cloud-payment-management "./PaymentManagement"
           docker push ${{ secrets.DOCKER_USERNAME }}/cloud-payment-management

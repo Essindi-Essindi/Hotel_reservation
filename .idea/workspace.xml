@@ -4,7 +4,90 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3dd1f9a-654f-4853-b57d-0df9bc59f57c" name="Changes" comment="Enabling CORS for frontend" />
+    <list default="true" id="b3dd1f9a-654f-4853-b57d-0df9bc59f57c" name="Changes" comment="merging Astera into Claudia">
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/admin-routing.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/admin.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/confirm-modal/confirm-modal.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/confirm-modal/confirm-modal.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/confirm-modal/confirm-modal.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/kpi-card/kpi-card.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/kpi-card/kpi-card.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/kpi-card/kpi-card.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/kpi-card/kpi-card.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/page-header/page-header.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/page-header/page-header.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/page-header/page-header.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/page-header/page-header.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/reservation-view-modal/reservation-view-modal.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/reservation-view-modal/reservation-view-modal.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/reservation-view-modal/reservation-view-modal.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/reservation-view-modal/reservation-view-modal.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/room-grid/room-grid.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/room-grid/room-grid.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/room-grid/room-grid.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/room-grid/room-grid.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/status-badge/status-badge.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/status-badge/status-badge.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/status-badge/status-badge.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/status-badge/status-badge.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-sidebar/admin-sidebar.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-sidebar/admin-sidebar.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-sidebar/sidebar.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-topbar/admin-topbar.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-topbar/admin-topbar.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-topbar/admin-topbar.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-topbar/admin-topbar.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/models/payment.model.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/models/reservation.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/dashboard/dashboard.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/dashboard/dashboard.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/dashboard/dashboard.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/payments/payments.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/payments/payments.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/payments/payments.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/payments/payments.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/dashboard.service.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/dashboard.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/hotel.service.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/hotel.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/location.service.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/location.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/mock-data.service.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/mock-data.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/payment.service.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/payment.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/reservation.service.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/reservation.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/room.service.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/room.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/room-deluxe.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/room-presidential.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/room-suite.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/dashboard/dashboard.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/dashboard/dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/confirm-modal/confirm-modal.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/dashboard/dashboard.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/dashboard/dashboard.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/dashboard/dashboard.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/sidebar/sidebar.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/sidebar/sidebar.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/sidebar/sidebar.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/sidebar/sidebar.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tsconfig.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,16 +101,154 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="3CmDHDNZm52U57ENGTZPHDYVLR0" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "Claudia"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Claudia",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.configurations.included.in.services": "true",
+    "ts.external.directory.path": "D:\\Inge 4\\S2\\Cloud Computing\\Hotel_reservation\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.GatewayApplication">
+    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.gateway.GatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HotelManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="HotelManagement" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.hotelmanagement.HotelManagementApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PaymentManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="PaymentManagement" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.paymentmanagement.PaymentManagementApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReservationManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ReservationManagement" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.reservationmanagement.ReservationManagementApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServiceRegistryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ServiceRegistry" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.serviceregistry.ServiceRegistryApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="UserManagement" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.usermanagement.UserManagementApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="user-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.userservice.UserServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b3dd1f9a-654f-4853-b57d-0df9bc59f57c" name="Changes" comment="Enabling CORS for frontend" />
+      <created>1776981770658</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1776981770658</updated>
+      <workItem from="1776981771228" duration="784000" />
+    </task>
+    <task id="LOCAL-00001" summary="Enabling CORS for frontend">
+      <option name="closed" value="true" />
+      <created>1776981907575</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1776981907575</updated>
+    </task>
+    <task id="LOCAL-00002" summary="merging Ayuk into Claudia">
+      <option name="closed" value="true" />
+      <created>1776982366426</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1776982366426</updated>
+    </task>
+    <task id="LOCAL-00003" summary="merging Astera into Claudia">
+      <option name="closed" value="true" />
+      <created>1776982547297</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1776982547297</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Enabling CORS for frontend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Enabling CORS for frontend" />
+    <MESSAGE value="merging Ayuk into Claudia" />
+    <MESSAGE value="merging Astera into Claudia" />
+    <option name="LAST_COMMIT_MESSAGE" value="merging Astera into Claudia" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

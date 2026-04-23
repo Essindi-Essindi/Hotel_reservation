@@ -5,11 +5,12 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/Gateway/pom.xml" />
-        <option value="$PROJECT_DIR$/UserManagement/pom.xml" />
-        <option value="$PROJECT_DIR$/ServiceRegistry/pom.xml" />
-        <option value="$PROJECT_DIR$/ReservationManagement/pom.xml" />
-        <option value="$PROJECT_DIR$/PaymentManagement/pom.xml" />
+        <option value="$PROJECT_DIR$/services/user-service/pom.xml" />
         <option value="$PROJECT_DIR$/HotelManagement/pom.xml" />
+        <option value="$PROJECT_DIR$/PaymentManagement/pom.xml" />
+        <option value="$PROJECT_DIR$/ReservationManagement/pom.xml" />
+        <option value="$PROJECT_DIR$/ServiceRegistry/pom.xml" />
+        <option value="$PROJECT_DIR$/UserManagement/pom.xml" />
       </list>
     </option>
   </component>

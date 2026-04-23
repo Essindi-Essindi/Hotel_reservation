@@ -5,88 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b3dd1f9a-654f-4853-b57d-0df9bc59f57c" name="Changes" comment="merging Astera into Claudia">
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/admin-routing.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/admin.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/confirm-modal/confirm-modal.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/confirm-modal/confirm-modal.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/confirm-modal/confirm-modal.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/kpi-card/kpi-card.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/kpi-card/kpi-card.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/kpi-card/kpi-card.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/kpi-card/kpi-card.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/page-header/page-header.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/page-header/page-header.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/page-header/page-header.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/page-header/page-header.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/reservation-view-modal/reservation-view-modal.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/reservation-view-modal/reservation-view-modal.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/reservation-view-modal/reservation-view-modal.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/reservation-view-modal/reservation-view-modal.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/room-grid/room-grid.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/room-grid/room-grid.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/room-grid/room-grid.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/room-grid/room-grid.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/status-badge/status-badge.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/status-badge/status-badge.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/status-badge/status-badge.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/status-badge/status-badge.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-sidebar/admin-sidebar.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-sidebar/admin-sidebar.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-sidebar/sidebar.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-topbar/admin-topbar.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-topbar/admin-topbar.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-topbar/admin-topbar.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-topbar/admin-topbar.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/models/payment.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/models/reservation.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/dashboard/dashboard.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/dashboard/dashboard.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/dashboard/dashboard.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/payments/payments.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/payments/payments.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/payments/payments.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/payments/payments.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/dashboard.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/dashboard.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/hotel.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/hotel.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/location.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/location.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/mock-data.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/mock-data.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/payment.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/payment.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/reservation.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/reservation.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/room.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/room.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/room-deluxe.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/room-presidential.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/room-suite.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/dashboard/dashboard.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/dashboard/dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/confirm-modal/confirm-modal.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/dashboard/dashboard.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/dashboard/dashboard.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/dashboard/dashboard.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/layout/admin-layout/admin-layout.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/sidebar/sidebar.component.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/sidebar/sidebar.component.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/sidebar/sidebar.component.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/layout/sidebar/sidebar.component.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/dto/PaymentDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/repository/PaymentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PaymentManagement/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PaymentManagement/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/controller/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/model/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/model/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/repository/PaymentRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/service/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/dto/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/security/JwtFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/security/JwtFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +46,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Claudia",
+    "git-widget-placeholder": "Merging Claudia",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
@@ -205,7 +138,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1776981770658</updated>
-      <workItem from="1776981771228" duration="784000" />
+      <workItem from="1776981771228" duration="1149000" />
     </task>
     <task id="LOCAL-00001" summary="Enabling CORS for frontend">
       <option name="closed" value="true" />
@@ -231,7 +164,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776982547297</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="merging Astera into Claudia">
+      <option name="closed" value="true" />
+      <created>1776982599843</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1776982599843</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

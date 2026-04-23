@@ -4,291 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57165d66-a1a2-4813-abb3-c3e566c6d063" name="Changes" comment="Enabling CORS for frontend" />
+    <list default="true" id="b3dd1f9a-654f-4853-b57d-0df9bc59f57c" name="Changes" comment="Enabling CORS for frontend" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Ayuk" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiPersistence">{}</component>
-  <component name="KubernetesApiProvider">{
-  &quot;isMigrated&quot;: true
-}</component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 4
-}</component>
-  <component name="ProjectId" id="3CjHPv4AiZkHNYYwII4G5VsY9np" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.GatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.HotelManagementApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.PaymentManagementApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ReservationManagementApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ServiceRegistryApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.UserManagementApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Claudia&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Inge 4/S2/Cloud Computing/Hotel_reservation/UserManagement&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Inge 4\\S2\\Cloud Computing\\Hotel_reservation\\frontend\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "Claudia"
   }
-}</component>
-  <component name="RunDashboard">
-    <option name="configurationTypes">
-      <set>
-        <option value="KtorApplicationConfigurationType" />
-        <option value="MicronautRunConfigurationType" />
-        <option value="QuarkusRunConfigurationType" />
-        <option value="SpringBootApplicationConfigurationType" />
-      </set>
-    </option>
-  </component>
-  <component name="RunManager" selected="Spring Boot.ParkingServiceApplication">
-    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="Gateway" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.gateway.GatewayApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="HotelManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="HotelManagement" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.hotelmanagement.HotelManagementApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ParkingServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="parking-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.parkingservice.ParkingServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PaymentManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="PaymentManagement" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.paymentmanagement.PaymentManagementApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PaymentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="payment-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.paymentservice.PaymentServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ReservationManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="ReservationManagement" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.reservationmanagement.ReservationManagementApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ServiceRegistryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="ServiceRegistry" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.serviceregistry.ServiceRegistryApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="UserManagement" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.usermanagement.UserManagementApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="user-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.userservice.UserServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.59" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.59" />
-      </set>
-    </attachedChunks>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+}]]></component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="57165d66-a1a2-4813-abb3-c3e566c6d063" name="Changes" comment="" />
-      <created>1776892039902</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1776892039902</updated>
-      <workItem from="1776892042182" duration="231000" />
-      <workItem from="1776892281974" duration="2000" />
-      <workItem from="1776892292219" duration="1352000" />
-      <workItem from="1776944166731" duration="22154000" />
-      <workItem from="1776976552081" duration="26000" />
-      <workItem from="1776981285320" duration="216000" />
-    </task>
-    <task id="LOCAL-00001" summary="Adding eureka Client defaultzone">
-      <option name="closed" value="true" />
-      <created>1776956907994</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1776956907994</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Converting the user management service to use a postgres database">
-      <option name="closed" value="true" />
-      <created>1776957596233</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1776957596233</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Resolving Gateway dependencies">
-      <option name="closed" value="true" />
-      <created>1776960548545</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1776960548545</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Resolving Gateway routing issues">
-      <option name="closed" value="true" />
-      <created>1776961686114</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1776961686115</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Resolving Gateway routing issues">
-      <option name="closed" value="true" />
-      <created>1776963409789</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1776963409789</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Resolving Gateway routing issues">
-      <option name="closed" value="true" />
-      <created>1776965619224</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1776965619224</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Resolving Gateway routing issues">
-      <option name="closed" value="true" />
-      <created>1776966721760</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1776966721760</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Resolving Gateway routing issues">
-      <option name="closed" value="true" />
-      <created>1776967335171</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1776967335171</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Resolving Gateway routing issues">
-      <option name="closed" value="true" />
-      <created>1776973357087</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1776973357087</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Deploying frontend">
-      <option name="closed" value="true" />
-      <created>1776973754639</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1776973754639</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Enabling CORS for frontend">
-      <option name="closed" value="true" />
-      <created>1776973938051</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1776973938051</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Enabling CORS for frontend">
-      <option name="closed" value="true" />
-      <created>1776975742233</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1776975742233</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Enabling CORS for frontend">
-      <option name="closed" value="true" />
-      <created>1776976492087</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1776976492087</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Enabling CORS for frontend">
-      <option name="closed" value="true" />
-      <created>1776981379740</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1776981379740</updated>
-    </task>
-    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding eureka Client defaultzone" />
-    <MESSAGE value="Converting the user management service to use a postgres database" />
-    <MESSAGE value="Resolving Gateway dependencies" />
-    <MESSAGE value="Resolving Gateway routing issues" />
-    <MESSAGE value="Deploying frontend" />
     <MESSAGE value="Enabling CORS for frontend" />
     <option name="LAST_COMMIT_MESSAGE" value="Enabling CORS for frontend" />
-  </component>
-  <component name="github-copilot-workspace">
-    <instructionFileLocations>
-      <option value=".github/instructions" />
-    </instructionFileLocations>
-    <promptFileLocations>
-      <option value=".github/prompts" />
-    </promptFileLocations>
   </component>
 </project>

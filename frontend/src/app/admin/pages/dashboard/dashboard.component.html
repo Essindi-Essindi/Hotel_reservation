@@ -1,22 +1,15 @@
-<!-- ============================================================
-     Dashboard Page — Angular template mirroring Lovable Dashboard.tsx
-     Layout: PageHeader → Hero strip → KPI grid → Hotel occupancy →
-             Charts → Recent reservations table
-     ============================================================ -->
 
 <div class="page-space">
 
-  <!-- ── Page Header ─────────────────────────────────────────── -->
   <app-page-header
     eyebrow="PlaceFinder · Overview"
-    title="Good evening, Catherine"
+    title="Greetings, Administrator!"
     description="Here's what's happening across your properties today"
     [hasActions]="true"
   >
 
   </app-page-header>
 
-  <!-- ── Hero Strip ──────────────────────────────────────────── -->
   <div class="hero-strip">
     <img
       src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=80"
@@ -30,12 +23,10 @@
         {{ occupancyPct }}% occupancy · {{ reservedCount }} rooms booked
       </h2>
     </div>
-    <!-- Diamond decorations (matching Lovable) -->
     <div class="hero-diamond hero-diamond--outer"></div>
     <div class="hero-diamond hero-diamond--inner"></div>
   </div>
 
-  <!-- ── KPI Grid ────────────────────────────────────────────── -->
   <div class="kpi-grid">
     <app-kpi-card
       *ngFor="let k of kpis"
@@ -48,7 +39,6 @@
     />
   </div>
 
-  <!-- ── Hotel Occupancy ─────────────────────────────────────── -->
   <div class="luxury-card p-6">
     <div class="section-header">
       <div>
@@ -67,8 +57,8 @@
       <div *ngFor="let hs of hotelStats" class="occupancy-row">
         <div class="occupancy-meta">
           <div>
-            <p class="occ-hotel-name">{{ hs.hotel.name }}</p>
-            <p class="occ-hotel-sub">{{ hs.hotel.city }} · {{ hs.hotel.groups.length }} groups · {{ hs.total }} rooms</p>
+            <p class="occ-hotel-name">{{ hs.hotel.hotelName }}</p>
+            <p class="occ-hotel-sub">{{ hs.hotel.locationName }} · {{ hs.total }} rooms</p>
           </div>
           <div class="occ-right">
             <p class="occ-pct">{{ hs.pct }}%</p>
@@ -82,10 +72,8 @@
     </div>
   </div>
 
-  <!-- ── Charts Row ──────────────────────────────────────────── -->
   <div class="charts-grid">
 
-    <!-- Area chart — Occupancy & Revenue -->
     <div class="luxury-card p-6 chart-main">
       <p class="eyebrow-text">Performance</p>
       <h3 class="section-title">Occupancy &amp; Revenue</h3>
@@ -120,13 +108,12 @@
       </div>
     </div>
 
-    <!-- Bar chart — Room Status -->
     <div class="luxury-card p-6 chart-side">
       <p class="eyebrow-text">Inventory</p>
       <h3 class="section-title">Room Status</h3>
       <div class="room-status-chart">
         <div *ngFor="let hs of hotelStats" class="rs-row">
-          <span class="rs-label">{{ hs.hotel.name | slice:9:24 }}</span>
+          <span class="rs-label">{{ hs.hotel.hotelName | slice:0:15 }}</span>
           <div class="rs-track">
             <div class="rs-fill" [style.width.%]="hs.pct"></div>
           </div>
@@ -136,7 +123,6 @@
     </div>
   </div>
 
-  <!-- ── Recent Reservations ─────────────────────────────────── -->
   <div class="luxury-card p-6">
     <div class="section-header">
       <div>

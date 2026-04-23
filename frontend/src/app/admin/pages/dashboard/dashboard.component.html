@@ -1,0 +1,169 @@
+
+<div class="page-space">
+
+  <app-page-header
+    eyebrow="PlaceFinder · Overview"
+    title="Greetings, Administrator!"
+    description="Here's what's happening across your properties today"
+    [hasActions]="true"
+  >
+
+  </app-page-header>
+
+  <div class="hero-strip">
+    <img
+      src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=80"
+      alt="Luxury hotel lobby"
+      class="hero-img"
+    />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Tonight's Forecast</p>
+      <h2 class="hero-headline">
+        {{ occupancyPct }}% occupancy · {{ reservedCount }} rooms booked
+      </h2>
+    </div>
+    <div class="hero-diamond hero-diamond--outer"></div>
+    <div class="hero-diamond hero-diamond--inner"></div>
+  </div>
+
+  <div class="kpi-grid">
+    <app-kpi-card
+      *ngFor="let k of kpis"
+      [label]="k.label"
+      [value]="k.value"
+      [delta]="k.delta"
+      [trend]="k.trend"
+      [iconSvg]="k.iconSvg"
+      [accent]="!!k.accent"
+    />
+  </div>
+
+  <div class="luxury-card p-6">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow-text">By Property</p>
+        <h3 class="section-title">Hotel Occupancy</h3>
+      </div>
+      <a [routerLink]="['/admin/hotels']" class="ghost-link">
+        View hotels
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="occupancy-list">
+      <div *ngFor="let hs of hotelStats" class="occupancy-row">
+        <div class="occupancy-meta">
+          <div>
+            <p class="occ-hotel-name">{{ hs.hotel.hotelName }}</p>
+            <p class="occ-hotel-sub">{{ hs.hotel.locationName }} · {{ hs.total }} rooms</p>
+          </div>
+          <div class="occ-right">
+            <p class="occ-pct">{{ hs.pct }}%</p>
+            <p class="occ-sub">{{ hs.reserved }} reserved · {{ hs.available }} available</p>
+          </div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" [style.width.%]="hs.pct"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+
+    <div class="luxury-card p-6 chart-main">
+      <p class="eyebrow-text">Performance</p>
+      <h3 class="section-title">Occupancy &amp; Revenue</h3>
+      <div class="bar-chart-wrap">
+        <div class="bar-chart">
+          <div
+            *ngFor="let d of occupancyTrend"
+            class="bar-col"
+          >
+            <div class="bar-tooltip">
+              <span>{{ d.month }}</span>
+              <span>${{ (d.revenue / 1000).toFixed(0) }}k</span>
+              <span>{{ d.occupancy }}%</span>
+            </div>
+            <div class="bars">
+              <div
+                class="bar bar-revenue"
+                [style.height]="barHeight(d.revenue, maxRevenue)"
+              ></div>
+              <div
+                class="bar bar-occupancy"
+                [style.height]="d.occupancy + '%'"
+              ></div>
+            </div>
+            <span class="bar-label">{{ d.month }}</span>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-dot dot-revenue"></span><span>Revenue</span>
+          <span class="legend-dot dot-occupancy"></span><span>Occupancy %</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="luxury-card p-6 chart-side">
+      <p class="eyebrow-text">Inventory</p>
+      <h3 class="section-title">Room Status</h3>
+      <div class="room-status-chart">
+        <div *ngFor="let hs of hotelStats" class="rs-row">
+          <span class="rs-label">{{ hs.hotel.hotelName | slice:0:15 }}</span>
+          <div class="rs-track">
+            <div class="rs-fill" [style.width.%]="hs.pct"></div>
+          </div>
+          <span class="rs-pct">{{ hs.pct }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="luxury-card p-6">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow-text">Activity</p>
+        <h3 class="section-title">Recent Reservations</h3>
+      </div>
+      <a [routerLink]="['/admin/reservations']" class="ghost-link">
+        View all
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Guest</th>
+            <th>Hotel</th>
+            <th class="hide-sm">Room</th>
+            <th class="hide-sm">Check-in</th>
+            <th class="text-right">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of recentReservations">
+            <td>
+              <div class="guest-cell">
+                <div class="avatar-sm">{{ getInitials(r.guest) }}</div>
+                <span class="guest-name">{{ r.guest }}</span>
+              </div>
+            </td>
+            <td class="text-muted">{{ r.hotelName }}</td>
+            <td class="text-muted hide-sm">{{ r.groupName }} · {{ r.roomId }}</td>
+            <td class="text-muted hide-sm">{{ r.checkIn }}</td>
+            <td class="text-right font-medium">${{ r.amount.toLocaleString() }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,332 @@
+:root {
+  --background: 36 33% 97%;
+  --foreground: 350 35% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 350 35% 12%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 350 35% 12%;
+  --primary: 350 55% 22%;
+  --primary-foreground: 36 50% 95%;
+  --primary-glow: 350 60% 32%;
+  --accent: 38 55% 58%;
+  --accent-foreground: 350 55% 18%;
+  --accent-soft: 38 50% 88%;
+  --secondary: 36 30% 92%;
+  --secondary-foreground: 350 45% 20%;
+  --muted: 36 25% 94%;
+  --muted-foreground: 350 10% 38%;
+  --destructive: 0 70% 45%;
+  --destructive-foreground: 36 50% 95%;
+  --success: 145 50% 35%;
+  --warning: 35 85% 50%;
+  --info: 210 60% 45%;
+  --border: 36 25% 86%;
+  --input: 36 25% 88%;
+  --ring: 350 55% 22%;
+  --radius: 0.875rem;
+  --sidebar-background: 350 50% 14%;
+  --sidebar-foreground: 38 40% 82%;
+  --sidebar-primary: 38 55% 58%;
+  --sidebar-primary-foreground: 350 55% 18%;
+  --sidebar-accent: 350 45% 20%;
+  --sidebar-accent-foreground: 38 50% 88%;
+  --sidebar-border: 350 40% 22%;
+  --sidebar-ring: 38 55% 58%;
+  --gradient-primary: linear-gradient(135deg, hsl(350 55% 22%), hsl(350 60% 32%));
+  --gradient-gold:    linear-gradient(135deg, hsl(38 60% 65%), hsl(38 50% 50%));
+  --gradient-wine:    linear-gradient(160deg, hsl(350 55% 22%) 0%, hsl(350 45% 16%) 100%);
+  --gradient-cream:   linear-gradient(135deg, hsl(36 40% 96%), hsl(36 30% 90%));
+  --shadow-soft:    0 2px 12px -4px hsl(350 40% 20% / 0.08);
+  --shadow-elegant: 0 10px 40px -12px hsl(350 50% 18% / 0.18);
+  --shadow-gold:    0 8px 30px -10px hsl(38 60% 50% / 0.35);
+  --shadow-deep:    0 20px 60px -20px hsl(350 60% 15% / 0.35);
+  --transition-smooth:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-elegant: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark {
+  --background: 350 30% 8%;
+  --foreground: 36 40% 92%;
+  --card: 350 35% 12%;
+  --card-foreground: 36 40% 92%;
+  --popover: 350 35% 12%;
+  --popover-foreground: 36 40% 92%;
+  --primary: 38 55% 58%;
+  --primary-foreground: 350 55% 12%;
+  --secondary: 350 30% 18%;
+  --secondary-foreground: 36 40% 92%;
+  --muted: 350 25% 16%;
+  --muted-foreground: 36 20% 65%;
+  --accent: 38 55% 58%;
+  --accent-foreground: 350 55% 12%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 36 40% 92%;
+  --border: 350 25% 20%;
+  --input: 350 25% 20%;
+  --ring: 38 55% 58%;
+}
+
+/* ── Host ───────────────────────────────────────────────────── */
+:host {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── Sidebar shell ──────────────────────────────────────────── */
+.sidebar {
+  --sb-bg:      hsl(350, 50%, 14%);
+  --sb-fg:      hsl(38, 40%, 82%);
+  --sb-gold:    hsl(38, 55%, 58%);
+  --sb-active:  hsl(350, 45%, 20%);
+  --sb-border:  hsl(350, 40%, 22%);
+  --sb-width:   260px;
+  --sb-mini:    72px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  width: var(--sb-width);
+  height: 100vh;
+  background: var(--sb-bg);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--sb-border);
+  transition: width var(--transition);
+  overflow: hidden;
+  position: relative;
+  z-index: 100;
+}
+
+/* Collapsed state */
+.sidebar.collapsed {
+  width: var(--sb-mini);
+}
+
+.sidebar.collapsed .label,
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .nav-group-label,
+.sidebar.collapsed .active-dot,
+.sidebar.collapsed .footer-card {
+  display: none !important;
+}
+
+.sidebar.collapsed .logo-mark {
+  margin: 0 auto;
+}
+
+.sidebar.collapsed .sidebar-item {
+  justify-content: center;
+  padding: 0.75rem;
+}
+
+.sidebar.collapsed .toggle-btn {
+  right: -18px;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--sb-border);
+  position: relative;
+}
+
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, hsl(38, 60%, 65%), hsl(38, 50%, 50%));
+  box-shadow: 0 8px 30px -10px hsl(38 60% 50% / 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: hsl(350, 55%, 18%);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.logo-text .brand-name {
+  font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+  font-size: 1.25rem;
+  color: var(--sb-fg);
+  letter-spacing: 0.03em;
+}
+
+.logo-text .brand-sub {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: hsl(38 40% 82% / 0.6);
+}
+
+/* ── Toggle button ──────────────────────────────────────────── */
+.toggle-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: -18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, hsl(350, 55%, 22%), hsl(350, 60%, 32%));
+  border: 2px solid var(--sb-border);
+  color: var(--sb-fg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  transition: all 0.3s ease;
+  z-index: 101;
+}
+
+.toggle-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+
+/* ── Navigation ─────────────────────────────────────────────── */
+.sidebar-menu {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem 0;
+}
+
+.sidebar-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-group-label {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: hsl(38 40% 82% / 0.5);
+  padding: 0 1rem 0.5rem;
+}
+
+/* Core nav item */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  height: 44px;
+  border-radius: 0.5rem;
+  margin: 0.125rem 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: hsl(38 40% 82% / 0.8);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-item:hover {
+  background: hsl(350 45% 20% / 0.6);
+  color: var(--sb-fg);
+}
+
+/* Active state */
+.sidebar-item.active {
+  background: var(--sb-active);
+  color: var(--sb-gold);
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--sb-gold);
+}
+
+.sidebar-item.active .icon {
+  color: var(--sb-gold);
+}
+
+.sidebar-item.active .active-dot {
+  display: block;
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sb-gold);
+  box-shadow: 0 0 8px var(--sb-gold);
+}
+
+.sidebar-item .icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.sidebar-item .icon svg {
+  display: block;
+}
+
+.sidebar-item .label {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sidebar-item .active-dot {
+  display: none;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.sidebar-footer {
+  border-top: 1px solid var(--sb-border);
+  padding: 0.75rem;
+}
+
+.footer-card {
+  border: 1px solid hsl(350 40% 22% / 0.6);
+  background: hsl(350 45% 20% / 0.4);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.footer-card .footer-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.875rem;
+  color: var(--sb-fg);
+}
+
+.footer-card .footer-city {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: hsl(38 40% 82% / 0.5);
+  margin-top: 0.25rem;
+}
+
+.footer-icon {
+  display: flex;
+  justify-content: center;
+  color: var(--sb-gold);
+}
+
+.sidebar-item .icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  display: block;
+}
+
+.sidebar-item .icon svg path,
+.sidebar-item .icon svg line,
+.sidebar-item .icon svg rect,
+.sidebar-item .icon svg polyline,
+.sidebar-item .icon svg circle {
+  stroke: currentColor;
+}
+
+.sidebar-item .icon svg * {
+  vector-effect: non-scaling-stroke;
+}

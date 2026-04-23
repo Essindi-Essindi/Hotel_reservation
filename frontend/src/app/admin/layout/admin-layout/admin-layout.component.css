@@ -1,76 +1,100 @@
-/* admin-layout.component.css */
-.admin-layout {
-  display: flex;
-  min-height: 100vh;
+root {
+  --background: 36 33% 97%;
+  --foreground: 350 35% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 350 35% 12%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 350 35% 12%;
+  --primary: 350 55% 22%;
+  --primary-foreground: 36 50% 95%;
+  --primary-glow: 350 60% 32%;
+  --accent: 38 55% 58%;
+  --accent-foreground: 350 55% 18%;
+  --accent-soft: 38 50% 88%;
+  --secondary: 36 30% 92%;
+  --secondary-foreground: 350 45% 20%;
+  --muted: 36 25% 94%;
+  --muted-foreground: 350 10% 38%;
+  --destructive: 0 70% 45%;
+  --destructive-foreground: 36 50% 95%;
+  --success: 145 50% 35%;
+  --warning: 35 85% 50%;
+  --info: 210 60% 45%;
+  --border: 36 25% 86%;
+  --input: 36 25% 88%;
+  --ring: 350 55% 22%;
+  --radius: 0.875rem;
+  --sidebar-background: 350 50% 14%;
+  --sidebar-foreground: 38 40% 82%;
+  --sidebar-primary: 38 55% 58%;
+  --sidebar-primary-foreground: 350 55% 18%;
+  --sidebar-accent: 350 45% 20%;
+  --sidebar-accent-foreground: 38 50% 88%;
+  --sidebar-border: 350 40% 22%;
+  --sidebar-ring: 38 55% 58%;
+  --gradient-primary: linear-gradient(135deg, hsl(350 55% 22%), hsl(350 60% 32%));
+  --gradient-gold:    linear-gradient(135deg, hsl(38 60% 65%), hsl(38 50% 50%));
+  --gradient-wine:    linear-gradient(160deg, hsl(350 55% 22%) 0%, hsl(350 45% 16%) 100%);
+  --gradient-cream:   linear-gradient(135deg, hsl(36 40% 96%), hsl(36 30% 90%));
+  --shadow-soft:    0 2px 12px -4px hsl(350 40% 20% / 0.08);
+  --shadow-elegant: 0 10px 40px -12px hsl(350 50% 18% / 0.18);
+  --shadow-gold:    0 8px 30px -10px hsl(38 60% 50% / 0.35);
+  --shadow-deep:    0 20px 60px -20px hsl(350 60% 15% / 0.35);
+  --transition-smooth:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-elegant: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-
-/* --- Main content --- */
-.main-content {
-  margin-left: 260px;
-  flex: 1;
-  padding: 2rem;
-  transition: margin-left 0.3s ease;
-  position: relative;
-  min-height: 100vh;
-  background: #f5f7fa;
+.dark {
+  --background: 350 30% 8%;
+  --foreground: 36 40% 92%;
+  --card: 350 35% 12%;
+  --card-foreground: 36 40% 92%;
+  --popover: 350 35% 12%;
+  --popover-foreground: 36 40% 92%;
+  --primary: 38 55% 58%;
+  --primary-foreground: 350 55% 12%;
+  --secondary: 350 30% 18%;
+  --secondary-foreground: 36 40% 92%;
+  --muted: 350 25% 16%;
+  --muted-foreground: 36 20% 65%;
+  --accent: 38 55% 58%;
+  --accent-foreground: 350 55% 12%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 36 40% 92%;
+  --border: 350 25% 20%;
+  --input: 350 25% 20%;
+  --ring: 38 55% 58%;
 }
 
-.main-content.collapsed {
-  margin-left: 70px;
-}
-
-/* --- User dropdown --- */
-.user-info {
-  position: absolute;
-  top: 1.5rem;
-  right: 2rem;
-  cursor: pointer;
-  width: 38px;
-  height: 38px;
-  background: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  color: #1a3c8f;
-}
-
-.user-dropdown {
-  display: none;
-  position: absolute;
-  top: 46px;
-  right: 0;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  min-width: 140px;
-  overflow: hidden;
-  z-index: 100;
-}
-
-.user-dropdown.active {
+/* ── Layout shell ───────────────────────────────────────────── */
+:host {
   display: block;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.user-dropdown-item {
-  padding: 0.65rem 1rem;
-  font-size: 0.9rem;
-  color: #333;
-  cursor: pointer;
-  transition: background 0.15s;
+.admin-shell {
+  display: flex;
+  height: 100vh;
+  background: hsl(var(--background));
 }
 
-.user-dropdown-item:hover {
-  background: #f5f7fa;
+.admin-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.user-dropdown-item.logout {
-  color: #dc3545;
-  border-top: 1px solid #f0f0f0;
+.admin-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 2.5rem;
 }
 
-.user-dropdown-item.logout:hover {
-  background: #fff5f5;
+@media (max-width: 768px) {
+  .admin-main {
+    padding: 1.25rem 1rem;
+  }
 }

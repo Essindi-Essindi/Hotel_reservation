@@ -1,0 +1,136 @@
+
+<div class="page-space">
+
+  <app-page-header
+    eyebrow="Finance"
+    title="Payments & Transactions"
+    description="Track every transaction across reservations."
+    [hasActions]="true"
+  >
+
+
+  </app-page-header>
+
+
+  <div class="kpi-grid">
+
+    <div class="kpi-card">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon--default">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <span class="kpi-delta kpi-delta--up">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+          </svg>
+          +12.4%
+        </span>
+      </div>
+      <p class="kpi-label">Total Revenue</p>
+      <p class="kpi-value">${{ totalRevenue().toLocaleString() }}</p>
+      <div class="kpi-deco-outer"></div>
+      <div class="kpi-deco-inner"></div>
+    </div>
+
+
+
+    <div class="kpi-card">
+      <div class="kpi-top">
+        <div class="kpi-icon kpi-icon--default">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+        </div>
+        <span class="kpi-delta kpi-delta--down">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="7" y1="7" x2="17" y2="17"/><polyline points="17 7 17 17 7 17"/>
+          </svg>
+          -2.1%
+        </span>
+      </div>
+      <p class="kpi-label">Refunded</p>
+      <p class="kpi-value">${{ refundedTotal().toLocaleString() }}</p>
+      <div class="kpi-deco-outer"></div>
+      <div class="kpi-deco-inner"></div>
+    </div>
+
+
+  </div>
+
+
+
+  <div class="filter-row">
+    <button
+      *ngFor="let m of filterMethods"
+      class="filter-pill"
+      [class.active]="methodFilter() === m"
+      (click)="methodFilter.set(m)"
+    >{{ m === 'ALL' ? 'All Methods' : methodLabel(m) }}</button>
+  </div>
+
+  <div class="luxury-card table-card">
+    <h3 class="table-heading">Recent Transactions</h3>
+
+    <div *ngIf="loading()" class="skeleton-rows">
+      <div class="skeleton-row" *ngFor="let i of [1,2,3,4,5]"></div>
+    </div>
+
+    <div class="table-scroll" *ngIf="!loading()">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Transaction</th>
+            <th>Booking</th>
+            <th>Guest</th>
+            <th>Method</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th class="text-right">Amount</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of filteredRows()">
+            <td class="mono-id">{{ r.txCode }}</td>
+            <td class="mono-id muted">{{ r.bookingCode }}</td>
+            <td class="guest-name">{{ r.guest }}</td>
+            <td class="text-muted">{{ r.methodLabel }}</td>
+            <td class="text-muted">{{ r.date }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="'status-' + r.status.toLowerCase()">
+                <span class="status-dot"></span>{{ r.status }}
+              </span>
+            </td>
+            <td class="text-right font-medium">${{ r.amount.toLocaleString() }}</td>
+            <td class="text-right">
+              <div *ngIf="deletingId() === r.id; else actions" class="delete-confirm">
+                <span class="delete-label">Delete?</span>
+                <button class="btn-confirm-yes" (click)="executeDelete(r.id)">Yes</button>
+                <button class="btn-confirm-no"  (click)="cancelDelete()">No</button>
+              </div>
+              <ng-template #actions>
+                <button class="icon-action icon-action--danger" (click)="confirmDelete(r.id)" title="Delete">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                </button>
+              </ng-template>
+            </td>
+          </tr>
+
+          <tr *ngIf="filteredRows().length === 0 && !loading()">
+            <td colspan="8" class="empty-state">No transactions found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+

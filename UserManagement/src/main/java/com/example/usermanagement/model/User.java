@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Data
 @NoArgsConstructor
@@ -28,15 +30,16 @@ public class User {
     private String email;
     private String phone;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
-    private String role = "GUEST";
+    private Role role = Role.GUEST;
 
     public UserDto toDto() {
-        return UserDto.builder()
-                .id(this.id)
-                .name(this.name)
-                .role(this.role)
-                .build();
-    }
+    return UserDto.builder()
+            .id(this.id)
+            .name(this.name)
+            .role(this.role.name())  
+            .build();
+}
 }

@@ -20,17 +20,17 @@ public class PaymentService {
 
     // Create payment
     public PaymentDto createPayment(PaymentDto dto) {
-        Payment payment = Payment.builder()
-                .paymentID(UUID.randomUUID().toString())
-                .paymentDate(new Date())
-                .amount(dto.getAmount())
-                .paymentMethod(dto.getPaymentMethod())
-                .reservationID(dto.getReservationID())
-                .userID(dto.getUserID())
-                .build();
+    Payment payment = Payment.builder()
+            
+            .paymentDate(new Date())
+            .amount(dto.getAmount())
+            .paymentMethod(dto.getPaymentMethod())
+            .reservationID(dto.getReservationID())
+            .userID(dto.getUserID())
+            .build();
 
-        return toDto(paymentRepository.save(payment));
-    }
+    return toDto(paymentRepository.save(payment));
+}
 
     // Get payment by ID
     public PaymentDto getPaymentById(String id) {

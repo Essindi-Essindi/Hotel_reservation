@@ -1,0 +1,176 @@
+<div class="reservation-container">
+  <app-nav-bar></app-nav-bar>
+
+  <section class="hero-fullwidth">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+      <h1>Find Your Place</h1>
+      <p>Book the perfect room for your next journey</p>
+    </div>
+    <div class="hero-gallery">
+      <div class="gallery-card">
+        <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Hotel">
+        <div class="gallery-overlay">
+          <span>Luxury Stay</span>
+        </div>
+      </div>
+      <div class="gallery-card">
+        <img src="https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Dining">
+        <div class="gallery-overlay">
+          <span>Fine Dining</span>
+        </div>
+      </div>
+      <div class="gallery-card">
+        <img src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Pool">
+        <div class="gallery-overlay">
+          <span>Infinity Pool</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reservation-section">
+    <div class="container">
+      <h2>Reserve a Room</h2>
+
+      <div *ngIf="isLoading" style="text-align: center; padding: 2rem;">
+        <div class="loading-spinner"></div>
+        <p>Loading hotels...</p>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage && !isLoading">
+        {{errorMessage}}
+      </div>
+
+      <div class="form-card" *ngIf="!isLoading && hotels.length > 0">
+        <label>Select Hotel</label>
+        <select [(ngModel)]="selectedHotelId" (change)="onHotelChange()">
+          <option value="">-- Choose Hotel --</option>
+          <option *ngFor="let hotel of hotels" [value]="hotel.hotelID">
+            {{getHotelDisplayName(hotel)}} - ${{hotel.price}}/night ({{hotel.totalRooms}} rooms)
+          </option>
+        </select>
+      </div>
+
+      <div class="hotel-details" *ngIf="selectedHotelId">
+        <div class="hotel-info">
+          <h3>{{getHotelName()}}</h3>
+          <p><i class="fas fa-map-marker-alt"></i> {{getHotelLocation()}}</p>
+          <div class="room-stats">
+            <span>Total Rooms: {{getTotalRoomsCount()}}</span>
+            <span>Available: {{getAvailableRoomsCount()}}</span>
+            <span>Price per night: ${{getRoomPrice()}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isLoadingRooms" style="text-align: center; padding: 2rem;">
+        <div class="loading-spinner"></div>
+        <p>Loading rooms...</p>
+      </div>
+
+      <div class="rooms-grid" *ngIf="selectedHotelId && !isLoadingRooms && filteredRooms.length > 0">
+        <div *ngFor="let room of filteredRooms"
+             class="room-card"
+             [class.selected]="selectedRoomId === room.roomID"
+             [class.unavailable]="room.status !== 'AVAILABLE'">
+          <div class="room-info">
+            <h4>Room {{room.roomID}}</h4>
+            <p class="price">${{getRoomPrice()}} <span>/ night</span></p>
+            <p class="room-status-text" [class.available]="room.status === 'AVAILABLE'" [class.unavailable]="room.status !== 'AVAILABLE'">
+              {{room.status === 'AVAILABLE' ? 'Available' : 'Occupied'}}
+            </p>
+          </div>
+          <button class="select-btn"
+                  [disabled]="room.status !== 'AVAILABLE'"
+                  (click)="onRoomSelect(room)">
+            {{selectedRoomId === room.roomID ? 'Selected' : 'Select Room'}}
+          </button>
+        </div>
+      </div>
+
+
+      <div *ngIf="selectedHotelId && !isLoadingRooms && filteredRooms.length === 0" style="text-align: center; padding: 2rem;">
+        <p>No rooms available for this hotel.</p>
+      </div>
+
+      <div class="book-action" *ngIf="selectedRoomId">
+        <button class="book-btn" (click)="openModal()">Book Selected Room</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal" [class.show]="showModal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h3>Complete Reservation</h3>
+
+      <div class="modal-body" *ngIf="!showReceipt">
+        <div class="form-group">
+          <label>Check-in Date</label>
+          <input type="date" [(ngModel)]="newReservation.reservationStartDate"
+                 [min]="minDate" (change)="calculateDurationAndCost()">
+        </div>
+
+        <div class="form-group">
+          <label>Check-out Date</label>
+          <input type="date" [(ngModel)]="newReservation.reservationEndDate"
+                 [min]="newReservation.reservationStartDate" (change)="calculateDurationAndCost()">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Start Time</label>
+            <input type="time" [(ngModel)]="newReservation.startTime">
+          </div>
+          <div class="form-group">
+            <label>End Time</label>
+            <input type="time" [(ngModel)]="newReservation.endTime">
+          </div>
+        </div>
+
+        <div class="summary" *ngIf="newReservation.duration > 0">
+          <p>Room: {{selectedRoom?.roomID}}</p>
+          <p>Duration: {{newReservation.duration}} night(s)</p>
+          <p class="total">Total Cost: ${{newReservation.cost}}</p>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{errorMessage}}
+        </div>
+
+        <button class="confirm-btn" (click)="confirmBooking()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="loading-spinner"></span>
+          {{isLoading ? 'Processing...' : 'Confirm Payment'}}
+        </button>
+      </div>
+
+      <div class="receipt" *ngIf="showReceipt && confirmedReservation">
+        <h4><i class="fas fa-check-circle"></i> Booking Confirmed</h4>
+        <div class="receipt-details">
+          <p><strong>Reservation ID:</strong> {{confirmedReservation.reservationID}}</p>
+          <p><strong>Hotel:</strong> {{getHotelName()}}</p>
+          <p><strong>Location:</strong> {{getHotelLocation()}}</p>
+          <p><strong>Room:</strong> {{confirmedReservation.roomId}}</p>
+          <p><strong>Check-in:</strong> {{confirmedReservation.reservationStartDate}} at {{confirmedReservation.startTime}}</p>
+          <p><strong>Check-out:</strong> {{confirmedReservation.reservationEndDate}} at {{confirmedReservation.endTime}}</p>
+          <p><strong>Duration:</strong> {{confirmedReservation.duration}} nights</p>
+          <p><strong>Price per night:</strong> ${{getRoomPrice()}}</p>
+          <p><strong>Total Cost:</strong> ${{confirmedReservation.cost}}</p>
+          <p><strong>Status:</strong> {{confirmedReservation.state}}</p>
+          <p><strong>Date Issued:</strong> {{confirmedReservation.DateIssued | date:'medium'}}</p>
+        </div>
+      </div>
+
+      <div *ngIf="showReceipt && confirmedReservation" style="padding: 0 1.5rem 1.5rem 1.5rem;">
+        <button class="download-receipt-btn" (click)="downloadReceipt()">
+          <i class="fas fa-download"></i> Download Receipt (HTML)
+        </button>
+
+        <button class="close-receipt-btn" (click)="resetAndClose()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

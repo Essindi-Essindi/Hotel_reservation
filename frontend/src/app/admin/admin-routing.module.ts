@@ -24,9 +24,9 @@ const routes: Routes = [
           import('./pages/reservations/reservations.component').then(m => m.ReservationsComponent),
       },
       {
-        path: 'settings',
+        path: 'payments',
         loadComponent: () =>
-          import('./pages/settings/settings.component').then(m => m.SettingsComponent),
+          import('./pages/payments/payments.component').then(m => m.PaymentsComponent),
       },
     ],
   },

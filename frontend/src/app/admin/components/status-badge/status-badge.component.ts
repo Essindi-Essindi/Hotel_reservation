@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReservationStatus } from '../../models/reservation';
+import type { ReservationStatus } from '../../models/reservation'; // ← add "type"
 
 @Component({
   selector: 'app-status-badge',
@@ -18,9 +18,9 @@ export class StatusBadgeComponent {
 
   get statusClass(): string {
     const map: Record<ReservationStatus, string> = {
-      CONFIRMED:  'confirmed',
-      CANCELLED:  'cancelled',
-      COMPLETED:  'checked-out',
+      CONFIRMED: 'confirmed',
+      CANCELLED: 'cancelled',
+      COMPLETED: 'checked-out',
     };
     return map[this.status] ?? '';
   }

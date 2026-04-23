@@ -1,0 +1,288 @@
+import { Injectable } from '@angular/core';
+import { forkJoin, Observable, of } from 'rxjs';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
+
+import { HotelService, Hotel } from './hotel.service';
+import { RoomService, Room } from './room.service';
+import { ReservationService } from './reservation.service';
+import { Reservation } from '../models/reservation';
+
+// ─── View-model types consumed by the dashboard component ────────────────────
+
+export interface KpiItem {
+  label: string;
+  value: string;
+  delta: string;
+  trend: 'up' | 'down';
+  iconSvg: string;
+  accent?: boolean;
+}
+
+export interface HotelStat {
+  hotel: Hotel;
+  total: number;
+  reserved: number;
+  available: number;
+  pct: number;
+}
+
+export interface OccupancyPoint {
+  month: string;
+  revenue: number;
+  occupancy: number;
+}
+
+export interface RecentReservationRow {
+  id: number;
+  guest: string;
+  hotelName: string;
+  roomId: string;
+  groupName: string;
+  checkIn: string;
+  amount: number;
+}
+
+export interface DashboardData {
+  kpis: KpiItem[];
+  hotelStats: HotelStat[];
+  occupancyTrend: OccupancyPoint[];
+  recentReservations: RecentReservationRow[];
+  occupancyPct: number;
+  reservedCount: number;
+  maxRevenue: number;
+}
+
+// ─── Month ordering for display ──────────────────────────────────────────────
+
+const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+// ─── Icons (kept identical to original mock-data component) ──────────────────
+
+const ICON_HOTELS = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+  <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+  <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+  <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/>
+  <path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>
+</svg>`;
+
+const ICON_ROOMS = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+  <path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/>
+  <path d="M2 17h20"/><path d="M6 8v9"/>
+</svg>`;
+
+const ICON_RESERVATIONS = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+</svg>`;
+
+const ICON_REVENUE = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+  <line x1="12" y1="1" x2="12" y2="23"/>
+  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+</svg>`;
+
+// ─── Service ─────────────────────────────────────────────────────────────────
+
+@Injectable({ providedIn: 'root' })
+export class DashboardService {
+
+  /**
+   * Single source of truth.
+   * Fetches hotels, then fetches all rooms for each hotel in parallel,
+   * then fetches all reservations — all in one round.
+   * Result is shared/replayed so multiple template bindings don't trigger
+   * extra HTTP calls.
+   */
+  readonly dashboardData$: Observable<DashboardData> = this._load().pipe(
+    shareReplay(1)
+  );
+
+  constructor(
+    private hotelSvc: HotelService,
+    private roomSvc: RoomService,
+    private resSvc: ReservationService,
+  ) {}
+
+  // ── Private loading pipeline ───────────────────────────────────────────────
+
+  private _load(): Observable<DashboardData> {
+    return forkJoin({
+      hotels: this.hotelSvc.getAll(),
+      reservations: this.resSvc.getAll(),
+    }).pipe(
+      switchMap(({ hotels, reservations }) => {
+        // Fetch all rooms for every hotel in parallel (one call per hotel)
+        const roomRequests = hotels.reduce<Record<string, Observable<import('./room.service').Room[]>>>(
+          (acc, h) => {
+            acc[h.hotelName] = this.roomSvc.getAllForHotel(h.hotelName);
+            return acc;
+          },
+          {}
+        );
+
+        // If there are no hotels avoid an empty forkJoin
+        const roomFork$ = hotels.length
+          ? forkJoin(roomRequests)
+          : of({} as Record<string, import('./room.service').Room[]>);
+
+        return roomFork$.pipe(
+          map(roomsByHotel => this._transform(hotels, roomsByHotel, reservations))
+        );
+      })
+    );
+  }
+
+  // ── Main transformation ────────────────────────────────────────────────────
+
+  private _transform(
+    hotels: Hotel[],
+    roomsByHotel: Record<string, import('./room.service').Room[]>,
+    reservations: Reservation[],
+  ): DashboardData {
+
+    const hotelStats      = this.computeHotelStats(hotels, roomsByHotel, reservations);
+    const kpis            = this.computeKPIs(hotels, roomsByHotel, reservations);
+    const occupancyTrend  = this.computeOccupancyTrend(reservations);
+    const recentReservations = this.mapRecentReservations(reservations);
+    const maxRevenue      = Math.max(...occupancyTrend.map(d => d.revenue), 1);
+
+    // Hero strip metrics
+    const allRooms   = Object.values(roomsByHotel).flat();
+    const totalRooms = allRooms.length;
+    const confirmedReservations = reservations.filter(r => r.status === 'CONFIRMED');
+    const reservedCount = confirmedReservations.length;
+    const occupancyPct  = totalRooms > 0
+      ? Math.round((reservedCount / totalRooms) * 100)
+      : 0;
+
+    return { kpis, hotelStats, occupancyTrend, recentReservations, occupancyPct, reservedCount, maxRevenue };
+  }
+
+  // ── 1. KPI Cards ──────────────────────────────────────────────────────────
+
+  computeKPIs(
+    hotels: Hotel[],
+    roomsByHotel: Record<string, import('./room.service').Room[]>,
+    reservations: Reservation[],
+  ): KpiItem[] {
+    const allRooms    = Object.values(roomsByHotel).flat();
+    const totalRooms  = allRooms.length;
+    const totalRes    = reservations.length;
+    const revenue     = reservations.reduce((sum, r) => sum + (r.cost ?? 0), 0);
+    const confirmed   = reservations.filter(r => r.status === 'CONFIRMED').length;
+    const occupancyPct = totalRooms > 0 ? Math.round((confirmed / totalRooms) * 100) : 0;
+
+    return [
+      {
+        label: 'Total Hotels',
+        value: String(hotels.length),
+        delta: `${hotels.reduce((s, h) => s + (h.totalRooms ?? 0), 0)} total rooms`,
+        trend: 'up',
+        iconSvg: ICON_HOTELS,
+      },
+      {
+        label: 'Total Rooms',
+        value: String(totalRooms),
+        delta: `across ${hotels.length} properties`,
+        trend: 'up',
+        accent: true,
+        iconSvg: ICON_ROOMS,
+      },
+      {
+        label: 'Total Reservations',
+        value: String(totalRes),
+        delta: `${confirmed} confirmed · ${occupancyPct}% occupancy`,
+        trend: confirmed > 0 ? 'up' : 'down',
+        iconSvg: ICON_RESERVATIONS,
+      },
+      {
+        label: 'Revenue',
+        value: `$${revenue.toLocaleString()}`,
+        delta: `from ${totalRes} reservation${totalRes !== 1 ? 's' : ''}`,
+        trend: revenue > 0 ? 'up' : 'down',
+        iconSvg: ICON_REVENUE,
+      },
+    ];
+  }
+
+  // ── 2. Hotel Occupancy List ───────────────────────────────────────────────
+
+  computeHotelStats(
+    hotels: Hotel[],
+    roomsByHotel: Record<string, import('./room.service').Room[]>,
+    reservations: Reservation[],
+  ): HotelStat[] {
+    return hotels.map(hotel => {
+      const rooms    = roomsByHotel[hotel.hotelName] ?? [];
+      const total    = rooms.length;
+
+      // Count CONFIRMED reservations whose hotelId matches this hotel's name
+      // (backend uses hotelName as the natural key per hotel.service.ts)
+      const reserved = reservations.filter(
+        r => r.hotelId === hotel.hotelName && r.status === 'CONFIRMED'
+      ).length;
+
+      const available = Math.max(0, total - reserved);
+      const pct       = total > 0 ? Math.round((reserved / total) * 100) : 0;
+
+      return { hotel, total, reserved, available, pct };
+    });
+  }
+
+  // ── 3. Occupancy & Revenue Trend ─────────────────────────────────────────
+
+  computeOccupancyTrend(reservations: Reservation[]): OccupancyPoint[] {
+    // Group by calendar month derived from reservationStartDate (or currentDate)
+    const byMonth = new Map<string, { revenue: number; confirmed: number; total: number }>();
+
+    for (const res of reservations) {
+      const dateStr = res.reservationStartDate ?? res.currentDate;
+      if (!dateStr) continue;
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) continue;
+
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      const entry = byMonth.get(key) ?? { revenue: 0, confirmed: 0, total: 0 };
+      entry.revenue   += res.cost ?? 0;
+      entry.total     += 1;
+      if (res.status === 'CONFIRMED') entry.confirmed += 1;
+      byMonth.set(key, entry);
+    }
+
+    // Sort chronologically, take last 12 months
+    const sorted = [...byMonth.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .slice(-12);
+
+    return sorted.map(([key, v]) => {
+      const monthIndex = parseInt(key.split('-')[1], 10) - 1;
+      const occupancy  = v.total > 0 ? Math.round((v.confirmed / v.total) * 100) : 0;
+      return {
+        month: MONTH_ABBR[monthIndex] ?? key,
+        revenue: v.revenue,
+        occupancy,
+      };
+    });
+  }
+
+  // ── 4. Recent Reservations Table ─────────────────────────────────────────
+
+  mapRecentReservations(reservations: Reservation[]): RecentReservationRow[] {
+    return [...reservations]
+      .sort((a, b) => {
+        // Sort by currentDate DESC (most recent first)
+        const da = new Date(a.currentDate ?? '').getTime() || 0;
+        const db = new Date(b.currentDate ?? '').getTime() || 0;
+        return db - da;
+      })
+      .slice(0, 10)
+      .map(r => ({
+        id:        r.id,
+        guest:     `User #${r.userId}`,   // No user-name endpoint; safe placeholder
+        hotelName: r.hotelId,             // hotelId IS the hotelName in this API
+        roomId:    r.roomId,
+        groupName: 'Standard',            // Not returned by API; safe default
+        checkIn:   r.reservationStartDate ?? r.currentDate ?? '',
+        amount:    r.cost ?? 0,
+      }));
+  }
+}

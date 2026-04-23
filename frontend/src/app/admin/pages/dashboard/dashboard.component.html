@@ -159,7 +159,6 @@
             <th>Hotel</th>
             <th class="hide-sm">Room</th>
             <th class="hide-sm">Check-in</th>
-            <th>Status</th>
             <th class="text-right">Amount</th>
           </tr>
         </thead>
@@ -174,7 +173,6 @@
             <td class="text-muted">{{ r.hotelName }}</td>
             <td class="text-muted hide-sm">{{ r.groupName }} · {{ r.roomId }}</td>
             <td class="text-muted hide-sm">{{ r.checkIn }}</td>
-            <td><app-status-badge [status]="r.status" /></td>
             <td class="text-right font-medium">${{ r.amount.toLocaleString() }}</td>
           </tr>
         </tbody>

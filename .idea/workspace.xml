@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57165d66-a1a2-4813-abb3-c3e566c6d063" name="Changes" comment="Resolving Gateway routing issues" />
+    <list default="true" id="57165d66-a1a2-4813-abb3-c3e566c6d063" name="Changes" comment="Enabling CORS for frontend">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/environments/environment.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -152,7 +155,7 @@
       <workItem from="1776892042182" duration="231000" />
       <workItem from="1776892281974" duration="2000" />
       <workItem from="1776892292219" duration="1352000" />
-      <workItem from="1776944166731" duration="20413000" />
+      <workItem from="1776944166731" duration="21356000" />
     </task>
     <task id="LOCAL-00001" summary="Adding eureka Client defaultzone">
       <option name="closed" value="true" />
@@ -226,7 +229,23 @@
       <option name="project" value="LOCAL" />
       <updated>1776973357087</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Deploying frontend">
+      <option name="closed" value="true" />
+      <created>1776973754639</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1776973754639</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Enabling CORS for frontend">
+      <option name="closed" value="true" />
+      <created>1776973938051</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1776973938051</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,7 +256,9 @@
     <MESSAGE value="Converting the user management service to use a postgres database" />
     <MESSAGE value="Resolving Gateway dependencies" />
     <MESSAGE value="Resolving Gateway routing issues" />
-    <option name="LAST_COMMIT_MESSAGE" value="Resolving Gateway routing issues" />
+    <MESSAGE value="Deploying frontend" />
+    <MESSAGE value="Enabling CORS for frontend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Enabling CORS for frontend" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

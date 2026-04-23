@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="57165d66-a1a2-4813-abb3-c3e566c6d063" name="Changes" comment="Resolving Gateway routing issues">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Gateway/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/model/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +153,7 @@
       <workItem from="1776892042182" duration="231000" />
       <workItem from="1776892281974" duration="2000" />
       <workItem from="1776892292219" duration="1352000" />
-      <workItem from="1776944166731" duration="16948000" />
+      <workItem from="1776944166731" duration="17886000" />
     </task>
     <task id="LOCAL-00001" summary="Adding eureka Client defaultzone">
       <option name="closed" value="true" />
@@ -205,7 +203,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776965619224</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Resolving Gateway routing issues">
+      <option name="closed" value="true" />
+      <created>1776966721760</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1776966721760</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -12,7 +12,7 @@ import { ConfirmModalComponent } from '../../components/confirm-modal/confirm-mo
 
 type StatusFilter = ReservationStatus | 'All';
 
-const ALL_STATUSES: StatusFilter[] = ['All', 'CONFIRMED', 'CANCELLED', 'COMPLETED'];
+const ALL_STATUSES: StatusFilter[] = ['All', 'Confirmed', 'Cancelled', 'Completed'];
 
 // ── View-model (what the table/view-modal renders) ────────────────────────────
 
@@ -88,9 +88,10 @@ export class ReservationsComponent implements OnInit {
   confirmConfig: ConfirmConfig | null = null;
 
   // ── Filtered rows (computed) ─────────────────────────────────────────────────
-
-  filtered = computed(() => {
+  getFilteredReservations(): ReservationRow[] {
     return this.allReservations.filter(r => {
+      // Note: status, hotelId, and query are still signals in your code,
+      // so we keep the parentheses () to read their current values.
       if (this.status() !== 'All' && r.status !== this.status()) return false;
       if (this.hotelId() !== 'All' && r.hotelId !== this.hotelId()) return false;
 
@@ -99,16 +100,21 @@ export class ReservationsComponent implements OnInit {
 
       return true;
     });
-  });
+  }
 
   // ── Unique hotels for filter dropdown ────────────────────────────────────────
-
-  hotels = computed<{ id: string; name: string }[]>(() => {
+  getHotels(): { id: string; name: string }[] {
     const seen = new Set<string>();
+
     return this.allReservations
-      .filter(r => { if (seen.has(r.hotelId)) return false; seen.add(r.hotelId); return true; })
+      .filter(r => {
+        if (seen.has(r.hotelId)) return false;
+        seen.add(r.hotelId);
+        return true;
+      })
       .map(r => ({ id: r.hotelId, name: r.hotelName }));
-  });
+  }
+
 
   // ── Constructor ──────────────────────────────────────────────────────────────
 
@@ -143,8 +149,8 @@ export class ReservationsComponent implements OnInit {
    */
   private mapToRow(r: Reservation): ReservationRow {
     return {
-      id:        r.id,
-      guest:     `User #${r.userId}`,           // replace with actual user name when user API available
+      id:        r.reservationID,
+      guest:     `User ${r.userId}`,           // replace with actual user name when user API available
       hotelId:   r.hotelId,
       hotelName: r.hotelId,                      // replace with actual hotel name when hotel API available
       roomId:    r.roomId,
@@ -154,7 +160,7 @@ export class ReservationsComponent implements OnInit {
       endTime:   r.endTime,
       duration:  r.duration,
       cost:      r.cost,
-      status:    r.status,
+      status:    r.state,
       userId:    r.userId,
     };
   }
@@ -173,11 +179,11 @@ export class ReservationsComponent implements OnInit {
   // ── Permission guards ─────────────────────────────────────────────────────────
 
   canCancel(row: ReservationRow): boolean {
-    return row.status === 'CONFIRMED';
+    return row.status === 'Confirmed';
   }
 
   canDelete(row: ReservationRow): boolean {
-    return row.status === 'CANCELLED';
+    return row.status === 'Cancelled';
   }
 
   // ── View modal ───────────────────────────────────────────────────────────────

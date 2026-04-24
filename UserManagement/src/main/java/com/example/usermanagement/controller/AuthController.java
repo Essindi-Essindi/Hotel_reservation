@@ -22,7 +22,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/admin")
-    @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')") 
+//    @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
     public ResponseEntity<AuthResponse> registerAdmin(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.registerAdmin(request));
     }

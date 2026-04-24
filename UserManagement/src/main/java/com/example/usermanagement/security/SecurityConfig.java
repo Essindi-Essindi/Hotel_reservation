@@ -42,7 +42,7 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(requests -> requests
             // Put specific rules FIRST
-            .requestMatchers("/api/auth/register/admin").authenticated()
+            .requestMatchers("/api/auth/register/admin").permitAll()
             // Put broad rules SECOND
             .requestMatchers("/api/auth/**", "/error").permitAll()
             .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()

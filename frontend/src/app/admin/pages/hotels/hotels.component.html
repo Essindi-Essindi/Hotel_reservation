@@ -62,12 +62,12 @@
         <div class="hotel-img-placeholder"></div>
         <div class="hotel-img-overlay"></div>
         <div class="hotel-img-caption">
-          <h3 class="hotel-card-name">{{ h.hotelName }}</h3>
+          <h3 class="hotel-card-name">{{ h.hotelID }}</h3>
           <p class="hotel-card-city">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
             </svg>
-            {{ h.locationName }}
+            {{ h.location.locationName }}
           </p>
         </div>
       </div>
@@ -96,7 +96,7 @@
             </svg>
             Manage
           </button>
-          <button class="btn-ghost-danger" (click)="deleteHotel(h.hotelName)" title="Delete hotel">
+          <button class="btn-ghost-danger" (click)="deleteHotel(h.hotelID)" title="Delete hotel">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <polyline points="3 6 5 6 21 6"/>
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
@@ -116,8 +116,8 @@
 
     <div class="modal-header">
       <div>
-        <p class="modal-eyebrow">Manage · {{ selectedHotel()!.locationName }}</p>
-        <h2 class="modal-title">{{ selectedHotel()!.hotelName }}</h2>
+        <p class="modal-eyebrow">Manage · {{ selectedHotel()!.location.locationName }}</p>
+        <h2 class="modal-title">{{ selectedHotel()!.hotelID }}</h2>
         <p class="modal-sub">${{ selectedHotel()!.price | number:'1.2-2' }} / night · {{ selectedHotel()!.totalRooms }} rooms</p>
       </div>
       <button class="modal-close" (click)="closeManage()">
@@ -143,23 +143,23 @@
           <table class="room-table">
             <thead>
               <tr>
-                <th>Room ID</th>
+<!--                <th>Room ID</th>-->
                 <th>Name</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let r of selectedHotel()!.rooms"
-                  [class.room-row--reserved]="r.status?.toLowerCase() === 'reserved'">
-                <td><span class="room-id">{{ r.roomId }}</span></td>
-                <td>{{ r.roomName }}</td>
+                  [class.room-row--reserved]="r.status?.toLowerCase() === 'occupied'">
+<!--                <td><span class="room-id">{{ r.roomID }}</span></td>-->
+                <td>{{ r.roomID }}</td>
                 <td>
                   <span class="room-status-badge"
-                    [class.room-status-badge--reserved]="r.status?.toLowerCase() === 'reserved'"
-                    [class.room-status-badge--free]="r.status?.toLowerCase() === 'free'"
+                    [class.room-status-badge--reserved]="r.status?.toLowerCase() === 'occupied'"
+                    [class.room-status-badge--free]="r.status?.toLowerCase() === 'available'"
                     [class.room-status-badge--maintenance]="r.status?.toLowerCase() === 'maintenance'">
                     <span class="status-dot"></span>
-                    {{ r.status ?? 'Free' }}
+                    {{ r.status ?? 'available' }}
                   </span>
                 </td>
               </tr>
@@ -283,11 +283,11 @@
         <h4 class="gen-title">Customise room names <span class="gen-hint">(or leave as auto-generated)</span></h4>
         <div class="room-names-grid">
           <div *ngFor="let name of roomNames; let i = index" class="field-group">
-            <label class="field-label">Room {{ i + 1 }}</label>
+            <label class="field-label">Room b {{ i + 1 }}</label>
             <input class="field-input field-input--sm"
                    [value]="roomNames[i]"
                    (input)="updateRoomName(i, $any($event.target).value)"
-                   [placeholder]="'Room ' + (i + 1)" />
+                   [placeholder]="' Room ' + (i + 1)"/>
           </div>
         </div>
       </div>

@@ -82,6 +82,12 @@ export class HotelsComponent implements OnInit {
     this._buildRoomForm();
     this._loadHotels();
     this._loadLocations();
+    this.hotelForm.get('hotelName')?.valueChanges.subscribe((newName: string) => {
+      const prefix = newName?.trim() || 'Hotel';
+
+      // Update the entire array with the new prefix
+      this.roomNames = this.roomNames.map((_, i) => `${prefix} Room ${i + 1}`);
+    });
   }
 
   // ── Form builders ─────────────────────────────────────────────────────────
@@ -109,9 +115,11 @@ export class HotelsComponent implements OnInit {
 
   private _syncRoomNames(count: number) {
     const current = this.roomNames.length;
+    const hotelPrefix = this.hotelForm.get('hotelName')?.value || 'Hotel';
+
     if (count > current) {
       for (let i = current; i < count; i++) {
-        this.roomNames.push(`Room ${i + 1}`);
+        this.roomNames.push(`${hotelPrefix} Room  ${i + 1}`);
       }
     } else {
       this.roomNames = this.roomNames.slice(0, count);
@@ -124,6 +132,7 @@ export class HotelsComponent implements OnInit {
     this.hotelsError.set(null);
     this.hotelSvc.getAll().subscribe({
       next: (list) => {
+        console.log("Listed hotels:", list);
         this.hotels.set(list.map(h => ({ ...h, rooms: [], roomsLoaded: false })));
         this.loadingHotels.set(false);
       },
@@ -144,7 +153,7 @@ export class HotelsComponent implements OnInit {
 
   // ── Computed helpers ──────────────────────────────────────────────────────
   reservedCount(h: HotelUI): number {
-    return h.rooms.filter(r => r.status?.toLowerCase() === 'reserved').length;
+    return h.rooms.filter(r => r.status?.toLowerCase() === 'OCCUPIED').length;
   }
 
   // ── MANAGE MODAL ──────────────────────────────────────────────────────────
@@ -157,11 +166,12 @@ export class HotelsComponent implements OnInit {
 
   private _fetchRooms(h: HotelUI) {
     this.loadingRooms.set(true);
-    this.roomSvc.getAllForHotel(h.hotelName).subscribe({
+    this.roomSvc.getAllForHotel(h.hotelID).subscribe({
       next: (rooms) => {
-        this._patchHotel(h.hotelName, { rooms, roomsLoaded: true });
+        console.log("Listed rooms for hotel", h.hotelID, rooms);
+        this._patchHotel(h.hotelID, { rooms, roomsLoaded: true });
         // refresh selectedHotel reference
-        const updated = this.hotels().find(x => x.hotelName === h.hotelName);
+        const updated = this.hotels().find(x => x.hotelID === h.hotelID);
         if (updated) this.selectedHotel.set(updated);
         this.loadingRooms.set(false);
       },
@@ -174,7 +184,7 @@ export class HotelsComponent implements OnInit {
 
   private _patchHotel(name: string, patch: Partial<HotelUI>) {
     this.hotels.update(list =>
-      list.map(h => h.hotelName === name ? { ...h, ...patch } : h)
+      list.map(h => h.hotelID === name ? { ...h, ...patch } : h)
     );
   }
 
@@ -182,7 +192,7 @@ export class HotelsComponent implements OnInit {
   deleteHotel(name: string) {
     if (!confirm(`Remove "${name}" from the list?`)) return;
     this.hotelSvc.delete(name).subscribe({
-      next: () => this.hotels.update(list => list.filter(h => h.hotelName !== name)),
+      next: () => this.hotels.update(list => list.filter(h => h.hotelID !== name)),
       error: (err) => {
         console.error(err);
         alert('Failed to delete hotel. Please try again.');
@@ -193,7 +203,9 @@ export class HotelsComponent implements OnInit {
   // ── NEW HOTEL MODAL ───────────────────────────────────────────────────────
   openNew() {
     this.hotelForm.reset({ totalRooms: 1 });
-    this.roomNames = ['Room 1'];
+    const hotelPrefix = this.hotelForm.get('hotelName')?.value || 'Hotel';
+
+    this.roomNames = [`${hotelPrefix} Room 1`];
     this.createError.set(null);
     this.roomWarning.set(null);
     this.showAddLocation.set(false);
@@ -317,10 +329,10 @@ export class HotelsComponent implements OnInit {
       next: (room) => {
         // update rooms list if hotel is loaded
         this._patchHotel(hotelName, {
-          rooms: [...(this.hotels().find(h => h.hotelName === hotelName)?.rooms ?? []), room],
+          rooms: [...(this.hotels().find(h => h.hotelID === hotelName)?.rooms ?? []), room],
         });
         // bump totalRooms display
-        const hotel = this.hotels().find(h => h.hotelName === hotelName);
+        const hotel = this.hotels().find(h => h.hotelID === hotelName);
         if (hotel) {
           this._patchHotel(hotelName, { totalRooms: hotel.totalRooms + 1 });
         }
@@ -336,7 +348,7 @@ export class HotelsComponent implements OnInit {
 
   // ── Helpers ───────────────────────────────────────────────────────────────
   hotelNames(): string[] {
-    return this.hotels().map(h => h.hotelName);
+    return this.hotels().map(h => h.hotelID);
   }
 
   field(form: FormGroup, name: string) {

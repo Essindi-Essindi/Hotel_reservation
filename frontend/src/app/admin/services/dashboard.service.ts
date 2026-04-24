@@ -93,7 +93,7 @@ export class DashboardService {
       switchMap(({ hotels, reservations }) => {
         const roomRequests = hotels.reduce<Record<string, Observable<Room[]>>>(
           (acc, h) => {
-            acc[h.hotelName] = this.roomSvc.getAllForHotel(h.hotelName);
+            acc[h.hotelID] = this.roomSvc.getAllForHotel(h.hotelID);
             return acc;
           },
           {}
@@ -123,7 +123,7 @@ export class DashboardService {
 
     const allRooms      = Object.values(roomsByHotel).flat();
     const totalRooms    = allRooms.length;
-    const reservedCount = reservations.filter(r => r.status === 'CONFIRMED').length;
+    const reservedCount = reservations.filter(r => r.state === 'Confirmed').length;
     const occupancyPct  = totalRooms > 0
       ? Math.round((reservedCount / totalRooms) * 100)
       : 0;
@@ -140,7 +140,7 @@ export class DashboardService {
     const totalRooms   = allRooms.length;
     const totalRes     = reservations.length;
     const revenue      = reservations.reduce((sum, r) => sum + (r.cost ?? 0), 0);
-    const confirmed    = reservations.filter(r => r.status === 'CONFIRMED').length;
+    const confirmed    = reservations.filter(r => r.state === 'Confirmed').length;
     const occupancyPct = totalRooms > 0 ? Math.round((confirmed / totalRooms) * 100) : 0;
 
     return [
@@ -182,10 +182,10 @@ export class DashboardService {
     reservations: Reservation[],
   ): HotelStat[] {
     return hotels.map(hotel => {
-      const rooms     = roomsByHotel[hotel.hotelName] ?? [];
+      const rooms     = roomsByHotel[hotel.hotelID] ?? [];
       const total     = rooms.length;
       const reserved  = reservations.filter(
-        r => r.hotelId === hotel.hotelName && r.status === 'CONFIRMED'
+        r => r.hotelId === hotel.hotelID && r.state === 'Confirmed'
       ).length;
       const available = Math.max(0, total - reserved);
       const pct       = total > 0 ? Math.round((reserved / total) * 100) : 0;
@@ -198,7 +198,7 @@ export class DashboardService {
     const byMonth = new Map<string, { revenue: number; confirmed: number; total: number }>();
 
     for (const res of reservations) {
-      const dateStr = res.reservationStartDate ?? res.currentDate;
+      const dateStr = res.reservationStartDate ?? res.DateIssued;
       if (!dateStr) continue;
       const d = new Date(dateStr);
       if (isNaN(d.getTime())) continue;
@@ -207,7 +207,7 @@ export class DashboardService {
       const entry = byMonth.get(key) ?? { revenue: 0, confirmed: 0, total: 0 };
       entry.revenue += res.cost ?? 0;
       entry.total   += 1;
-      if (res.status === 'CONFIRMED') entry.confirmed += 1;
+      if (res.state === 'Confirmed') entry.confirmed += 1;
       byMonth.set(key, entry);
     }
 
@@ -228,18 +228,18 @@ export class DashboardService {
   mapRecentReservations(reservations: Reservation[]): RecentReservationRow[] {
     return [...reservations]
       .sort((a, b) => {
-        const da = new Date(a.currentDate ?? '').getTime() || 0;
-        const db = new Date(b.currentDate ?? '').getTime() || 0;
+        const da = new Date(a.DateIssued ?? '').getTime() || 0;
+        const db = new Date(b.DateIssued ?? '').getTime() || 0;
         return db - da;
       })
       .slice(0, 10)
       .map(r => ({
-        id:        r.id,
+        id:        r.reservationID,
         guest:     `User #${r.userId}`,
         hotelName: r.hotelId,
         roomId:    r.roomId,
         groupName: 'Standard',
-        checkIn:   r.reservationStartDate ?? r.currentDate ?? '',
+        checkIn:   r.reservationStartDate ?? r.DateIssued ?? '',
         amount:    r.cost ?? 0,
       }));
   }

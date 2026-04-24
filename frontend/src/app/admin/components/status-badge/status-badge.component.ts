@@ -18,18 +18,18 @@ export class StatusBadgeComponent {
 
   get statusClass(): string {
     const map: Record<ReservationStatus, string> = {
-      CONFIRMED: 'confirmed',
-      CANCELLED: 'cancelled',
-      COMPLETED: 'checked-out',
+      Confirmed: 'confirmed',
+      Cancelled: 'cancelled',
+      Completed: 'checked-out',
     };
     return map[this.status] ?? '';
   }
 
   get label(): string {
     const map: Record<ReservationStatus, string> = {
-      CONFIRMED: 'Confirmed',
-      CANCELLED: 'Cancelled',
-      COMPLETED: 'Completed',
+      Confirmed: 'Confirmed',
+      Cancelled: 'Cancelled',
+      Completed: 'Completed',
     };
     return map[this.status] ?? this.status;
   }

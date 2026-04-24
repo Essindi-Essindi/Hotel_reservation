@@ -24,6 +24,10 @@ public class HotelService {
         return hotelRepo.findByIsDeletedFalse();
     }
 
+    public void saveHotel(Hotel hotel) {
+        hotelRepo.save(hotel);
+    }
+
     public Hotel getHotelById(String hotelID) {
         return hotelRepo.findByHotelIDAndIsDeletedFalse(hotelID);
     }

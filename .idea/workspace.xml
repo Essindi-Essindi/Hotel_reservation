@@ -4,22 +4,84 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b3dd1f9a-654f-4853-b57d-0df9bc59f57c" name="Changes" comment="merging Astera into Claudia">
-      <change afterPath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/dto/PaymentDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/repository/PaymentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PaymentManagement/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PaymentManagement/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/controller/PaymentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/model/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/model/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/repository/PaymentRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/PaymentManagement/src/main/java/com/example/paymentmanagement/service/PaymentService.java" afterDir="false" />
+    <list default="true" id="b3dd1f9a-654f-4853-b57d-0df9bc59f57c" name="Changes" comment="merging Elsa into Claudia">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelManagement/src/main/java/com/example/hotelmanagement/service/HotelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HotelManagement/src/main/java/com/example/hotelmanagement/service/HotelService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelManagement/src/main/java/com/example/hotelmanagement/service/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HotelManagement/src/main/java/com/example/hotelmanagement/service/RoomService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/dto/UserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/security/JwtFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/security/JwtFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/UserManagement/src/main/java/com/example/usermanagement/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/components/status-badge/status-badge.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/components/status-badge/status-badge.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/models/reservation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/models/reservation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/hotels/hotels.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/reservations/reservations.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/services/dashboard.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/dashboard.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/services/hotel.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/hotel.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/services/location.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/location.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/services/reservation.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/reservation.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/services/room.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/room.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/parking-service/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/parking-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/parking-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/parking-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/parking-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/parking-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/parking-service/src/main/java/com/example/parkingservice/ParkingServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/parking-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/parking-service/src/test/java/com/example/parkingservice/ParkingServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/compose.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/src/main/java/com/example/paymentservice/PaymentServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service/src/test/java/com/example/paymentservice/PaymentServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pricing-service/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pricing-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pricing-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pricing-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pricing-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pricing-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pricing-service/src/main/java/com/example/pricingservice/PricingServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pricing-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/pricing-service/src/test/java/com/example/pricingservice/PricingServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/reservation-service/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/reservation-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/reservation-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/reservation-service/compose.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/reservation-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/reservation-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/reservation-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/reservation-service/src/main/java/com/example/reservationservice/ReservationServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/reservation-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/reservation-service/src/test/java/com/example/reservationservice/ReservationServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/compose.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/UserServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/dto/AuthResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/dto/LoginRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/dto/RegisterRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/entity/com/example/userservice/entity/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/security/JwtFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/security/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/security/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/service/AuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/java/com/example/userservice/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service/src/test/java/com/example/userservice/UserServiceApplicationTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,31 +96,38 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="3CmDHDNZm52U57ENGTZPHDYVLR0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging Claudia",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.configurations.included.in.services": "true",
-    "ts.external.directory.path": "D:\\Inge 4\\S2\\Cloud Computing\\Hotel_reservation\\frontend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ReservationManagementApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ServiceRegistryApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.UserManagementApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Claudia&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Inge 4\\S2\\Cloud Computing\\Hotel_reservation\\frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -113,14 +182,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="user-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.userservice.UserServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -138,7 +199,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1776981770658</updated>
-      <workItem from="1776981771228" duration="1149000" />
+      <workItem from="1776981771228" duration="12246000" />
     </task>
     <task id="LOCAL-00001" summary="Enabling CORS for frontend">
       <option name="closed" value="true" />
@@ -172,7 +233,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776982599843</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="merging Elsa into Claudia">
+      <option name="closed" value="true" />
+      <created>1776983235551</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1776983235552</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,7 +251,8 @@
     <MESSAGE value="Enabling CORS for frontend" />
     <MESSAGE value="merging Ayuk into Claudia" />
     <MESSAGE value="merging Astera into Claudia" />
-    <option name="LAST_COMMIT_MESSAGE" value="merging Astera into Claudia" />
+    <MESSAGE value="merging Elsa into Claudia" />
+    <option name="LAST_COMMIT_MESSAGE" value="merging Elsa into Claudia" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

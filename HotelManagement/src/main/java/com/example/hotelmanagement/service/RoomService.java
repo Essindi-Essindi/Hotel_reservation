@@ -43,8 +43,11 @@ public class RoomService {
         newRoom.setRoomID(newRoomDto.getRoomName());
         newRoom.setStatus(RoomStatus.AVAILABLE);
         Hotel hotel = hotelService.getHotelById(newRoomDto.getHotelName());
-        newRoom.setHotel(hotel);
-
+        if(hotel != null){
+            hotel.setTotalRooms(hotel.getTotalRooms() + 1);
+            newRoom.setHotel(hotel);
+            hotelService.saveHotel(hotel);
+        }
         return  roomRepo.save(newRoom);
     }
 

@@ -1,0 +1,217 @@
+<!-- Reservations Page — same table structure, fixed API/modal logic -->
+
+<div class="page-space">
+
+  <!-- Page Header — NO create button (per requirements) -->
+  <app-page-header
+    eyebrow="Reservations"
+    title="Reservation Management"
+    description="Manage all room reservations across your properties."
+    [hasActions]="false"
+  />
+
+  <!-- Filter bar -->
+  <div class="luxury-card filter-card">
+    <div class="filter-row">
+
+      <!-- Search -->
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Search guest, ID, or hotel…"
+          [ngModel]="query()"
+          (ngModelChange)="query.set($event)"
+        />
+      </div>
+
+      <!-- Hotel filter (built from actual data) -->
+      <select class="filter-select" [ngModel]="hotelId()" (ngModelChange)="hotelId.set($event)">
+        <option value="All">All Hotels</option>
+        <option *ngFor="let h of getHotels()" [value]="h.id">{{ h.name }}</option>
+      </select>
+
+      <!-- Status filter -->
+      <select class="filter-select filter-select--narrow" [ngModel]="status()" (ngModelChange)="status.set($event)">
+        <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+      </select>
+
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="luxury-card table-card">
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+<!--            <th>ID</th>-->
+            <th>Guest</th>
+            <th>Hotel · Room</th>
+            <th class="hide-md">Check-in</th>
+            <th class="hide-md">Check-out</th>
+            <th>Status</th>
+            <th class="text-right">Amount</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let r of getFilteredReservations()">
+
+            <!-- ID -->
+<!--            <td class="mono-id">{{ r.id }}</td>-->
+
+            <!-- Guest -->
+            <td>
+              <div class="guest-cell">
+                <div class="avatar-sm">{{ getInitials(r.guest) }}</div>
+                <span class="guest-name">{{ r.guest }}</span>
+              </div>
+            </td>
+
+            <!-- Hotel · Room -->
+            <td>
+              <p class="table-primary">{{ r.hotelName }}</p>
+              <p class="table-sub">Room {{ r.roomId }}</p>
+            </td>
+
+            <!-- Check-in -->
+            <td class="text-muted hide-md">{{ r.checkIn }}</td>
+
+            <!-- Check-out -->
+            <td class="text-muted hide-md">{{ r.checkOut }}</td>
+
+            <!-- Status -->
+            <td><app-status-badge [status]="r.status" /></td>
+
+            <!-- Amount -->
+            <td class="text-right font-medium">${{ r.cost.toLocaleString() }}</td>
+
+            <!-- Actions -->
+            <td class="text-right">
+              <div class="action-btns">
+
+                <!-- View (always available) -->
+                <button class="icon-action" title="View" (click)="openViewModal(r)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.5">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+
+
+                <!-- Delete (CANCELLED only) -->
+                <button
+                  class="icon-action"
+                  [class.icon-action--danger]="canDelete(r)"
+                  [disabled]="!canDelete(r)"
+                  [title]="canDelete(r) ? 'Delete reservation' : 'Cannot delete — only cancelled reservations can be deleted'"
+                  [style.opacity]="canDelete(r) ? '1' : '0.35'"
+                  [style.cursor]="canDelete(r) ? 'pointer' : 'not-allowed'"
+                  (click)="requestDelete(r)"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="1.5">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                </button>
+
+              </div>
+            </td>
+
+          </tr>
+
+          <!-- Empty state -->
+          <tr *ngIf="getFilteredReservations().length === 0">
+            <td colspan="8" class="empty-state">No reservations match your filters.</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+
+<div
+  class="modal-backdrop"
+  *ngIf="showViewModal() && selectedRow() as r"
+  (click)="onViewBackdropClick($event)"
+>
+  <div class="modal-card modal-card--view" role="dialog" aria-modal="true" aria-labelledby="modal-view-title">
+
+    <div class="modal-header">
+      <div>
+        <p class="modal-eyebrow">#{{ r.id }}</p>
+        <h2 class="modal-title" id="modal-view-title">Reservation Details</h2>
+      </div>
+      <button class="close-btn" (click)="closeViewModal()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Guest hero strip -->
+    <div class="view-guest-strip">
+      <div class="avatar-lg">{{ getInitials(r.guest) }}</div>
+      <div>
+        <p class="view-guest-name">{{ r.guest }}</p>
+        <app-status-badge [status]="r.status" />
+      </div>
+      <div class="view-amount">${{ r.cost.toLocaleString() }}</div>
+    </div>
+
+    <!-- Detail grid -->
+    <div class="view-grid">
+      <div class="view-item">
+        <span class="view-label">Hotel</span>
+        <span class="view-value">{{ r.hotelName }}</span>
+      </div>
+      <div class="view-item">
+        <span class="view-label">Room</span>
+        <span class="view-value">Room {{ r.roomId }}</span>
+      </div>
+      <div class="view-item">
+        <span class="view-label">Check-in</span>
+        <span class="view-value">{{ r.checkIn }}</span>
+      </div>
+      <div class="view-item">
+        <span class="view-label">Check-out</span>
+        <span class="view-value">{{ r.checkOut }}</span>
+      </div>
+      <div class="view-item">
+        <span class="view-label">Start Time</span>
+        <span class="view-value">{{ r.startTime }}</span>
+      </div>
+      <div class="view-item">
+        <span class="view-label">End Time</span>
+        <span class="view-value">{{ r.endTime }}</span>
+      </div>
+      <div class="view-item">
+        <span class="view-label">Duration</span>
+        <span class="view-value">{{ r.duration }} hr{{ r.duration !== 1 ? 's' : '' }}</span>
+      </div>
+      <div class="view-item">
+        <span class="view-label">Cost</span>
+        <span class="view-value">${{ r.cost.toLocaleString() }}</span>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-outline" (click)="closeViewModal()">Close</button>
+    </div>
+
+  </div>
+</div>
+
+
+

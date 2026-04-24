@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ReservationService, NewReservationDto, Reservation, Hotel, Room } from '../../reservation.service';
+import { PaymentService, PaymentDto, PaymentMethod } from '../../payment.service';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
@@ -28,6 +29,7 @@ export class ReservationComponent implements OnInit {
 
 
   showModal: boolean = false;
+  showPaymentModal: boolean = false;
   showReceipt: boolean = false;
   minDate: string = '';
   isLoading: boolean = false;
@@ -48,10 +50,25 @@ export class ReservationComponent implements OnInit {
     roomId: ''
   };
 
+  paymentData: PaymentDto = {
+    paymentID: '',
+    paymentDate: '',
+    amount: 0,
+    paymentMethod: 'CreditCard',
+    reservationID: 0,
+    userID: 1
+  };
+
+  availablePaymentMethods: PaymentMethod[] = ['CreditCard', 'Paypal', 'MobileMoney', 'OrangeMoney'];
+
   confirmedReservation: Reservation | null = null;
   selectedReceiptReservation: Reservation | null = null;
+  confirmedPayment: PaymentDto | null = null;
 
-  constructor(private reservationService: ReservationService) {}
+  constructor(
+    private reservationService: ReservationService,
+    private paymentService: PaymentService
+  ) {}
 
   ngOnInit(): void {
     this.loadUserData();
@@ -79,8 +96,10 @@ export class ReservationComponent implements OnInit {
     if (storedUser) {
       const user = JSON.parse(storedUser);
       this.newReservation.userId = user.id || 1;
+      this.paymentData.userID = user.id || 1;
     } else {
       this.newReservation.userId = 1;
+      this.paymentData.userID = 1;
     }
   }
 
@@ -127,9 +146,9 @@ export class ReservationComponent implements OnInit {
         this.isLoading = false;
       }, 500);
     } else {
-
       this.reservationService.getAllHotels().subscribe({
         next: (hotels) => {
+          console.log("Fetched hotels:", hotels);
           this.hotels = hotels.filter(hotel => !hotel.isDeleted);
           this.isLoading = false;
         },
@@ -182,8 +201,10 @@ export class ReservationComponent implements OnInit {
         this.isLoadingRooms = false;
       }, 500);
     } else {
+      console.log("Fetching rooms for hotel:", this.selectedHotelName);
       this.reservationService.getAllRoomsForHotel(this.selectedHotelName).subscribe({
         next: (rooms) => {
+          console.log("Fetched rooms for hotel:", rooms);
           this.rooms = rooms;
           this.filteredRooms = rooms;
           this.isLoadingRooms = false;
@@ -264,19 +285,87 @@ export class ReservationComponent implements OnInit {
 
   closeModal(): void {
     this.showModal = false;
-    this.showReceipt = false;
     this.errorMessage = '';
   }
 
-  confirmBooking(): void {
-    if (!this.selectedRoom) return;
+  closePaymentModal(): void {
+    this.showPaymentModal = false;
+    this.errorMessage = '';
+  }
+
+  openPaymentModal(): void {
+    if (!this.newReservation.reservationStartDate || !this.newReservation.reservationEndDate) {
+      this.errorMessage = 'Please select check-in and check-out dates.';
+      return;
+    }
+
+    if (this.newReservation.duration <= 0) {
+      this.errorMessage = 'Please select valid dates (at least 1 night).';
+      return;
+    }
+
+    this.closeModal();
+    this.resetPaymentForm();
+    this.showPaymentModal = true;
+  }
+
+  resetPaymentForm(): void {
+    this.paymentData = {
+      paymentID: '',
+      paymentDate: new Date().toISOString(),
+      amount: this.newReservation.cost,
+      paymentMethod: 'CreditCard',
+      reservationID: 0,
+      userID: this.newReservation.userId
+    };
+    this.errorMessage = '';
+  }
+
+  processPayment(): void {
+    if (!this.paymentData.paymentMethod) {
+      this.errorMessage = 'Please select a payment method.';
+      return;
+    }
 
     this.isLoading = true;
+    this.paymentData.paymentDate = new Date().toISOString();
+    this.paymentData.amount = this.newReservation.cost;
+
+    if (this.useMockData) {
+      setTimeout(() => {
+        const mockPayment: PaymentDto = {
+          paymentID: 'PAY-' + Math.floor(Math.random() * 90000) + 10000,
+          paymentDate: this.paymentData.paymentDate,
+          amount: this.paymentData.amount,
+          paymentMethod: this.paymentData.paymentMethod,
+          reservationID: 0,
+          userID: this.paymentData.userID
+        };
+
+        this.confirmedPayment = mockPayment;
+        this.createReservationAfterPayment();
+      }, 1500);
+    } else {
+      console.log("Processing payment with data:", this.paymentData);
+      this.paymentService.createPayment(this.paymentData).subscribe({
+        next: (payment) => {
+          this.confirmedPayment = payment;
+          this.createReservationAfterPayment();
+        },
+        error: (error) => {
+          console.error('Payment failed:', error);
+          this.errorMessage = 'Payment processing failed. Please try again.';
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  createReservationAfterPayment(): void {
     this.calculateDurationAndCost();
     this.newReservation.currentDate = new Date().toISOString();
 
     if (this.useMockData) {
-
       setTimeout(() => {
         const reservation: Reservation = {
           reservationID: Math.floor(Math.random() * 90000) + 10000,
@@ -296,6 +385,10 @@ export class ReservationComponent implements OnInit {
           deletedAt: null
         };
 
+        if (this.confirmedPayment) {
+          this.confirmedPayment.reservationID = reservation.reservationID;
+        }
+
         this.confirmedReservation = reservation;
         this.selectedReceiptReservation = reservation;
 
@@ -305,6 +398,7 @@ export class ReservationComponent implements OnInit {
         }
 
         this.filteredRooms = [...this.rooms];
+        this.showPaymentModal = false;
         this.showReceipt = true;
         this.isLoading = false;
       }, 1000);
@@ -313,7 +407,15 @@ export class ReservationComponent implements OnInit {
         next: (reservation) => {
           this.confirmedReservation = reservation;
           this.selectedReceiptReservation = reservation;
-
+          if (this.confirmedPayment) {
+            const updatedPayment = { ...this.confirmedPayment, reservationID: reservation.reservationID };
+            this.paymentService.updatePayment(this.confirmedPayment.paymentID, updatedPayment).subscribe({
+              next: () => {
+                this.confirmedPayment = updatedPayment;
+              },
+              error: (err) => console.error('Failed to update payment with reservation ID:', err)
+            });
+          }
           this.reservationService.updateRoomStatus(this.selectedRoom!.roomID).subscribe({
             next: () => {
               const roomIndex = this.rooms.findIndex(r => r.roomID === this.selectedRoom!.roomID);
@@ -324,13 +426,13 @@ export class ReservationComponent implements OnInit {
             },
             error: (err) => console.error('Failed to update room status:', err)
           });
-
+          this.showPaymentModal = false;
           this.showReceipt = true;
           this.isLoading = false;
         },
         error: (error) => {
-          console.error('Booking failed:', error);
-          this.errorMessage = 'Booking failed. Please try again.';
+          console.error('Reservation creation failed:', error);
+          this.errorMessage = 'Reservation failed. Please try again.';
           this.isLoading = false;
         }
       });
@@ -398,6 +500,16 @@ export class ReservationComponent implements OnInit {
             color: #2c3e2f;
             font-weight: 600;
           }
+          .payment-details {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+          }
+          .payment-details h5 {
+            color: #1565c0;
+            margin-bottom: 0.8rem;
+          }
           .receipt-footer {
             margin-top: 1.5rem;
             padding-top: 1rem;
@@ -425,6 +537,15 @@ export class ReservationComponent implements OnInit {
               <p><strong>Status:</strong> ${this.selectedReceiptReservation.state}</p>
               <p><strong>Date Issued:</strong> ${new Date(this.selectedReceiptReservation.DateIssued).toLocaleString()}</p>
             </div>
+            ${this.confirmedPayment ? `
+            <div class="payment-details">
+              <h5><i class="fas fa-credit-card"></i> Payment Information</h5>
+              <p><strong>Payment ID:</strong> ${this.confirmedPayment.paymentID}</p>
+              <p><strong>Payment Method:</strong> ${this.formatPaymentMethod(this.confirmedPayment.paymentMethod)}</p>
+              <p><strong>Amount Paid:</strong> $${this.confirmedPayment.amount}</p>
+              <p><strong>Payment Date:</strong> ${new Date(this.confirmedPayment.paymentDate).toLocaleString()}</p>
+            </div>
+            ` : ''}
             <div class="receipt-footer">
               <i class="fas fa-check-circle"></i> Thank you for choosing Placefinder!
             </div>
@@ -445,12 +566,27 @@ export class ReservationComponent implements OnInit {
     URL.revokeObjectURL(url);
   }
 
+  formatPaymentMethod(method: string): string {
+    const methods: { [key: string]: string } = {
+      'CREDIT_CARD': 'Credit Card',
+      'DEBIT_CARD': 'Debit Card',
+      'PAYPAL': 'PayPal',
+      'MOMO': 'MTN Mobile Money',
+      'ORANGE_MONEY': 'Orange Money'
+    };
+    return methods[method] || method;
+  }
+
   resetAndClose(): void {
     this.showModal = false;
+    this.showPaymentModal = false;
     this.showReceipt = false;
     this.selectedRoomId = '';
     this.selectedRoom = null;
     this.selectedReceiptReservation = null;
+    this.confirmedReservation = null;
+    this.confirmedPayment = null;
+    this.errorMessage = '';
     this.setDefaultDates();
   }
 }

@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserDto {
-
     private Integer id;
     private String name;
-    private String role;
+    private String role;  // String, not Role enum
 }

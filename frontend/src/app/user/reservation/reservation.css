@@ -10,6 +10,7 @@
   min-height: 100vh;
   width: 100%;
 }
+
 .hero-fullwidth {
   position: relative;
   width: 100vw;
@@ -116,6 +117,7 @@
   font-size: 1rem;
   letter-spacing: 1px;
 }
+
 .container {
   max-width: 1400px;
   margin: 0 auto;
@@ -396,7 +398,7 @@
   font-size: 0.9rem;
 }
 
-.form-group input {
+.form-group input, .form-group select {
   width: 100%;
   padding: 0.8rem;
   border: 2px solid #e0d6c8;
@@ -405,7 +407,7 @@
   transition: all 0.2s;
 }
 
-.form-group input:focus {
+.form-group input:focus, .form-group select:focus {
   border-color: #571726;
   outline: none;
 }
@@ -450,9 +452,14 @@
   transition: all 0.3s;
 }
 
-.confirm-btn:hover {
+.confirm-btn:hover:not(:disabled) {
   background: #1e5a38;
   transform: translateY(-2px);
+}
+
+.confirm-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .receipt {
@@ -528,11 +535,6 @@
   to { transform: rotate(360deg); }
 }
 
-.confirm-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
 .error-message {
   background: #f8d7da;
   color: #721c24;
@@ -541,6 +543,169 @@
   margin-bottom: 1rem;
   font-size: 0.9rem;
   text-align: center;
+}
+
+.payment-modal {
+  max-width: 550px;
+}
+
+.payment-summary {
+  background: linear-gradient(135deg, #f9f0e8, #f5e6dc);
+  padding: 1.2rem;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+}
+
+.payment-summary h4 {
+  color: #571726;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #e0d6c8;
+  padding-bottom: 0.5rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.6rem 0;
+  font-size: 0.95rem;
+}
+
+.summary-item.total {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2c7a4d;
+  border-top: 1px solid #e0d6c8;
+  padding-top: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+.payment-select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e0d6c8;
+  border-radius: 12px;
+  font-size: 1rem;
+  background: white;
+  cursor: pointer;
+}
+
+.payment-select:focus {
+  border-color: #571726;
+  outline: none;
+}
+
+.payment-method-icons {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.payment-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-width: 80px;
+  background: #f5f0ea;
+}
+
+.payment-icon:hover {
+  transform: translateY(-2px);
+}
+
+.payment-icon i {
+  font-size: 1.8rem;
+  color: #666;
+}
+
+.payment-icon span {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.payment-icon.active {
+  background: #571726;
+  transform: scale(1.05);
+}
+
+.payment-icon.active i,
+.payment-icon.active span {
+  color: white;
+}
+
+.payment-icon:hover:not(.active) {
+  background: #e0d6c8;
+}
+
+.card-details, .mobile-money-details, .paypal-details {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+}
+
+.card-input {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.card-input:focus {
+  border-color: #571726;
+  outline: none;
+}
+
+.confirm-btn i {
+  margin-right: 8px;
+}
+
+.secure-notice {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.secure-notice i {
+  color: #2c7a4d;
+  margin-right: 5px;
+}
+
+.receipt-modal {
+  max-width: 600px;
+}
+
+.payment-details-in-receipt {
+  background: #e3f2fd;
+  padding: 1.2rem;
+  border-radius: 16px;
+  margin: 1rem 0;
+}
+
+.payment-details-in-receipt h5 {
+  color: #1565c0;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.payment-info-content p {
+  margin: 0.5rem 0;
+  padding: 0.3rem 0;
+  border-bottom: 1px dashed #bbdef5;
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (max-width: 768px) {
@@ -584,6 +749,23 @@
     flex-direction: column;
     gap: 0.8rem;
   }
+  
+  .payment-method-icons {
+    gap: 0.5rem;
+  }
+  
+  .payment-icon {
+    min-width: 60px;
+    padding: 0.5rem;
+  }
+  
+  .payment-icon i {
+    font-size: 1.2rem;
+  }
+  
+  .payment-icon span {
+    font-size: 0.65rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -606,5 +788,10 @@
   
   .room-info .price {
     font-size: 1.5rem;
+  }
+  
+  .receipt-details p {
+    flex-direction: column;
+    gap: 0.3rem;
   }
 }

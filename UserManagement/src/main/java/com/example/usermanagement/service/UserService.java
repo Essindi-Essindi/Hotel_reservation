@@ -5,6 +5,7 @@ import com.example.usermanagement.model.User;
 import com.example.usermanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.usermanagement.model.Role;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,10 +30,10 @@ public class UserService {
     }
 
     public List<UserDto> getUsersByRole(String role) {
-        return userRepository.findByRole(role)
-                .stream()
-                .map(User::toDto)
-                .collect(Collectors.toList());
+    return userRepository.findByRole(Role.valueOf(role.toUpperCase()))
+            .stream()
+            .map(User::toDto)
+            .collect(Collectors.toList());
     }
 
     public void deleteUser(Integer id) {

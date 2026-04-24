@@ -6,6 +6,7 @@ import com.example.usermanagement.dto.RegisterRequest;
 import com.example.usermanagement.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +19,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
+    }
+
+    @PostMapping("/register/admin")
+//    @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
+    public ResponseEntity<AuthResponse> registerAdmin(@RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(authService.registerAdmin(request));
     }
 
     @PostMapping("/login")

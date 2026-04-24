@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57165d66-a1a2-4813-abb3-c3e566c6d063" name="Changes" comment="Enabling CORS for frontend">
+    <list default="true" id="b3dd1f9a-654f-4853-b57d-0df9bc59f57c" name="Changes" comment="Integrating Admin reservation and hotel management pages">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/environments/environment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HotelManagement/src/main/java/com/example/hotelmanagement/service/ReservationCleanUpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/HotelManagement/src/main/java/com/example/hotelmanagement/service/ReservationCleanUpService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/models/payment.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/models/payment.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/pages/dashboard/dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/dashboard/dashboard.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/pages/payments/payments.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/pages/payments/payments.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/services/dashboard.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/dashboard.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/admin/services/payment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/admin/services/payment.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/payment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/payment.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/user/reservation/reservation.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/user/reservation/reservation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/user/reservation/reservation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/user/reservation/reservation.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +23,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Ayuk" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -21,42 +35,33 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 4
+  &quot;associatedIndex&quot;: 7
 }</component>
-  <component name="ProjectId" id="3CjHPv4AiZkHNYYwII4G5VsY9np" />
+  <component name="ProjectId" id="3CmDHDNZm52U57ENGTZPHDYVLR0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.GatewayApplication.executor": "Run",
-    "Spring Boot.HotelManagementApplication.executor": "Run",
-    "Spring Boot.PaymentManagementApplication.executor": "Run",
-    "Spring Boot.ReservationManagementApplication.executor": "Run",
-    "Spring Boot.ServiceRegistryApplication.executor": "Run",
-    "Spring Boot.UserManagementApplication.executor": "Run",
-    "git-widget-placeholder": "Claudia",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Inge 4/S2/Cloud Computing/Hotel_reservation/UserManagement",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.configurations.included.in.services": "true",
-    "ts.external.directory.path": "D:\\Inge 4\\S2\\Cloud Computing\\Hotel_reservation\\frontend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ReservationManagementApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ServiceRegistryApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.UserManagementApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Claudia&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Inge 4\\S2\\Cloud Computing\\Hotel_reservation\\frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -67,7 +72,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ParkingServiceApplication">
+  <component name="RunManager" selected="Spring Boot.GatewayApplication">
     <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="Gateway" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.gateway.GatewayApplication" />
@@ -82,25 +87,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ParkingServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="parking-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.parkingservice.ParkingServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="PaymentManagementApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="PaymentManagement" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.paymentmanagement.PaymentManagementApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PaymentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="payment-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.paymentservice.PaymentServiceApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -127,14 +116,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="user-service" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.userservice.UserServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -147,118 +128,74 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="57165d66-a1a2-4813-abb3-c3e566c6d063" name="Changes" comment="" />
-      <created>1776892039902</created>
+      <changelist id="b3dd1f9a-654f-4853-b57d-0df9bc59f57c" name="Changes" comment="Enabling CORS for frontend" />
+      <created>1776981770658</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1776892039902</updated>
-      <workItem from="1776892042182" duration="231000" />
-      <workItem from="1776892281974" duration="2000" />
-      <workItem from="1776892292219" duration="1352000" />
-      <workItem from="1776944166731" duration="21356000" />
+      <updated>1776981770658</updated>
+      <workItem from="1776981771228" duration="19111000" />
     </task>
-    <task id="LOCAL-00001" summary="Adding eureka Client defaultzone">
+    <task id="LOCAL-00001" summary="Enabling CORS for frontend">
       <option name="closed" value="true" />
-      <created>1776956907994</created>
+      <created>1776981907575</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1776956907994</updated>
+      <updated>1776981907575</updated>
     </task>
-    <task id="LOCAL-00002" summary="Converting the user management service to use a postgres database">
+    <task id="LOCAL-00002" summary="merging Ayuk into Claudia">
       <option name="closed" value="true" />
-      <created>1776957596233</created>
+      <created>1776982366426</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1776957596233</updated>
+      <updated>1776982366426</updated>
     </task>
-    <task id="LOCAL-00003" summary="Resolving Gateway dependencies">
+    <task id="LOCAL-00003" summary="merging Astera into Claudia">
       <option name="closed" value="true" />
-      <created>1776960548545</created>
+      <created>1776982547297</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1776960548545</updated>
+      <updated>1776982547297</updated>
     </task>
-    <task id="LOCAL-00004" summary="Resolving Gateway routing issues">
+    <task id="LOCAL-00004" summary="merging Astera into Claudia">
       <option name="closed" value="true" />
-      <created>1776961686114</created>
+      <created>1776982599843</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1776961686115</updated>
+      <updated>1776982599843</updated>
     </task>
-    <task id="LOCAL-00005" summary="Resolving Gateway routing issues">
+    <task id="LOCAL-00005" summary="merging Elsa into Claudia">
       <option name="closed" value="true" />
-      <created>1776963409789</created>
+      <created>1776983235551</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1776963409789</updated>
+      <updated>1776983235552</updated>
     </task>
-    <task id="LOCAL-00006" summary="Resolving Gateway routing issues">
+    <task id="LOCAL-00006" summary="Integrating Admin reservation and hotel management pages">
       <option name="closed" value="true" />
-      <created>1776965619224</created>
+      <created>1776994178239</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1776965619224</updated>
+      <updated>1776994178239</updated>
     </task>
-    <task id="LOCAL-00007" summary="Resolving Gateway routing issues">
-      <option name="closed" value="true" />
-      <created>1776966721760</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1776966721760</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Resolving Gateway routing issues">
-      <option name="closed" value="true" />
-      <created>1776967335171</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1776967335171</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Resolving Gateway routing issues">
-      <option name="closed" value="true" />
-      <created>1776973357087</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1776973357087</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Deploying frontend">
-      <option name="closed" value="true" />
-      <created>1776973754639</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1776973754639</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Enabling CORS for frontend">
-      <option name="closed" value="true" />
-      <created>1776973938051</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1776973938051</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding eureka Client defaultzone" />
-    <MESSAGE value="Converting the user management service to use a postgres database" />
-    <MESSAGE value="Resolving Gateway dependencies" />
-    <MESSAGE value="Resolving Gateway routing issues" />
-    <MESSAGE value="Deploying frontend" />
     <MESSAGE value="Enabling CORS for frontend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Enabling CORS for frontend" />
+    <MESSAGE value="merging Ayuk into Claudia" />
+    <MESSAGE value="merging Astera into Claudia" />
+    <MESSAGE value="merging Elsa into Claudia" />
+    <MESSAGE value="Integrating Admin reservation and hotel management pages" />
+    <option name="LAST_COMMIT_MESSAGE" value="Integrating Admin reservation and hotel management pages" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

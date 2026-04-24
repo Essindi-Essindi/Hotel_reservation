@@ -100,6 +100,16 @@ interface NavItem {
             <path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0Z"/>
           </svg>
         </div>
+        <button (click)="logout.emit()" class="logout-btn" [class.collapsed]="collapsed">
+          <span class="icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16,17 21,12 16,7"/>
+              <line x1="21" x2="9" y1="12" y2="12"/>
+            </svg>
+          </span>
+          <span class="label" *ngIf="!collapsed">Logout</span>
+        </button>
       </div>
     </aside>
   `,
@@ -108,6 +118,7 @@ interface NavItem {
 export class AdminSidebarComponent {
   @Input() collapsed = false;
   @Output() toggleCollapse = new EventEmitter<void>();
+  @Output() logout = new EventEmitter<void>();
 
   navItems: NavItem[] = [
     {

@@ -277,6 +277,60 @@
   display: none;
 }
 
+/* Logout button */
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  height: 44px;
+  border-radius: 0.5rem;
+  margin: 0.125rem 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: hsl(0 70% 50%);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  background: none;
+  border: none;
+  width: calc(100% - 1rem);
+}
+
+.logout-btn:hover {
+  background: hsl(0 70% 50% / 0.1);
+  color: hsl(0 80% 60%);
+}
+
+.logout-btn.collapsed {
+  justify-content: center;
+  padding: 0.75rem;
+}
+
+.logout-btn.collapsed .label {
+  display: none;
+}
+
+.logout-btn .icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.logout-btn .icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.logout-btn .label {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 /* ── Footer ─────────────────────────────────────────────────── */
 .sidebar-footer {
   border-top: 1px solid var(--sb-border);

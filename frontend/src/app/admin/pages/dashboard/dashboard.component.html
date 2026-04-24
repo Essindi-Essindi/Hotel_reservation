@@ -57,8 +57,8 @@
       <div *ngFor="let hs of hotelStats" class="occupancy-row">
         <div class="occupancy-meta">
           <div>
-            <p class="occ-hotel-name">{{ hs.hotel.hotelName }}</p>
-            <p class="occ-hotel-sub">{{ hs.hotel.locationName }} · {{ hs.total }} rooms</p>
+            <p class="occ-hotel-name">{{ hs.hotel.hotelID }}</p>
+            <p class="occ-hotel-sub">{{ hs.hotel.location.locationName }} · {{ hs.total }} rooms</p>
           </div>
           <div class="occ-right">
             <p class="occ-pct">{{ hs.pct }}%</p>
@@ -113,7 +113,7 @@
       <h3 class="section-title">Room Status</h3>
       <div class="room-status-chart">
         <div *ngFor="let hs of hotelStats" class="rs-row">
-          <span class="rs-label">{{ hs.hotel.hotelName | slice:0:15 }}</span>
+          <span class="rs-label">{{ hs.hotel.hotelID | slice:0:15 }}</span>
           <div class="rs-track">
             <div class="rs-fill" [style.width.%]="hs.pct"></div>
           </div>

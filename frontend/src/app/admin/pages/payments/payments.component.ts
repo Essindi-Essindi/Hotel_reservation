@@ -29,10 +29,10 @@ interface ChartPoint {
 
 // Lookup to produce display-friendly method strings
 const METHOD_LABELS: Record<PaymentMethod, string> = {
-  CASH:          'Cash',
-  CARD:          'Card',
-  WIRE_TRANSFER: 'Wire Transfer',
-  MOBILE:        'Mobile Pay',
+  OrangeMoney:          'Orange Money',
+  CreditCard:          'Card',
+  PayPal: 'PayPal',
+  MobileMoney:        'Mobile Money',
 };
 
 // Mock guest names keyed by userID (replace with real user service when ready)
@@ -69,24 +69,25 @@ export class PaymentsComponent implements OnInit {
   error   = signal<string | null>(null);
   rows    = signal<PaymentRow[]>([]);
 
+
   // New payment modal
   showNewModal  = signal(false);
   saving        = signal(false);
   saveError     = signal<string | null>(null);
   newPayment: Partial<PaymentDto> & { paymentMethod: PaymentMethod } = {
     amount: 0,
-    paymentMethod: 'CARD',
+    paymentMethod: 'CreditCard',
     reservationID: 0,
     userID: 0,
   };
-  readonly methods: PaymentMethod[] = ['CASH', 'CARD', 'WIRE_TRANSFER', 'MOBILE'];
+  readonly methods: PaymentMethod[] = ['OrangeMoney', 'CreditCard', 'PayPal', 'MobileMoney'];
 
   // Delete confirm
   deletingId = signal<string | null>(null);
 
   // Filter
   methodFilter = signal<PaymentMethod | 'ALL'>('ALL');
-  readonly filterMethods: (PaymentMethod | 'ALL')[] = ['ALL', 'CASH', 'CARD', 'WIRE_TRANSFER', 'MOBILE'];
+  readonly filterMethods: (PaymentMethod | 'ALL')[] = ['ALL', 'OrangeMoney', 'CreditCard', 'PayPal', 'MobileMoney'];
 
   // ── Computed KPIs ─────────────────────────────────────────
   totalRevenue = computed(() =>
@@ -104,11 +105,22 @@ export class PaymentsComponent implements OnInit {
   });
 
   // ── Filtered rows ─────────────────────────────────────────
-  filteredRows = computed(() => {
+  // filteredRows = computed(() => {
+  //   const mf = this.methodFilter();
+  //   if (mf === 'ALL') return this.rows();
+  //   return this.rows().filter(r => r.raw.paymentMethod === mf);
+  // });
+
+  filteredRows(): PaymentRow[] {
     const mf = this.methodFilter();
-    if (mf === 'ALL') return this.rows();
-    return this.rows().filter(r => r.raw.paymentMethod === mf);
-  });
+    const currentRows = this.rows();
+
+    if (mf === 'ALL') {
+      return currentRows;
+    }
+
+    return currentRows.filter(r => r.raw.paymentMethod === mf);
+  }
 
   // ── Chart data (monthly revenue from rows) ────────────────
   chartPoints = computed<ChartPoint[]>(() => {
@@ -164,12 +176,14 @@ export class PaymentsComponent implements OnInit {
     this.error.set(null);
     this.paymentService.getAllPayments().subscribe({
       next: (dtos) => {
+        console.log("Fetched payments:", dtos);
         this.rows.set(this.mapToRows(dtos));
+        console.log("Mapped rows:", this.rows());
         this.loading.set(false);
       },
       error: (err) => {
         // Fall back to mock data so the UI is never blank
-        this.rows.set(this.mockRows());
+        // this.rows.set(this.mockRows());
         this.loading.set(false);
         this.error.set('Could not reach server — showing sample data.');
       },
@@ -211,7 +225,7 @@ export class PaymentsComponent implements OnInit {
   }
 
   resetForm() {
-    this.newPayment = { amount: 0, paymentMethod: 'CARD', reservationID: 0, userID: 0 };
+    this.newPayment = { amount: 0, paymentMethod: 'CreditCard', reservationID: 0, userID: 0 };
   }
 
   // ── Delete payment ─────────────────────────────────────────
@@ -249,7 +263,7 @@ export class PaymentsComponent implements OnInit {
     const id     = dto.paymentID ?? `mock-${index}`;
     const txNum  = 9821 - index;
     const bkNum  = 2841 - index;
-    const guest  = GUEST_NAMES[dto.userID] ?? `Guest #${dto.userID}`;
+    const guest  = `User ${dto.userID}`;
     const status = MOCK_STATUSES[index % MOCK_STATUSES.length];
     const date   = dto.paymentDate
       ? new Date(dto.paymentDate).toISOString().split('T')[0]
@@ -264,23 +278,23 @@ export class PaymentsComponent implements OnInit {
   private buildMethodLabel(method: PaymentMethod, seed: number): string {
     const last4 = String(seed).slice(-4).padStart(4, '0');
     switch (method) {
-      case 'CARD':          return `Visa •••• ${last4}`;
-      case 'WIRE_TRANSFER': return 'Wire Transfer';
-      case 'CASH':          return 'Cash';
-      case 'MOBILE':        return 'Mobile Pay';
+      case 'CreditCard':          return `Visa •••• ${last4}`;
+      case 'PayPal': return 'Wire Transfer';
+      case 'OrangeMoney':          return 'Orange Money';
+      case 'MobileMoney':        return 'Mobile Money';
       default:              return method;
     }
   }
 
   private mockRows(): PaymentRow[] {
     const mockDtos: PaymentDto[] = [
-      { paymentID: 'p1', amount: 4280, paymentMethod: 'CARD',          reservationID: 2841, userID: 1, paymentDate: '2026-04-18' },
-      { paymentID: 'p2', amount: 1240, paymentMethod: 'CARD',          reservationID: 2840, userID: 2, paymentDate: '2026-04-17' },
-      { paymentID: 'p3', amount: 2160, paymentMethod: 'CARD',          reservationID: 2839, userID: 3, paymentDate: '2026-04-17' },
-      { paymentID: 'p4', amount: 1480, paymentMethod: 'WIRE_TRANSFER', reservationID: 2838, userID: 4, paymentDate: '2026-04-16' },
-      { paymentID: 'p5', amount: 1820, paymentMethod: 'CARD',          reservationID: 2837, userID: 5, paymentDate: '2026-04-15' },
-      { paymentID: 'p6', amount:  380, paymentMethod: 'CARD',          reservationID: 2836, userID: 6, paymentDate: '2026-04-15' },
-      { paymentID: 'p7', amount: 6420, paymentMethod: 'CARD',          reservationID: 2835, userID: 7, paymentDate: '2026-04-14' },
+      { paymentID: 'p1', amount: 4280, paymentMethod: 'CreditCard',          reservationID: 2841, userID: 1, paymentDate: '2026-04-18' },
+      { paymentID: 'p2', amount: 1240, paymentMethod: 'CreditCard',          reservationID: 2840, userID: 2, paymentDate: '2026-04-17' },
+      { paymentID: 'p3', amount: 2160, paymentMethod: 'CreditCard',          reservationID: 2839, userID: 3, paymentDate: '2026-04-17' },
+      { paymentID: 'p4', amount: 1480, paymentMethod: 'PayPal', reservationID: 2838, userID: 4, paymentDate: '2026-04-16' },
+      { paymentID: 'p5', amount: 1820, paymentMethod: 'CreditCard',          reservationID: 2837, userID: 5, paymentDate: '2026-04-15' },
+      { paymentID: 'p6', amount:  380, paymentMethod: 'CreditCard',          reservationID: 2836, userID: 6, paymentDate: '2026-04-15' },
+      { paymentID: 'p7', amount: 6420, paymentMethod: 'CreditCard',          reservationID: 2835, userID: 7, paymentDate: '2026-04-14' },
     ];
     return mockDtos.map((dto, i) => this.toRow(dto, i));
   }

@@ -1,4 +1,4 @@
-export type PaymentMethod = 'CASH' | 'CARD' | 'WIRE_TRANSFER' | 'MOBILE';
+export type PaymentMethod = 'CreditCard' | 'OrangeMoney' | 'MobileMoney' | 'PayPal';
 
 export interface PaymentDto {
   paymentID?: string;

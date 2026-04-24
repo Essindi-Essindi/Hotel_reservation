@@ -235,7 +235,7 @@ export class DashboardService {
       .slice(0, 10)
       .map(r => ({
         id:        r.reservationID,
-        guest:     `User #${r.userId}`,
+        guest:     `User ${r.userId}`,
         hotelName: r.hotelId,
         roomId:    r.roomId,
         groupName: 'Standard',

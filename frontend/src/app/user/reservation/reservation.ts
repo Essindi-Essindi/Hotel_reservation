@@ -15,7 +15,7 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 })
 export class ReservationComponent implements OnInit {
 
-  useMockData: boolean = true;
+  useMockData: boolean = false;
 
   hotels: Hotel[] = [];
   rooms: Room[] = [];
@@ -54,12 +54,12 @@ export class ReservationComponent implements OnInit {
     paymentID: '',
     paymentDate: '',
     amount: 0,
-    paymentMethod: 'CREDIT_CARD',
+    paymentMethod: 'CreditCard',
     reservationID: 0,
     userID: 1
   };
 
-  availablePaymentMethods: PaymentMethod[] = ['CREDIT_CARD', 'PAYPAL', 'MOMO', 'ORANGE_MONEY'];
+  availablePaymentMethods: PaymentMethod[] = ['CreditCard', 'Paypal', 'MobileMoney', 'OrangeMoney'];
 
   confirmedReservation: Reservation | null = null;
   selectedReceiptReservation: Reservation | null = null;
@@ -148,6 +148,7 @@ export class ReservationComponent implements OnInit {
     } else {
       this.reservationService.getAllHotels().subscribe({
         next: (hotels) => {
+          console.log("Fetched hotels:", hotels);
           this.hotels = hotels.filter(hotel => !hotel.isDeleted);
           this.isLoading = false;
         },
@@ -164,7 +165,7 @@ export class ReservationComponent implements OnInit {
     const selectedHotel = this.getSelectedHotel();
     if (!selectedHotel) return;
 
-    this.selectedHotelName = selectedHotel.location.locationName;
+    this.selectedHotelName = selectedHotel.hotelID;
     this.newReservation.hotelId = this.selectedHotelId;
     this.selectedRoomId = '';
     this.selectedRoom = null;
@@ -200,8 +201,10 @@ export class ReservationComponent implements OnInit {
         this.isLoadingRooms = false;
       }, 500);
     } else {
+      console.log("Fetching rooms for hotel:", this.selectedHotelName);
       this.reservationService.getAllRoomsForHotel(this.selectedHotelName).subscribe({
         next: (rooms) => {
+          console.log("Fetched rooms for hotel:", rooms);
           this.rooms = rooms;
           this.filteredRooms = rooms;
           this.isLoadingRooms = false;
@@ -311,7 +314,7 @@ export class ReservationComponent implements OnInit {
       paymentID: '',
       paymentDate: new Date().toISOString(),
       amount: this.newReservation.cost,
-      paymentMethod: 'CREDIT_CARD',
+      paymentMethod: 'CreditCard',
       reservationID: 0,
       userID: this.newReservation.userId
     };
@@ -343,6 +346,7 @@ export class ReservationComponent implements OnInit {
         this.createReservationAfterPayment();
       }, 1500);
     } else {
+      console.log("Processing payment with data:", this.paymentData);
       this.paymentService.createPayment(this.paymentData).subscribe({
         next: (payment) => {
           this.confirmedPayment = payment;

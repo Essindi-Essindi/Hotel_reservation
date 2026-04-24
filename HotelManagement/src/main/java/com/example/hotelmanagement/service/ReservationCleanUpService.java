@@ -26,7 +26,7 @@ public class ReservationCleanUpService {
     @Autowired
     private ReservationManagementInterface reservationManagement;
 
-//    @Scheduled(fixedRate = 5000*1000)
+    @Scheduled(fixedRate = 5000*1000)
     @Transactional
     public void releaseExpiredRoomReservations(){
         try{
@@ -54,7 +54,7 @@ public class ReservationCleanUpService {
         }
     }
 
-//    @Scheduled(fixedRate = 5*1000)
+    @Scheduled(fixedRate = 5*1000)
     @Transactional
     public void releaseCancelledRoomReservations(){
         try{

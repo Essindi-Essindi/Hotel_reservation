@@ -192,33 +192,33 @@
 
         <div class="payment-method-icons">
           <div class="payment-icon"
-               [class.active]="paymentData.paymentMethod === 'CREDIT_CARD'"
-               (click)="paymentData.paymentMethod = 'CREDIT_CARD'">
+               [class.active]="paymentData.paymentMethod === 'CreditCard'"
+               (click)="paymentData.paymentMethod = 'CreditCard'">
             <i class="fab fa-cc-visa"></i>
             <i class="fab fa-cc-mastercard"></i>
             <span>Card</span>
           </div>
           <div class="payment-icon"
-               [class.active]="paymentData.paymentMethod === 'PAYPAL'"
-               (click)="paymentData.paymentMethod = 'PAYPAL'">
+               [class.active]="paymentData.paymentMethod === 'Paypal'"
+               (click)="paymentData.paymentMethod = 'Paypal'">
             <i class="fab fa-paypal"></i>
             <span>PayPal</span>
           </div>
           <div class="payment-icon"
-               [class.active]="paymentData.paymentMethod === 'MOMO'"
-               (click)="paymentData.paymentMethod = 'MOMO'">
+               [class.active]="paymentData.paymentMethod === 'MobileMoney'"
+               (click)="paymentData.paymentMethod = 'MobileMoney'">
             <i class="fas fa-mobile-alt"></i>
             <span>MTN MoMo</span>
           </div>
           <div class="payment-icon"
-               [class.active]="paymentData.paymentMethod === 'ORANGE_MONEY'"
-               (click)="paymentData.paymentMethod = 'ORANGE_MONEY'">
+               [class.active]="paymentData.paymentMethod === 'OrangeMoney'"
+               (click)="paymentData.paymentMethod = 'OrangeMoney'">
             <i class="fas fa-mobile-alt"></i>
             <span>Orange Money</span>
           </div>
         </div>
 
-        <div class="card-details" *ngIf="paymentData.paymentMethod === 'CREDIT_CARD'">
+        <div class="card-details" *ngIf="paymentData.paymentMethod === 'CreditCard'">
           <div class="form-group">
             <label>Card Number</label>
             <input type="text" placeholder="1234 5678 9012 3456" class="card-input">
@@ -239,7 +239,7 @@
           </div>
         </div>
 
-        <div class="mobile-money-details" *ngIf="paymentData.paymentMethod === 'MOMO' || paymentData.paymentMethod === 'ORANGE_MONEY'">
+        <div class="mobile-money-details" *ngIf="paymentData.paymentMethod === 'MobileMoney' || paymentData.paymentMethod === 'OrangeMoney'">
           <div class="form-group">
             <label>Phone Number</label>
             <input type="tel" placeholder="6XXXXXXXX" class="card-input">
@@ -250,7 +250,7 @@
           </div>
         </div>
 
-        <div class="paypal-details" *ngIf="paymentData.paymentMethod === 'PAYPAL'">
+        <div class="paypal-details" *ngIf="paymentData.paymentMethod === 'Paypal'">
           <div class="form-group">
             <label>Email Address</label>
             <input type="email" placeholder="you@example.com" class="card-input">
@@ -280,7 +280,7 @@
       <div class="receipt" *ngIf="confirmedReservation">
         <h4><i class="fas fa-check-circle"></i> Booking Confirmed</h4>
         <div class="receipt-details">
-          <p><strong>Reservation ID:</strong> {{confirmedReservation.reservationID}}</p>
+<!--          <p><strong>Reservation ID:</strong> {{confirmedReservation.reservationID}}</p>-->
           <p><strong>Hotel:</strong> {{getHotelName()}}</p>
           <p><strong>Location:</strong> {{getHotelLocation()}}</p>
           <p><strong>Room:</strong> {{confirmedReservation.roomId}}</p>
@@ -296,7 +296,7 @@
         <div class="payment-details-in-receipt" *ngIf="confirmedPayment">
           <h5><i class="fas fa-credit-card"></i> Payment Information</h5>
           <div class="payment-info-content">
-            <p><strong>Payment ID:</strong> {{confirmedPayment.paymentID}}</p>
+<!--            <p><strong>Payment ID:</strong> {{confirmedPayment.paymentID}}</p>-->
             <p><strong>Payment Method:</strong> {{formatPaymentMethod(confirmedPayment.paymentMethod)}}</p>
             <p><strong>Amount Paid:</strong> ${{confirmedPayment.amount}}</p>
             <p><strong>Payment Date:</strong> {{confirmedPayment.paymentDate | date:'medium'}}</p>

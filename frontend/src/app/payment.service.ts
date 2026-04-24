@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from '../environments/environment';
 
-export type PaymentMethod = 'CREDIT_CARD'| 'PAYPAL' | 'MOMO' | 'ORANGE_MONEY';
+export type PaymentMethod = 'CreditCard'| 'Paypal' | 'MobileMoney' | 'OrangeMoney';
 
 export interface PaymentDto {
   paymentID: string;
@@ -17,7 +18,8 @@ export interface PaymentDto {
   providedIn: 'root'
 })
 export class PaymentService {
-  private apiUrl = 'http://localhost:8080/api/payments';
+  private BaseUrl = environment.ApiUrl;
+  private apiUrl = `${this.BaseUrl}/api/payments`;
 
   constructor(private http: HttpClient) {}
 

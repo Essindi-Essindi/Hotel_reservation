@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AdminSidebarComponent } from '../admin-sidebar/admin-sidebar.component';
 import { AdminTopbarComponent } from '../admin-topbar/admin-topbar.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -12,6 +13,7 @@ import { AdminTopbarComponent } from '../admin-topbar/admin-topbar.component';
       <app-admin-sidebar
         [collapsed]="sidebarCollapsed()"
         (toggleCollapse)="sidebarCollapsed.set(!sidebarCollapsed())"
+        (logout)="onLogout()"
       />
       <div class="admin-body">
         <app-admin-topbar (toggleSidebar)="sidebarCollapsed.set(!sidebarCollapsed())" />
@@ -25,4 +27,10 @@ import { AdminTopbarComponent } from '../admin-topbar/admin-topbar.component';
 })
 export class AdminLayoutComponent {
   sidebarCollapsed = signal(false);
+
+  constructor(private authService: AuthService) {}
+
+  onLogout() {
+    this.authService.logout();
+  }
 }

@@ -99,9 +99,9 @@
 /* ── Buttons ── */
 .btn-primary {
   height: 3.2rem;
-  background: var(--primary);
-  color: var(--primary-fg);
-  border: none;
+  background: var(--gold);
+  color: var(--primary);
+  border: 1px solid var(--gold);
   border-radius: var(--radius);
   font-family: var(--font-sans);
   font-size: 0.75rem;
@@ -111,7 +111,7 @@
   transition: background 0.3s var(--ease-out), transform 0.2s;
 }
 .btn-primary:hover {
-  background: var(--primary-light);
+  background: var(--gold-soft);
   transform: translateY(-1px);
 }
 .btn-primary:active { transform: translateY(0); }

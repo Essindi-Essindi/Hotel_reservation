@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {environment} from '../../environments/environment';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AuthService {
   private apiUrl = environment.ApiUrl; // Adjust to your backend URL
   private tokenKey = 'authToken';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   // Sign in method
   login(credentials: { email: string; password: string }): Observable<any> {
@@ -55,6 +56,18 @@ export class AuthService {
   // Check if user is logged in
   isLoggedIn(): boolean {
     return !!this.getToken();
+  }
+
+  // Logout method
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
+    localStorage.removeItem('telephone');
+    localStorage.removeItem('userId');
+    this.router.navigate(['/sign-in']);
   }
 
   // Handle errors
